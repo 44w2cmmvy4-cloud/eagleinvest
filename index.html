@@ -1,100 +1,14 @@
-<!doctype html>
-<html lang="es">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Código de prueba</title>
-    <style>
-         :root {
-            --bg: #f5f7fa;
-            --card: #fff;
-            --accent: #0078d4;
-            --text: #111
-        }
-        
-        body {
-            font-family: system-ui, Segoe UI, Roboto, Arial;
-            margin: 2rem;
-            background: var(--bg);
-            color: var(--text)
-        }
-        
-        .card {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 1.5rem;
-            border-radius: 10px;
-            background: var(--card);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, .06)
-        }
-        
-        h1 {
-            margin-top: 0
-        }
-        
-        .controls {
-            display: flex;
-            gap: .5rem;
-            align-items: center;
-            margin-top: 1rem
-        }
-        
-        button {
-            padding: .5rem .9rem;
-            border: 0;
-            border-radius: 8px;
-            background: var(--accent);
-            color: #fff;
-            cursor: pointer
-        }
-        
-        button.secondary {
-            background: #6b7280
-        }
-        
-        #output {
-            margin-top: 1rem;
-            padding: .7rem;
-            border-radius: 6px;
-            background: #f3f4f6
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 
 <body>
-    <div class="card">
-        <h1>Código de prueba</h1>
-        <p>Haz clic en los botones para ver interacciones.</p>
-
-        <div class="controls">
-            <button id="btnClick">Haz clic</button>
-            <button id="btnReset" class="secondary">Reiniciar</button>
-            <label style="margin-left:auto;font-size:.9rem;color:#374151">Contador: <strong id="count">0</strong></label>
-        </div>
-
-        <div id="output" aria-live="polite">Estado: esperando interacción...</div>
-    </div>
-
-    <script>
-        const btnClick = document.getElementById('btnClick');
-        const btnReset = document.getElementById('btnReset');
-        const output = document.getElementById('output');
-        const countEl = document.getElementById('count');
-        let count = 0;
-
-        btnClick.addEventListener('click', () => {
-            count++;
-            countEl.textContent = count;
-            output.textContent = `¡Has hecho clic ${count} vez${count>1 ? 'es' : ''}!`;
-        });
-
-        btnReset.addEventListener('click', () => {
-            count = 0;
-            countEl.textContent = count;
-            output.textContent = 'Contador reiniciado.';
-        });
-    </script>
+    <h1>HOLA MUNDO</h1>
 </body>
 
 </html>
