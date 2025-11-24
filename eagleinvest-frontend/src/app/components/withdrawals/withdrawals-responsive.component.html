@@ -1,0 +1,162 @@
+<app-navbar></app-navbar>
+
+<div style="background: linear-gradient(135deg, #0A0E27 0%, #13172E 50%, #0A0E27 100%); min-height: 100vh; padding: 20px;">
+  <div class="container-fluid">
+    <!-- Header Responsive -->
+    <div class="row mb-4 animate-fade-in">
+      <div class="col-12">
+        <h1 class="animate-slide-in-right icon-glow" style="color: white; font-weight: 800; margin: 0 0 10px 0; font-size: clamp(1.5rem, 5vw, 2.5rem);">
+          💰 Gestión de Retiros
+        </h1>
+        <p style="color: #A1A9C9; margin: 0; font-size: clamp(0.9rem, 2vw, 1.1rem);">
+          Retira tus ganancias de forma segura y rápida
+        </p>
+      </div>
+    </div>
+
+    <div class="row g-3 g-md-4 stagger-children">
+      <!-- Withdrawal Form - Full Width on Mobile -->
+      <div class="col-12 col-xl-7">
+        <div class="gpu-accelerated animate-fade-in-up" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(15px, 3vw, 25px); backdrop-filter: blur(10px); margin-bottom: 20px;">
+          <div class="d-flex align-items-center gap-3 mb-4 pb-3" style="border-bottom: 1px solid rgba(0,240,255,0.1);">
+            <div class="icon-wrapper" style="background: rgba(0,240,255,0.2); width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <i class="bi bi-cash-stack" style="font-size: 1.8rem; color: #00F0FF;"></i>
+            </div>
+            <div style="flex: 1; min-width: 0;">
+              <h5 style="color: white; margin: 0 0 5px 0; font-weight: 700; font-size: 1.2rem;">Solicitar Retiro</h5>
+              <p style="color: #7581A8; margin: 0; font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis;">Balance disponible: <span class="counter-number" style="color: #00F0FF; font-weight: 700;">\${{ balance | number:'1.2-2' }}</span></p>
+            </div>
+          </div>
+
+          <form [formGroup]="withdrawalForm" (ngSubmit)="submitWithdrawal()">
+            <div class="row g-3 mb-3">
+              <div class="col-12 col-md-6">
+                <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: clamp(0.85rem, 2vw, 0.95rem); display: block;">Monto a Retirar</label>
+                <div class="position-relative">
+                  <span style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #00F0FF; font-weight: 700; font-size: clamp(1rem, 2.5vw, 1.2rem);">$</span>
+                  <input type="number" formControlName="amount" placeholder="0.00" 
+                         style="width: 100%; padding: 12px 12px 12px 35px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: clamp(0.9rem, 2vw, 1.1rem); font-weight: 600;">
+                </div>
+                <div class="d-flex gap-2 flex-wrap mt-2">
+                  <button type="button" (click)="setAmount(100)" class="btn-bot-control" style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: clamp(0.75rem, 1.8vw, 0.85rem); font-weight: 600;">$100</button>
+                  <button type="button" (click)="setAmount(500)" class="btn-bot-control" style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: clamp(0.75rem, 1.8vw, 0.85rem); font-weight: 600;">$500</button>
+                  <button type="button" (click)="setAmount(1000)" class="btn-bot-control" style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: clamp(0.75rem, 1.8vw, 0.85rem); font-weight: 600;">$1000</button>
+                  <button type="button" (click)="setAmount(balance)" class="btn-bot-control" style="background: rgba(201,70,255,0.1); border: 1px solid rgba(201,70,255,0.3); color: #C946FF; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: clamp(0.75rem, 1.8vw, 0.85rem); font-weight: 600;">Máximo</button>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: clamp(0.85rem, 2vw, 0.95rem); display: block;">Método de Pago</label>
+                <select formControlName="payment_method" style="width: 100%; padding: 12px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: clamp(0.9rem, 2vw, 1rem);">
+                  <option value="" disabled>Selecciona un método</option>
+                  <option value="bank_transfer">Transferencia Bancaria</option>
+                  <option value="paypal">PayPal</option>
+                  <option value="crypto">Criptomoneda</option>
+                  <option value="credit_card">Tarjeta de Crédito</option>
+                </select>
+              </div>
+
+              <div class="col-12">
+                <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: clamp(0.85rem, 2vw, 0.95rem); display: block;">Dirección/Cuenta de Destino</label>
+                <input type="text" formControlName="wallet_address" placeholder="Ingresa tu dirección de pago" 
+                       style="width: 100%; padding: 12px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: clamp(0.9rem, 2vw, 1rem);">
+              </div>
+            </div>
+
+            <!-- Withdrawal Fee Info -->
+            <div class="stat-card gpu-accelerated" style="background: rgba(255,159,67,0.1); border-left: 3px solid #FF9F43; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+              <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                <span style="color: #CDD2E5; font-size: clamp(0.85rem, 2vw, 0.95rem);">Comisión del servicio</span>
+                <span class="badge-animated" style="color: #FF9F43; font-weight: 700; font-size: clamp(0.9rem, 2vw, 1rem);">2.5%</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mt-2">
+                <span style="color: white; font-weight: 700; font-size: clamp(0.95rem, 2.5vw, 1.1rem);">Recibirás</span>
+                <span class="counter-number" style="color: #00F0FF; font-weight: 800; font-size: clamp(1.1rem, 3vw, 1.3rem);">${{ calculateNetAmount() }}</span>
+              </div>
+            </div>
+
+            <button type="submit" [disabled]="withdrawalForm.invalid" [style.opacity]="withdrawalForm.invalid ? '0.5' : '1'"
+                    class="btn-neon"
+                    style="width: 100%; padding: 15px; background: linear-gradient(135deg, #00F0FF, #C946FF); color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: clamp(0.95rem, 2.5vw, 1.1rem);">
+              <i class="bi bi-send me-2"></i>Solicitar Retiro
+            </button>
+          </form>
+        </div>
+
+        <!-- Withdrawal Guidelines - Collapsible on Mobile -->
+        <details style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(15px, 3vw, 25px); backdrop-filter: blur(10px);">
+          <summary style="color: white; font-weight: 700; cursor: pointer; font-size: clamp(1rem, 2.5vw, 1.2rem); list-style: none;">
+            <i class="bi bi-info-circle me-2"></i>Información Importante
+          </summary>
+          <ul style="color: #A1A9C9; margin: 15px 0 0 0; padding-left: 20px; line-height: 1.8; font-size: clamp(0.85rem, 2vw, 0.95rem);">
+            <li>Retiro mínimo: $50</li>
+            <li>Procesamiento: 24-48 horas hábiles</li>
+            <li>Comisión: 2.5% por transacción</li>
+            <li>Verifica tu información antes de confirmar</li>
+          </ul>
+        </details>
+      </div>
+
+      <!-- Active Investments Sidebar -->
+      <div class="col-12 col-xl-5">
+        <div class="gpu-accelerated animate-fade-in-up" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(15px, 3vw, 25px); backdrop-filter: blur(10px); position: sticky; top: 20px;">
+          <h5 class="animate-slide-in-right" style="color: white; margin: 0 0 20px 0; font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.3rem);">💼 Inversiones Activas</h5>
+
+          @if (investments() && investments()!.length > 0) {
+            <div class="row g-3">
+              @for (investment of investments(); track investment.id) {
+                <!-- Mobile Card View -->
+                <div class="col-12 col-md-6 col-xl-12">
+                  <div class="investment-card gpu-accelerated" style="background: rgba(13,17,46,0.6); border: 1px solid rgba(0,240,255,0.15); border-radius: 12px; padding: 15px;">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                      <div style="flex: 1;">
+                        <h6 style="color: white; margin: 0 0 5px 0; font-weight: 700; font-size: clamp(0.95rem, 2.5vw, 1.1rem);">{{ investment.plan_name }}</h6>
+                        <p class="badge-animated" style="color: #7581A8; margin: 0; font-size: clamp(0.75rem, 1.8vw, 0.85rem);">{{ investment.status }}</p>
+                      </div>
+                      <span class="badge-animated"
+                            [style.background]="investment.roi >= 0 ? 'rgba(0,240,255,0.2)' : 'rgba(255,0,128,0.2)'" 
+                            [style.color]="investment.roi >= 0 ? '#00F0FF' : '#FF0080'"
+                            style="padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: clamp(0.75rem, 1.8vw, 0.85rem);">
+                        {{ investment.roi >= 0 ? '+' : '' }}{{ investment.roi }}%
+                      </span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                      <div>
+                        <p style="color: #7581A8; margin: 0; font-size: clamp(0.75rem, 1.8vw, 0.85rem);">Monto Invertido</p>
+                        <p class="counter-number" style="color: white; margin: 0; font-weight: 700; font-size: clamp(0.9rem, 2vw, 1rem);">${{ investment.amount }}</p>
+                      </div>
+                      <div>
+                        <p style="color: #7581A8; margin: 0; font-size: clamp(0.75rem, 1.8vw, 0.85rem);">Retorno Actual</p>
+                        <p class="counter-number" style="color: #00F0FF; margin: 0; font-weight: 700; font-size: clamp(0.9rem, 2vw, 1rem);">${{ investment.current_value }}</p>
+                      </div>
+                    </div>
+
+                    <div class="progress-bar-animated" style="background: rgba(0,240,255,0.1); height: 6px; border-radius: 10px; margin: 12px 0; overflow: hidden;">
+                      <div [style.width]="investment.progress + '%'" style="background: linear-gradient(90deg, #00F0FF, #C946FF); height: 100%; border-radius: 10px;"></div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                      <span style="color: #7581A8; font-size: clamp(0.75rem, 1.8vw, 0.85rem);">
+                        <i class="bi bi-clock me-1"></i>{{ investment.end_date }}
+                      </span>
+                      <span class="badge-animated" style="color: #00F0FF; font-weight: 700; font-size: clamp(0.75rem, 1.8vw, 0.85rem);">{{ investment.progress }}% completado</span>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          } @else {
+            <div class="animate-fade-in" style="text-align: center; padding: 40px 20px;">
+              <i class="bi bi-inbox icon-wrapper" style="font-size: clamp(3rem, 8vw, 4rem); color: #4A5578; margin-bottom: 15px; display: block;"></i>
+              <p style="color: #7581A8; margin: 0 0 20px 0; font-size: clamp(0.9rem, 2vw, 1rem);">No tienes inversiones activas</p>
+              <button [routerLink]="['/dashboard']" class="btn-neon" style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; padding: 12px 24px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: clamp(0.85rem, 2vw, 0.95rem);">
+                <i class="bi bi-plus-circle me-2"></i>Explorar Planes
+              </button>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

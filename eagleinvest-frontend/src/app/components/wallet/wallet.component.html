@@ -1,0 +1,156 @@
+<app-navbar></app-navbar>
+
+<div class="page-shell" style="background: linear-gradient(135deg, #0A0E27 0%, #13172E 50%, #0A0E27 100%); min-height: 100vh; padding: clamp(20px, 5vw, 60px); display: flex; justify-content: center;">
+  <div class="container-xl px-2 px-md-4" style="width: 100%; max-width: 1200px;">
+    
+    <!-- Header -->
+    <div class="row mb-4 animate-fade-in">
+      <div class="col-12">
+        <h1 class="animate-slide-in-right" style="color: white; font-weight: 800; margin: 0 0 10px 0; font-size: clamp(1.5rem, 5vw, 2.5rem);">
+          🔐 Wallet de Criptomonedas
+        </h1>
+        <p style="color: #A1A9C9; margin: 0; font-size: clamp(0.9rem, 2vw, 1.1rem);">
+          Conecta tu wallet para realizar transacciones seguras con criptomonedas
+        </p>
+      </div>
+    </div>
+
+    <!-- Connected Wallet Display -->
+    @if (walletInfo() && walletInfo()!.connected) {
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="gpu-accelerated animate-fade-in-up" style="background: linear-gradient(145deg, rgba(9,15,45,0.95), rgba(6,10,28,0.92)); border: 1px solid rgba(12,235,221,0.25); border-radius: 20px; padding: clamp(20px, 4vw, 35px); backdrop-filter: blur(12px);">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+              <div>
+                <p style="color: #4BD4FF; margin: 0 0 8px; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;">Wallet Conectada</p>
+                <h3 style="color: white; margin: 0; font-weight: 800; font-size: clamp(1.2rem, 3vw, 1.5rem);">{{ walletInfo()!.network }}</h3>
+              </div>
+              <button (click)="disconnectWallet()" style="background: rgba(255,0,128,0.2); border: 1px solid rgba(255,0,128,0.4); color: #FF0080; padding: 10px 20px; border-radius: 999px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.75rem; cursor: pointer;">
+                Desconectar
+              </button>
+            </div>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div style="background: rgba(12,235,221,0.08); border: 1px solid rgba(12,235,221,0.2); border-radius: 14px; padding: 20px;">
+                  <p style="color: #7C8AB3; margin: 0 0 10px; font-size: 0.85rem;">Dirección</p>
+                  <div class="d-flex align-items-center gap-2">
+                    <code style="color: #0CEBDD; font-weight: 600; font-size: clamp(0.9rem, 2vw, 1rem); flex: 1; overflow: hidden; text-overflow: ellipsis;">
+                      {{ formatAddress(walletInfo()!.address) }}
+                    </code>
+                    <button (click)="copyAddress()" style="background: rgba(12,235,221,0.15); border: 1px solid rgba(12,235,221,0.3); color: #0CEBDD; padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 0.85rem;">
+                      <i class="bi bi-clipboard"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div style="background: rgba(201,70,255,0.08); border: 1px solid rgba(201,70,255,0.2); border-radius: 14px; padding: 20px;">
+                  <p style="color: #7C8AB3; margin: 0 0 10px; font-size: 0.85rem;">Balance Estimado</p>
+                  <h4 style="color: #C946FF; margin: 0; font-weight: 800; font-size: clamp(1.2rem, 3vw, 1.5rem);">
+                    {{ walletInfo()!.balance }} ETH
+                  </h4>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(12,235,221,0.15);">
+              <p style="color: #7C8AB3; font-size: 0.85rem; margin: 0;">
+                <i class="bi bi-shield-check" style="color: #0CEBDD; margin-right: 8px;"></i>
+                Tu wallet está protegida con encriptación de grado militar
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Wallet Connection Options -->
+    @if (!walletInfo() || !walletInfo()!.connected) {
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="gpu-accelerated animate-fade-in-up" style="background: linear-gradient(145deg, rgba(9,15,45,0.95), rgba(5,8,24,0.93)); border: 1px solid rgba(12,235,221,0.18); border-radius: 20px; padding: clamp(20px, 4vw, 35px); backdrop-filter: blur(12px);">
+            <div class="mb-4">
+              <p style="color: #4BD4FF; margin: 0 0 8px; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;">Selecciona tu wallet</p>
+              <h3 style="color: white; margin: 0; font-weight: 800; font-size: clamp(1.2rem, 3vw, 1.5rem);">Conectar Wallet</h3>
+            </div>
+
+            <div class="row g-3">
+              @for (wallet of supportedWallets(); track wallet.id) {
+                <div class="col-md-6">
+                  <div (click)="!isConnecting() && connectWallet(wallet.id)" 
+                       class="wallet-card"
+                       [class.disabled]="isConnecting()"
+                       style="cursor: pointer; transition: all 0.3s; border-radius: 16px; padding: 24px; border: 1px solid rgba(12,235,221,0.15);"
+                       [style.background]="wallet.color"
+                       onmouseover="this.style.borderColor='rgba(12,235,221,0.4)'; this.style.transform='translateY(-4px)'"
+                       onmouseout="this.style.borderColor='rgba(12,235,221,0.15)'; this.style.transform='translateY(0)'">
+                    <div class="d-flex align-items-start gap-3">
+                      <div style="font-size: 3rem;">{{ wallet.icon }}</div>
+                      <div style="flex: 1;">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                          <h5 style="color: white; margin: 0; font-weight: 700; font-size: 1.1rem;">{{ wallet.name }}</h5>
+                          @if (wallet.installed) {
+                            <span style="background: rgba(12,235,221,0.2); color: #0CEBDD; padding: 4px 10px; border-radius: 999px; font-size: 0.7rem; font-weight: 600;">
+                              ✓ Instalada
+                            </span>
+                          }
+                        </div>
+                        <p style="color: #7C8AB3; margin: 0 0 12px; font-size: 0.9rem;">{{ wallet.description }}</p>
+                        <div style="display: flex; align-items: center; gap: 6px; color: #4BD4FF; font-size: 0.85rem; font-weight: 600;">
+                          <span>Conectar</span>
+                          <i class="bi bi-arrow-right"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+
+            @if (isConnecting()) {
+              <div style="text-align: center; margin-top: 30px; padding: 20px; background: rgba(12,235,221,0.08); border-radius: 12px;">
+                <div style="display: inline-block; width: 40px; height: 40px; border: 4px solid rgba(12,235,221,0.3); border-top: 4px solid #0CEBDD; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                <p style="color: #0CEBDD; margin: 15px 0 0; font-weight: 600;">Conectando wallet...</p>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Security Notice -->
+    <div class="row">
+      <div class="col-12">
+        <div class="gpu-accelerated animate-fade-in-up" style="background: rgba(255,159,67,0.08); border: 1px solid rgba(255,159,67,0.3); border-left: 4px solid #FF9F43; border-radius: 12px; padding: 20px;">
+          <div class="d-flex gap-3">
+            <i class="bi bi-shield-exclamation" style="color: #FF9F43; font-size: 1.5rem; flex-shrink: 0;"></i>
+            <div>
+              <h6 style="color: white; margin: 0 0 8px; font-weight: 700;">Consejos de Seguridad</h6>
+              <ul style="color: #A1A9C9; margin: 0; padding-left: 20px; font-size: 0.9rem;">
+                <li>Nunca compartas tu frase semilla (seed phrase) con nadie</li>
+                <li>Verifica siempre la URL antes de conectar tu wallet</li>
+                <li>Revisa los permisos que otorgas a las aplicaciones</li>
+                <li>Usa autenticación de dos factores cuando esté disponible</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .wallet-card.disabled {
+    opacity: 0.6;
+    cursor: not-allowed !important;
+  }
+</style>

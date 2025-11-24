@@ -1,0 +1,120 @@
+/* Market Overview Premium Animations */
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.4), 0 0 40px rgba(0, 240, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(0, 240, 255, 0.6), 0 0 80px rgba(0, 240, 255, 0.3);
+  }
+}
+
+@keyframes priceUp {
+  0% {
+    transform: translateY(0);
+    color: #00F0FF;
+  }
+  50% {
+    transform: translateY(-5px);
+    color: #00FF88;
+  }
+  100% {
+    transform: translateY(0);
+    color: #00F0FF;
+  }
+}
+
+@keyframes priceDown {
+  0% {
+    transform: translateY(0);
+    color: #FF0080;
+  }
+  50% {
+    transform: translateY(5px);
+    color: #FF4444;
+  }
+  100% {
+    transform: translateY(0);
+    color: #FF0080;
+  }
+}
+
+@keyframes tradeFlash {
+  0%, 100% {
+    background: rgba(0,240,255,0.05);
+  }
+  50% {
+    background: rgba(0,240,255,0.2);
+  }
+}
+
+.bot-premium-card {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+.price-up {
+  animation: priceUp 1s ease-in-out;
+}
+
+.price-down {
+  animation: priceDown 1s ease-in-out;
+}
+
+.trade-flash {
+  animation: tradeFlash 0.5s ease-in-out;
+}
+
+.crypto-card {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.crypto-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0,240,255,0.2), transparent);
+  transition: left 0.6s;
+}
+
+.crypto-card:hover::before {
+  left: 100%;
+}
+
+.crypto-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  border-color: rgba(0,240,255,0.6);
+  box-shadow: 0 20px 60px rgba(0, 240, 255, 0.4);
+}
+
+.btn-bot-control {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-bot-control::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-bot-control:active::after {
+  width: 300px;
+  height: 300px;
+}
+
+.chart-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}

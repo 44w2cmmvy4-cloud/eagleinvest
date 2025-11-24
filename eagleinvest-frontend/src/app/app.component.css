@@ -1,0 +1,20 @@
+/* Component specific styles */
+.hero-illustration {
+  position: relative;
+}
+
+.floating-card {
+  transition: transform 0.3s ease;
+}
+
+.stats-section {
+  background: var(--gradient-primary);
+}
+
+.plans-section {
+  background-color: var(--bg-secondary);
+}
+
+.cta-section {
+  background: var(--gradient-neon);
+}

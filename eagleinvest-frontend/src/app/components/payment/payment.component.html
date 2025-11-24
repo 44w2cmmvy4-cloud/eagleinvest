@@ -1,0 +1,438 @@
+<app-navbar></app-navbar>
+
+<div style="background: linear-gradient(135deg, #0A0E27 0%, #13172E 50%, #0A0E27 100%); min-height: 100vh; padding: 20px;">
+  <div class="container-fluid">
+    <!-- Header -->
+    <div class="row mb-4 animate-fade-in">
+      <div class="col-12">
+        <h1 class="animate-slide-in-right icon-glow" style="color: white; font-weight: 800; margin: 0 0 10px 0; font-size: clamp(1.5rem, 5vw, 2.5rem);">
+          💳 Realizar Pago e Inversión
+        </h1>
+        <p style="color: #A1A9C9; margin: 0; font-size: clamp(0.9rem, 2vw, 1.1rem);">
+          Selecciona tu plan de inversión y método de pago preferido
+        </p>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- Left Column - Plan Selection & Amount -->
+      <div class="col-12 col-lg-8">
+        <!-- Investment Plans -->
+        <div class="gpu-accelerated animate-fade-in-up" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(15px, 3vw, 25px); backdrop-filter: blur(10px); margin-bottom: 20px;">
+          <h5 class="icon-glow" style="color: white; margin: 0 0 20px 0; font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.3rem);">
+            📊 Selecciona tu Plan de Inversión
+          </h5>
+
+          <div class="row g-3">
+            @for (plan of investmentPlans(); track plan.id) {
+              <div class="col-12 col-md-6">
+                <div (click)="selectPlan(plan)" 
+                     class="plan-card gpu-accelerated"
+                     [class.selected]="selectedPlan()?.id === plan.id"
+                     style="background: rgba(13,17,46,0.6); border: 2px solid rgba(0,240,255,0.2); border-radius: 12px; padding: 20px; cursor: pointer; height: 100%; display: flex; flex-direction: column;">
+                  <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div style="flex: 1;">
+                      <h6 style="color: white; margin: 0 0 5px 0; font-weight: 700; font-size: 1.1rem;">{{ plan.name }}</h6>
+                      <p style="color: #7581A8; margin: 0; font-size: 0.85rem; line-height: 1.4;">{{ plan.description }}</p>
+                    </div>
+                    @if (selectedPlan()?.id === plan.id) {
+                      <i class="bi bi-check-circle-fill" style="color: #00F0FF; font-size: 1.3rem; flex-shrink: 0; margin-left: 10px;"></i>
+                    }
+                  </div>
+
+                  <div class="stat-card" style="background: rgba(0,240,255,0.1); padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                    <div class="row g-2">
+                      <div class="col-6">
+                        <p style="color: #7581A8; margin: 0; font-size: 0.8rem;">Retorno Diario</p>
+                        <h5 class="counter-number badge-glow" style="color: #00F0FF; margin: 0; font-weight: 800;">{{ plan.daily_return }}%</h5>
+                      </div>
+                      <div class="col-6">
+                        <p style="color: #7581A8; margin: 0; font-size: 0.8rem;">Duración</p>
+                        <h5 class="counter-number" style="color: #C946FF; margin: 0; font-weight: 800;">{{ plan.duration_days }} días</h5>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <p style="color: #7581A8; margin: 0; font-size: 0.8rem;">Monto Mínimo</p>
+                      <p class="counter-number" style="color: white; margin: 0; font-weight: 700;">\${{ plan.min_amount | number }}</p>
+                    </div>
+                    <div>
+                      <p style="color: #7581A8; margin: 0; font-size: 0.8rem;">Monto Máximo</p>
+                      <p class="counter-number" style="color: white; margin: 0; font-weight: 700;">\${{ plan.max_amount | number }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- Amount Selection -->
+        @if (selectedPlan()) {
+          <div class="gpu-accelerated animate-slide-down" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(15px, 3vw, 25px); backdrop-filter: blur(10px); margin-bottom: 20px;">
+            <h5 class="icon-glow" style="color: white; margin: 0 0 20px 0; font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.3rem);">
+              💰 Monto a Invertir
+            </h5>
+
+            <div class="mb-4">
+              <div class="d-flex justify-content-between mb-2">
+                <span style="color: #7581A8;">Monto</span>
+                <span class="counter-number badge-glow" style="color: #00F0FF; font-weight: 700; font-size: 1.3rem;">\${{ amount() | number:'1.2-2' }}</span>
+              </div>
+              <input type="range" 
+                     [min]="selectedPlan()!.min_amount" 
+                     [max]="selectedPlan()!.max_amount" 
+                     [value]="amount()"
+                     (input)="amount.set(+$any($event.target).value)"
+                     style="width: 100%;">
+            </div>
+
+            <div class="row g-2 mb-3">
+              <div class="col-4">
+                <button (click)="amount.set(selectedPlan()!.min_amount)" class="btn-bot-control" style="width: 100%; padding: 12px 8px; background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">
+                  Mínimo
+                </button>
+              </div>
+              <div class="col-4">
+                <button (click)="amount.set((selectedPlan()!.min_amount + selectedPlan()!.max_amount) / 2)" class="btn-bot-control" style="width: 100%; padding: 12px 8px; background: rgba(201,70,255,0.1); border: 1px solid rgba(201,70,255,0.3); color: #C946FF; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">
+                  Medio
+                </button>
+              </div>
+              <div class="col-4">
+                <button (click)="amount.set(selectedPlan()!.max_amount)" class="btn-bot-control" style="width: 100%; padding: 12px 8px; background: rgba(255,0,128,0.1); border: 1px solid rgba(255,0,128,0.3); color: #FF0080; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">
+                  Máximo
+                </button>
+              </div>
+            </div>
+
+            <div class="input-group mb-3">
+              <span style="background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; padding: 12px 20px; border-radius: 10px 0 0 10px; font-weight: 700;">$</span>
+              <input type="number" 
+                     [value]="amount()"
+                     (input)="amount.set(+$any($event.target).value)"
+                     [min]="selectedPlan()!.min_amount"
+                     [max]="selectedPlan()!.max_amount"
+                     style="flex: 1; padding: 12px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-left: none; border-radius: 0 10px 10px 0; color: white; font-weight: 700; font-size: 1.1rem;">
+            </div>
+
+            <!-- Investment Summary -->
+            <div class="stat-card gpu-accelerated" style="background: linear-gradient(135deg, rgba(0,240,255,0.1), rgba(201,70,255,0.1)); border: 2px solid rgba(0,240,255,0.3); border-radius: 12px; padding: 20px;">
+              <h6 style="color: white; margin: 0 0 15px 0; font-weight: 700;">📈 Resumen de Inversión</h6>
+              <div class="row g-3">
+                <div class="col-6">
+                  <p style="color: #7581A8; margin: 0; font-size: 0.85rem;">Inversión Inicial</p>
+                  <p class="counter-number" style="color: white; margin: 0; font-weight: 700; font-size: 1.1rem;">\${{ amount() | number:'1.2-2' }}</p>
+                </div>
+                <div class="col-6">
+                  <p style="color: #7581A8; margin: 0; font-size: 0.85rem;">Duración</p>
+                  <p class="counter-number" style="color: white; margin: 0; font-weight: 700; font-size: 1.1rem;">{{ selectedPlan()!.duration_days }} días</p>
+                </div>
+                <div class="col-6">
+                  <p style="color: #7581A8; margin: 0; font-size: 0.85rem;">Ganancia Estimada</p>
+                  <p class="counter-number badge-glow" style="color: #00F0FF; margin: 0; font-weight: 700; font-size: 1.1rem;">+\${{ estimatedReturn() | number:'1.2-2' }}</p>
+                </div>
+                <div class="col-6">
+                  <p style="color: #7581A8; margin: 0; font-size: 0.85rem;">Total Retorno</p>
+                  <p class="counter-number badge-glow" style="color: #C946FF; margin: 0; font-weight: 700; font-size: 1.1rem;">\${{ totalReturn() | number:'1.2-2' }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Methods -->
+          <div class="gpu-accelerated animate-fade-in-up" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(15px, 3vw, 25px); backdrop-filter: blur(10px);">
+            <h5 class="icon-glow" style="color: white; margin: 0 0 20px 0; font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.3rem);">
+              💳 Método de Pago
+            </h5>
+
+            <div class="row g-3">
+              @for (method of paymentMethods(); track method.id) {
+                @if (method.enabled) {
+                  <div class="col-12 col-md-6">
+                    <div (click)="selectPaymentMethod(method.id)"
+                         class="payment-method-card gpu-accelerated"
+                         [class.selected]="selectedPaymentMethod() === method.id"
+                         style="background: rgba(13,17,46,0.6); border: 2px solid rgba(0,240,255,0.2); border-radius: 12px; padding: 15px; cursor: pointer;">
+                      <div class="d-flex align-items-start gap-3">
+                        <div class="icon-wrapper" style="background: rgba(0,240,255,0.2); width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                          <i [class]="'bi ' + method.icon" style="color: #00F0FF; font-size: 1.5rem;"></i>
+                        </div>
+                        <div style="flex: 1;">
+                          <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                              <h6 style="color: white; margin: 0 0 5px 0; font-weight: 700; font-size: 1rem;">{{ method.name }}</h6>
+                              <p style="color: #7581A8; margin: 0; font-size: 0.8rem;">{{ method.description }}</p>
+                            </div>
+                            @if (selectedPaymentMethod() === method.id) {
+                              <i class="bi bi-check-circle-fill badge-glow" style="color: #00F0FF; font-size: 1.3rem;"></i>
+                            }
+                          </div>
+                          <div class="d-flex gap-3 mt-2">
+                            <span class="badge-animated" style="background: rgba(0,240,255,0.2); color: #00F0FF; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600;">
+                              {{ method.fee }}% comisión
+                            </span>
+                            <span class="badge-animated" style="background: rgba(201,70,255,0.2); color: #C946FF; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600;">
+                              {{ method.processingTime }}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                }
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Right Column - Payment Summary -->
+      <div class="col-12 col-lg-4">
+        <div class="gpu-accelerated animate-fade-in-up" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(15px, 3vw, 25px); backdrop-filter: blur(10px); position: sticky; top: 20px;">
+          <h5 class="icon-glow" style="color: white; margin: 0 0 20px 0; font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.3rem);">
+            📋 Resumen del Pago
+          </h5>
+
+          @if (!selectedPlan()) {
+            <div class="text-center" style="padding: 40px 20px;">
+              <i class="bi bi-wallet2 icon-wrapper" style="font-size: 4rem; color: #4A5578; margin-bottom: 15px; display: block;"></i>
+              <p style="color: #7581A8; margin: 0;">Selecciona un plan para comenzar</p>
+            </div>
+          } @else {
+            <div class="stat-card gpu-accelerated" style="background: rgba(13,17,46,0.6); padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+              <p style="color: #7581A8; margin: 0 0 5px 0; font-size: 0.85rem;">Plan Seleccionado</p>
+              <p class="badge-animated badge-glow" style="color: #00F0FF; margin: 0; font-weight: 700; font-size: 1.1rem;">{{ selectedPlan()!.name }}</p>
+            </div>
+
+            <div class="stat-card gpu-accelerated" style="background: rgba(13,17,46,0.6); padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span style="color: #7581A8; font-size: 0.9rem;">Monto de Inversión</span>
+                <span class="counter-number" style="color: white; font-weight: 700; font-size: 1.1rem;">\${{ amount() | number:'1.2-2' }}</span>
+              </div>
+              @if (selectedPaymentMethod()) {
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span style="color: #7581A8; font-size: 0.9rem;">Comisión ({{ selectedMethodDetails()!.fee }}%)</span>
+                  <span style="color: #FF9F43; font-weight: 600;">\${{ processingFee() | number:'1.2-2' }}</span>
+                </div>
+                <div style="border-top: 1px solid rgba(0,240,255,0.2); padding-top: 10px; margin-top: 10px;">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span style="color: white; font-weight: 700; font-size: 1.1rem;">Total a Pagar</span>
+                    <span class="counter-number badge-glow" style="color: #00F0FF; font-weight: 800; font-size: 1.3rem;">\${{ totalAmount() | number:'1.2-2' }}</span>
+                  </div>
+                </div>
+              }
+            </div>
+
+            <div class="stat-card gpu-accelerated" style="background: linear-gradient(135deg, rgba(0,240,255,0.1), rgba(201,70,255,0.1)); border: 1px solid rgba(0,240,255,0.3); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+              <p style="color: #7581A8; margin: 0 0 10px 0; font-size: 0.85rem;">Retorno Estimado Total</p>
+              <p class="counter-number badge-glow" style="color: #C946FF; margin: 0; font-weight: 800; font-size: 1.5rem;">\${{ totalReturn() | number:'1.2-2' }}</p>
+              <p class="badge-animated" style="color: #00F0FF; margin: 5px 0 0 0; font-size: 0.85rem;">
+                +{{ ((estimatedReturn() / amount()) * 100) | number:'1.1-1' }}% de ganancia
+              </p>
+            </div>
+
+            @if (!selectedPaymentMethod()) {
+              <div class="alert" style="background: rgba(255,159,67,0.1); border: 1px solid rgba(255,159,67,0.3); border-radius: 10px; padding: 15px; margin-bottom: 20px;">
+                <i class="bi bi-info-circle me-2" style="color: #FF9F43;"></i>
+                <span style="color: #FF9F43; font-size: 0.9rem;">Selecciona un método de pago</span>
+              </div>
+            }
+
+            <button (click)="proceedToPayment()" 
+                    [disabled]="!selectedPlan() || !validateAmount() || !selectedPaymentMethod()"
+                    class="btn-neon"
+                    [style.opacity]="!selectedPlan() || !validateAmount() || !selectedPaymentMethod() ? '0.5' : '1'"
+                    style="width: 100%; padding: 15px; background: linear-gradient(135deg, #00F0FF, #C946FF); color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 1.1rem; margin-bottom: 15px;">
+              <i class="bi bi-lock-fill me-2"></i>Proceder al Pago Seguro
+            </button>
+
+            <!-- Security Badges -->
+            <div class="d-flex gap-2 flex-wrap justify-content-center">
+              <span class="badge-animated" style="background: rgba(0,240,255,0.1); color: #00F0FF; padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;">
+                <i class="bi bi-shield-check me-1"></i>SSL Seguro
+              </span>
+              <span class="badge-animated" style="background: rgba(0,240,255,0.1); color: #00F0FF; padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;">
+                <i class="bi bi-lock-fill me-1"></i>Encriptado
+              </span>
+              <span class="badge-animated" style="background: rgba(0,240,255,0.1); color: #00F0FF; padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 600;">
+                <i class="bi bi-check-circle me-1"></i>Verificado
+              </span>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Modal -->
+@if (showPaymentModal()) {
+  <div class="animate-fade-in" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 20px; backdrop-filter: blur(5px);" (click)="closeModal()">
+    <div class="animate-scale-in gpu-accelerated" style="background: linear-gradient(135deg, #0D112E, #1A1F4D); border: 2px solid rgba(0,240,255,0.4); border-radius: 20px; padding: 30px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 0 40px rgba(0,240,255,0.4);" (click)="$event.stopPropagation()">
+      
+      @if (!paymentSuccess()) {
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3 class="icon-glow" style="color: white; margin: 0; font-weight: 800; font-size: 1.5rem;">
+            <i [class]="'bi ' + selectedMethodDetails()!.icon + ' me-2'"></i>{{ selectedMethodDetails()!.name }}
+          </h3>
+          <button (click)="closeModal()" style="background: transparent; border: none; color: #7581A8; font-size: 1.5rem; cursor: pointer;">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+        <!-- Card Payment Form -->
+        @if (selectedPaymentMethod() === 'card') {
+          <form [formGroup]="cardForm">
+            <div class="mb-3">
+              <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; display: block;">Número de Tarjeta</label>
+              <input type="text" 
+                     formControlName="cardNumber" 
+                     (input)="formatCardNumber($event)"
+                     maxlength="19"
+                     placeholder="1234 5678 9012 3456"
+                     class="gpu-accelerated"
+                     style="width: 100%; padding: 12px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: 1rem;">
+            </div>
+            <div class="mb-3">
+              <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; display: block;">Nombre en la Tarjeta</label>
+              <input type="text" 
+                     formControlName="cardName" 
+                     placeholder="JOHN DOE"
+                     class="gpu-accelerated"
+                     style="width: 100%; padding: 12px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: 1rem; text-transform: uppercase;">
+            </div>
+            <div class="row g-3 mb-3">
+              <div class="col-6">
+                <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; display: block;">Fecha de Expiración</label>
+                <input type="text" 
+                       formControlName="expiryDate" 
+                       placeholder="MM/YY"
+                       maxlength="5"
+                       class="gpu-accelerated"
+                       style="width: 100%; padding: 12px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: 1rem;">
+              </div>
+              <div class="col-6">
+                <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; display: block;">CVV</label>
+                <input type="text" 
+                       formControlName="cvv" 
+                       placeholder="123"
+                       maxlength="4"
+                       class="gpu-accelerated"
+                       style="width: 100%; padding: 12px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: 1rem;">
+              </div>
+            </div>
+          </form>
+        }
+
+        <!-- Crypto Payment -->
+        @if (selectedPaymentMethod() === 'crypto') {
+          <form [formGroup]="cryptoForm">
+            <div class="mb-3">
+              <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; display: block;">Selecciona Criptomoneda</label>
+              <select formControlName="cryptoCurrency" class="gpu-accelerated" style="width: 100%; padding: 12px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: 1rem;">
+                <option value="BTC">Bitcoin (BTC)</option>
+                <option value="ETH">Ethereum (ETH)</option>
+                <option value="USDT">Tether (USDT)</option>
+                <option value="BNB">Binance Coin (BNB)</option>
+              </select>
+            </div>
+            
+            <div class="qr-placeholder text-center mb-3" style="padding: 30px; border-radius: 12px;">
+              <i class="bi bi-qr-code" style="font-size: 4rem; color: #00F0FF;"></i>
+              <p style="color: #7581A8; margin: 10px 0 0 0;">Escanea el código QR para pagar</p>
+            </div>
+
+            <div class="mb-3">
+              <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; display: block;">Dirección de Billetera</label>
+              <div style="background: rgba(0,240,255,0.1); padding: 12px; border-radius: 10px; word-break: break-all;">
+                <code style="color: #00F0FF; font-size: 0.9rem;">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</code>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; display: block;">Hash de Transacción (Opcional)</label>
+              <input type="text" 
+                     formControlName="walletAddress" 
+                     placeholder="Pega el hash de tu transacción"
+                     class="gpu-accelerated"
+                     style="width: 100%; padding: 12px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: 1rem;">
+            </div>
+          </form>
+        }
+
+        <!-- Bank Transfer -->
+        @if (selectedPaymentMethod() === 'bank') {
+          <div class="stat-card mb-3" style="background: rgba(0,240,255,0.1); padding: 15px; border-radius: 10px;">
+            <h6 style="color: white; margin: 0 0 10px 0; font-weight: 700;">Datos Bancarios</h6>
+            <div style="color: #CDD2E5; font-size: 0.9rem; line-height: 1.8;">
+              <p style="margin: 0;"><strong>Banco:</strong> Eagle Investment Bank</p>
+              <p style="margin: 0;"><strong>Cuenta:</strong> 1234567890</p>
+              <p style="margin: 0;"><strong>Routing:</strong> 021000021</p>
+              <p style="margin: 0;"><strong>SWIFT:</strong> EAGLUS33</p>
+            </div>
+          </div>
+          <div class="alert" style="background: rgba(255,159,67,0.1); border: 1px solid rgba(255,159,67,0.3); border-radius: 10px; padding: 12px; margin-bottom: 15px;">
+            <i class="bi bi-info-circle me-2" style="color: #FF9F43;"></i>
+            <span style="color: #FF9F43; font-size: 0.85rem;">Envía el comprobante de pago a support@eagleinvest.com</span>
+          </div>
+        }
+
+        <!-- PayPal / Zelle -->
+        @if (selectedPaymentMethod() === 'paypal' || selectedPaymentMethod() === 'zelle') {
+          <div class="stat-card mb-3" style="background: rgba(0,240,255,0.1); padding: 20px; border-radius: 10px; text-align: center;">
+            <i [class]="'bi ' + selectedMethodDetails()!.icon" style="font-size: 4rem; color: #00F0FF; margin-bottom: 15px; display: block;"></i>
+            <p style="color: #CDD2E5; margin: 0 0 15px 0;">Serás redirigido a {{ selectedMethodDetails()!.name }} para completar el pago</p>
+            <p style="color: #7581A8; font-size: 0.85rem; margin: 0;">El proceso es rápido y seguro</p>
+          </div>
+        }
+
+        <!-- Payment Summary -->
+        <div class="stat-card gpu-accelerated" style="background: rgba(13,17,46,0.6); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+          <div class="d-flex justify-content-between mb-2">
+            <span style="color: #7581A8;">Monto</span>
+            <span style="color: white; font-weight: 600;">\${{ amount() | number:'1.2-2' }}</span>
+          </div>
+          <div class="d-flex justify-content-between mb-2">
+            <span style="color: #7581A8;">Comisión</span>
+            <span style="color: #FF9F43; font-weight: 600;">\${{ processingFee() | number:'1.2-2' }}</span>
+          </div>
+          <div style="border-top: 1px solid rgba(0,240,255,0.2); padding-top: 10px; margin-top: 10px;">
+            <div class="d-flex justify-content-between">
+              <span style="color: white; font-weight: 700; font-size: 1.1rem;">Total</span>
+              <span class="counter-number badge-glow" style="color: #00F0FF; font-weight: 800; font-size: 1.2rem;">\${{ totalAmount() | number:'1.2-2' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <button (click)="processPayment()" 
+                [disabled]="isProcessing()"
+                class="btn-neon"
+                style="width: 100%; padding: 15px; background: linear-gradient(135deg, #00F0FF, #C946FF); color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 1.1rem;">
+          @if (isProcessing()) {
+            <span class="processing-spinner">
+              <i class="bi bi-arrow-repeat me-2"></i>Procesando...
+            </span>
+          } @else {
+            <i class="bi bi-check-circle me-2"></i>Confirmar Pago
+          }
+        </button>
+      } @else {
+        <!-- Success State -->
+        <div class="text-center animate-fade-in">
+          <div class="success-icon" style="background: rgba(0,240,255,0.2); width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+            <i class="bi bi-check-circle-fill" style="color: #00F0FF; font-size: 4rem;"></i>
+          </div>
+          <h3 style="color: white; margin: 0 0 10px 0; font-weight: 800;">¡Pago Exitoso!</h3>
+          <p style="color: #A1A9C9; margin: 0 0 20px 0;">Tu inversión ha sido procesada correctamente</p>
+          <div class="stat-card" style="background: rgba(0,240,255,0.1); padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+            <p style="color: #7581A8; margin: 0 0 5px 0;">Monto Invertido</p>
+            <p class="counter-number badge-glow" style="color: #00F0FF; margin: 0; font-weight: 800; font-size: 2rem;">\${{ amount() | number:'1.2-2' }}</p>
+          </div>
+          <p style="color: #7581A8; font-size: 0.9rem;">Redirigiendo al dashboard...</p>
+        </div>
+      }
+    </div>
+  </div>
+}

@@ -1,0 +1,543 @@
+.text-secondary,
+.text-muted,
+p,
+.lead,
+small {
+  color: var(--text-secondary) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong,
+.fw-bold {
+  color: var(--text-primary);
+}
+/* ============================================
+   EagleInvest Custom Styles
+   ============================================ */
+
+/* Color Variables */
+:root {
+  --primary-color: #00F0FF;
+  --primary-light: #C946FF;
+  --dark-bg: #0A0E27;
+  --light-bg: #13172E;
+  --text-muted: #7581A8;
+  --border-radius: 12px;
+}
+
+/* ============================================
+   General Styles
+   ============================================ */
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+main,
+section,
+.app-shell,
+.content-wrapper {
+  background-color: transparent;
+  color: inherit;
+}
+
+.bg-white,
+.bg-light,
+.bg-body,
+.bg-body-tertiary {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color-light) !important;
+}
+
+.text-dark,
+.text-body,
+.text-black {
+  color: var(--text-primary) !important;
+}
+
+/* ============================================
+   Navbar Styles
+   ============================================ */
+
+.navbar {
+  background: rgba(10, 14, 39, 0.9) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
+}
+
+.navbar-brand i {
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.nav-link {
+  transition: all 0.3s ease;
+  color: var(--text-secondary) !important;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  color: var(--accent-gold) !important;
+  transform: translateY(-2px);
+}
+
+/* ============================================
+   Hero Section
+   ============================================ */
+
+.hero-section {
+  background: var(--gradient-primary) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: floatBackground 15s ease-in-out infinite;
+}
+
+.hero-section::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: -5%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(201, 70, 255, 0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: floatBackground 20s ease-in-out infinite reverse;
+}
+
+@keyframes floatBackground {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(20px, 20px);
+  }
+}
+
+.hero-section .display-4 {
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-section .lead {
+  font-size: 1.2rem;
+  line-height: 1.8;
+}
+
+.hero-illustration {
+  position: relative;
+  z-index: 2;
+  padding: 40px;
+}
+
+/* ============================================
+   Floating Cards Animation
+   ============================================ */
+
+.floating-card {
+  animation: floatingCard 6s ease-in-out infinite;
+  border: 1px solid rgba(0, 240, 255, 0.2) !important;
+}
+
+.floating-card:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.floating-card:nth-child(2) {
+  animation-delay: 1s;
+}
+
+@keyframes floatingCard {
+  0%, 100% {
+    transform: translateY(0) rotate(5deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(5deg);
+  }
+}
+
+/* ============================================
+   Features Section
+   ============================================ */
+
+.card {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 240, 255, 0.15);
+  background: rgba(10, 14, 39, 0.9);
+  color: var(--text-primary);
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-glow);
+  border-color: var(--accent-gold) !important;
+}
+
+.card-body {
+  padding: 2rem;
+}
+
+.card-title {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.card-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.hover-lift {
+  position: relative;
+  will-change: transform;
+}
+
+.hover-lift:hover {
+  box-shadow: 0 25px 50px rgba(0, 240, 255, 0.25) !important;
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+
+.min-vh-50 {
+  min-height: 50vh;
+}
+
+.bg-gradient {
+  background: var(--gradient-accent);
+}
+
+.btn-warning {
+  background: var(--gradient-accent) !important;
+  border-color: var(--accent-gold) !important;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+  background: var(--gradient-accent) !important;
+  border-color: var(--accent-gold) !important;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+.btn-outline-primary {
+  color: var(--accent-gold);
+  border-color: var(--accent-gold);
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--accent-gold);
+  border-color: var(--accent-gold);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+.btn-outline-light {
+  color: var(--text-primary);
+  border-color: rgba(0, 240, 255, 0.4);
+  background: transparent;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+  background-color: rgba(0, 240, 255, 0.15);
+  border-color: var(--accent-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 240, 255, 0.25);
+}
+
+/* ============================================
+   Statistics Section
+   ============================================ */
+
+.display-6 {
+  color: var(--accent-gold);
+  font-weight: 700;
+}
+
+.bg-dark {
+  background: var(--gradient-primary) !important;
+}
+
+/* ============================================
+   Pricing Cards
+   ============================================ */
+
+.border-warning {
+  border-color: var(--accent-gold) !important;
+  position: relative;
+}
+
+.badge-warning {
+  background-color: var(--accent-gold) !important;
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 240, 255, 0.3);
+}
+
+.list-unstyled li {
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+.list-unstyled li:hover {
+  transform: translateX(4px);
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+
+footer {
+  background: var(--gradient-primary) !important;
+  border-top: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+footer h5 {
+  color: var(--accent-gold);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+footer a {
+  transition: all 0.3s ease;
+}
+
+footer a:hover {
+  color: var(--accent-gold) !important;
+  text-decoration: underline !important;
+}
+
+/* ============================================
+   Modal Styles
+   ============================================ */
+
+.modal-content {
+  border: none;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  border-radius: var(--border-radius);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.modal-header {
+  background: var(--gradient-accent);
+  color: var(--bg-primary);
+  border: none;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.modal-header .btn-close {
+  filter: brightness(0) invert(1);
+}
+
+.form-control {
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  background: rgba(26, 31, 77, 0.85);
+  color: var(--text-primary);
+}
+
+.form-control::placeholder {
+  color: var(--text-tertiary);
+}
+
+.form-control:focus {
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 0.2rem rgba(0, 240, 255, 0.25);
+  outline: none;
+  background: rgba(19, 23, 46, 0.95);
+}
+
+.form-label {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.form-check-input {
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
+  width: 1.2rem;
+  height: 1.2rem;
+  cursor: pointer;
+  background-color: rgba(19, 23, 46, 0.85);
+}
+
+.form-check-input:checked {
+  background-color: var(--accent-gold);
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
+}
+
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 240, 255, 0.25);
+}
+
+.modal-footer .btn-primary {
+  background: var(--gradient-neon);
+  border-color: var(--accent-gold);
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.modal-footer .btn-primary:hover {
+  background: var(--gradient-premium);
+  border-color: var(--secondary-purple);
+  box-shadow: 0 8px 16px rgba(201, 70, 255, 0.35);
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 768px) {
+  .hero-section::before,
+  .hero-section::after {
+    display: none;
+  }
+
+  .display-4 {
+    font-size: 2.2rem;
+  }
+
+  .lead {
+    font-size: 1rem;
+  }
+
+  .min-vh-50 {
+    min-height: 40vh;
+  }
+
+  .floating-card {
+    width: 100% !important;
+    margin: 10px auto !important;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  .hero-illustration {
+    padding: 20px;
+  }
+
+  .gap-3 {
+    flex-direction: column !important;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  .display-4 {
+    font-size: 1.8rem;
+  }
+
+  .lead {
+    font-size: 0.9rem;
+  }
+
+  .display-6 {
+    font-size: 1.5rem;
+  }
+
+  .text-center h3 {
+    font-size: 1.3rem;
+  }
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   Dark Mode Support (Future)
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+  }
+
+  .card {
+    background: rgba(10, 14, 39, 0.9);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+  }
+
+  .card-title {
+    color: var(--text-primary);
+  }
+
+  .form-control {
+    background: rgba(19, 23, 46, 0.95);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+  }
+}

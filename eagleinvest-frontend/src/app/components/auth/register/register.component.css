@@ -1,0 +1,77 @@
+.register-container {
+  min-height: 100vh;
+}
+
+.bg-gradient {
+  background: var(--gradient-primary);
+}
+
+.register-form {
+  padding: 2rem;
+}
+
+.form-control-lg {
+  border-radius: 0.75rem;
+  border: 2px solid var(--border-color);
+  transition: border-color 0.3s ease;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.form-control-lg:focus {
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 0.2rem rgba(0, 240, 255, 0.25);
+  background: var(--bg-tertiary);
+}
+
+.btn-warning {
+  background: var(--gradient-accent);
+  border-color: var(--accent-gold);
+  color: var(--bg-primary);
+  font-weight: 600;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.btn-warning:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Input focus effects */
+input:focus {
+  border-color: #00F0FF !important;
+  box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.2) !important;
+  outline: none;
+}
+
+input.is-invalid {
+  border-color: #FF3D00 !important;
+}
+
+/* Shake animation for errors */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Processing spinner */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.processing-spinner {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+@media (max-width: 991.98px) {
+  .register-form {
+    padding: 1rem;
+  }
+}

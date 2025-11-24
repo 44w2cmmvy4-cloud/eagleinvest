@@ -1,0 +1,377 @@
+<div class="dashboard-wrapper">
+  <!-- Responsive Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background: linear-gradient(135deg, #0A0E27, #1A1F4D); border-bottom: 2px solid rgba(0,240,255,0.3);">
+    <div class="container-fluid px-3 px-md-4">
+      <a class="navbar-brand fw-bold d-flex align-items-center" [routerLink]="['/dashboard']">
+        <i class="bi bi-graph-up-arrow me-2" style="color: #00F0FF; font-size: 1.5rem;"></i>
+        <span style="background: linear-gradient(135deg, #00F0FF, #C946FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.3rem;">EagleInvest</span>
+      </a>
+      
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" style="color: #00F0FF;">
+        <i class="bi bi-list" style="font-size: 1.5rem; color: #00F0FF;"></i>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item">
+            <a class="nav-link px-3 py-2 rounded" [routerLink]="['/dashboard']" routerLinkActive="active" style="color: #CDD2E5; transition: all 0.3s;">
+              <i class="bi bi-speedometer2 me-2"></i>Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link px-3 py-2 rounded" [routerLink]="['/market']" routerLinkActive="active" style="color: #CDD2E5; transition: all 0.3s;">
+              <i class="bi bi-graph-up me-2"></i>Mercado
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link px-3 py-2 rounded" [routerLink]="['/withdrawals']" routerLinkActive="active" style="color: #CDD2E5; transition: all 0.3s;">
+              <i class="bi bi-cash-coin me-2"></i>Retiros
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link px-3 py-2 rounded" [routerLink]="['/transactions']" routerLinkActive="active" style="color: #CDD2E5; transition: all 0.3s;">
+              <i class="bi bi-list-check me-2"></i>Transacciones
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link px-3 py-2 rounded" [routerLink]="['/profile']" routerLinkActive="active" style="color: #CDD2E5; transition: all 0.3s;">
+              <i class="bi bi-person me-2"></i>Perfil
+            </a>
+          </li>
+          <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+            <button class="btn btn-sm w-100" (click)="logout()" style="background: linear-gradient(135deg, #00F0FF, #C946FF); color: #0A0E27; font-weight: 600; border: none; padding: 8px 20px; border-radius: 8px;">
+              <i class="bi bi-box-arrow-right me-2"></i>Salir
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content" style="background: linear-gradient(135deg, #0A0E27 0%, #13172E 100%); min-height: calc(100vh - 70px); padding: 20px 0;">
+    <div class="container-fluid px-3 px-md-4 px-lg-5">
+      <!-- Header Section -->
+      <div class="row mb-3 mb-md-4">
+        <div class="col-12">
+          <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
+            <div style="flex: 1;">
+              <h1 class="mb-2" style="color: white; font-weight: 800; font-size: clamp(1.3rem, 4vw, 2.2rem); line-height: 1.2;">
+                👋 Bienvenido, <span style="background: linear-gradient(135deg, #00F0FF, #C946FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">{{dashboardData()?.user?.name || 'Usuario'}}</span>
+              </h1>
+              <p style="color: #A1A9C9; font-size: clamp(0.85rem, 1.8vw, 0.95rem); margin: 0;">
+                <i class="bi bi-calendar-check me-2"></i>Panel actualizado en tiempo real
+              </p>
+            </div>
+            <button class="btn btn-bot-control" (click)="refreshData()" style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; padding: 10px 20px; border-radius: 8px; white-space: nowrap; font-weight: 600;">
+              <i class="bi bi-arrow-clockwise me-2"></i>Actualizar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Cards - Responsive Grid with Stagger Animation -->
+      <div class="row g-3 g-md-4 mb-4 mb-md-5 stagger-children">
+        <!-- Total Invertido -->
+        <div class="col-6 col-lg-3">
+          <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: 20px; backdrop-filter: blur(10px); height: 100%;">
+            <div class="icon-wrapper mb-3" style="background: rgba(0,240,255,0.1); border-radius: 12px; padding: 10px; display: inline-flex; align-items: center; justify-content: center;">
+              <i class="bi bi-graph-up" style="color: #00F0FF; font-size: 1.5rem; opacity: 0.9;"></i>
+            </div>
+            <h6 style="color: #A1A9C9; font-size: 0.8rem; margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Total Invertido</h6>
+            <h3 class="counter-number" style="color: white; font-weight: 800; font-size: clamp(1.3rem, 3vw, 1.6rem); margin: 0; line-height: 1;">\${{(dashboardData()?.stats?.total_invested || 0) | number:'1.2-2'}}</h3>
+          </div>
+        </div>
+
+        <!-- Ganancias Totales -->
+        <div class="col-6 col-lg-3">
+          <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: 20px; backdrop-filter: blur(10px); height: 100%;">
+            <div class="icon-wrapper mb-3" style="background: rgba(0,240,255,0.1); border-radius: 12px; padding: 10px; display: inline-flex; align-items: center; justify-content: center;">
+              <i class="bi bi-arrow-up-circle" style="color: #00F0FF; font-size: 1.5rem; opacity: 0.9;"></i>
+            </div>
+            <h6 style="color: #A1A9C9; font-size: 0.8rem; margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Ganancias</h6>
+            <h3 class="counter-number" style="color: #00F0FF; font-weight: 800; font-size: clamp(1.3rem, 3vw, 1.6rem); margin: 0; line-height: 1;">\${{(dashboardData()?.stats?.total_earnings || 0) | number:'1.2-2'}}</h3>
+          </div>
+        </div>
+
+        <!-- Balance Disponible -->
+        <div class="col-6 col-lg-3">
+          <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(201,70,255,0.2); border-radius: 15px; padding: clamp(15px, 3vw, 25px); backdrop-filter: blur(10px); height: 100%;">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <div class="icon-wrapper" style="background: rgba(201,70,255,0.1); border-radius: 12px; padding: 10px; display: inline-block;">
+                <i class="bi bi-wallet2" style="color: #C946FF; font-size: clamp(1.2rem, 4vw, 1.8rem); opacity: 0.9;"></i>
+              </div>
+            </div>
+            <h6 style="color: #A1A9C9; font-size: clamp(0.75rem, 2vw, 0.875rem); margin-bottom: 8px; font-weight: 600;">Disponible</h6>
+            <h3 class="counter-number" style="color: #C946FF; font-weight: 800; font-size: clamp(1.2rem, 4vw, 1.8rem); margin: 0;">\${{(dashboardData()?.stats?.earnings_balance || 0) | number:'1.2-2'}}</h3>
+          </div>
+        </div>
+
+        <!-- Referidos -->
+        <div class="col-6 col-lg-3">
+          <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(255,0,128,0.2); border-radius: 15px; padding: clamp(15px, 3vw, 25px); backdrop-filter: blur(10px); height: 100%;">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <div class="icon-wrapper" style="background: rgba(255,0,128,0.1); border-radius: 12px; padding: 10px; display: inline-block;">
+                <i class="bi bi-people" style="color: #FF0080; font-size: clamp(1.2rem, 4vw, 1.8rem); opacity: 0.9;"></i>
+              </div>
+            </div>
+            <h6 style="color: #A1A9C9; font-size: clamp(0.75rem, 2vw, 0.875rem); margin-bottom: 8px; font-weight: 600;">Referidos</h6>
+            <h3 style="color: #FF0080; font-weight: 800; font-size: clamp(1.2rem, 4vw, 1.8rem); margin: 0;">\${{(dashboardData()?.stats?.referral_balance || 0) | number:'1.2-2'}}</h3>
+            <p style="color: #7581A8; font-size: clamp(0.7rem, 1.5vw, 0.8rem); margin: 0; margin-top: 5px;">{{(dashboardData()?.stats?.total_referrals || 0)}} personas</p>
+          </div>
+        </div>
+      </div>
+      <!-- Inversiones Activas - Responsive -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-3">
+            <h4 style="color: white; font-weight: 700; font-size: clamp(1.2rem, 4vw, 1.5rem); margin: 0;">
+              💼 Inversiones Activas
+            </h4>
+            <span class="badge mt-2 mt-sm-0" style="background: rgba(0,240,255,0.2); color: #00F0FF; padding: 8px 16px; font-size: 0.9rem; border-radius: 8px;">
+              {{(dashboardData()?.stats?.active_investments || 0)}} activas
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3 g-md-4 mb-5">
+        @if (dashboardData()?.active_investments && dashboardData()!.active_investments.length > 0) {
+          @for (investment of dashboardData()!.active_investments; track investment.id) {
+            <div class="col-12 col-md-6 col-xl-4 animate-fade-in-up">
+              <div class="investment-card gpu-accelerated" style="height: 100%;">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <div style="flex: 1;">
+                    <span class="badge mb-2" style="background: linear-gradient(135deg, #00F0FF, #C946FF); color: #0A0E27; font-weight: 700; padding: 6px 12px; border-radius: 6px; font-size: 0.75rem;">
+                      {{investment.investment_plan?.name || 'Plan de Inversión'}}
+                    </span>
+                    <h3 class="counter-number" style="color: white; font-weight: 800; margin: 8px 0; font-size: clamp(1.3rem, 4vw, 1.8rem);">
+                      \${{investment.amount | number:'1.2-2'}}
+                    </h3>
+                    <p style="color: #A1A9C9; margin: 0; font-size: clamp(0.8rem, 2vw, 0.9rem); line-height: 1.4;">
+                      {{investment.investment_plan?.description || 'Inversión activa generando rendimientos'}}
+                    </p>
+                  </div>
+                  <span class="badge badge-glow" style="background: rgba(0,240,255,0.2); color: #00F0FF; padding: 6px 10px; border-radius: 8px; font-size: 0.75rem; white-space: nowrap;">
+                    <i class="bi bi-check-circle me-1"></i>{{investment.status || 'active'}}
+                  </span>
+                </div>
+
+                <div class="row text-center mb-3 py-3" style="border-top: 1px solid rgba(0,240,255,0.1); border-bottom: 1px solid rgba(0,240,255,0.1);">
+                  <div class="col-4">
+                    <p style="color: #7581A8; margin: 0 0 5px 0; font-size: clamp(0.7rem, 1.8vw, 0.8rem);">Diario</p>
+                    <p class="counter-number" style="color: #00F0FF; font-weight: 700; margin: 0; font-size: clamp(0.9rem, 2.5vw, 1.1rem);">
+                      {{investment.investment_plan?.daily_return_rate || 0}}%
+                    </p>
+                  </div>
+                  <div class="col-4">
+                    <p style="color: #7581A8; margin: 0 0 5px 0; font-size: clamp(0.7rem, 1.8vw, 0.8rem);">Días</p>
+                    <p class="counter-number" style="color: white; font-weight: 700; margin: 0; font-size: clamp(0.9rem, 2.5vw, 1.1rem);">
+                      {{investment.completed_days || 0}}/{{investment.investment_plan?.duration_days || 0}}
+                    </p>
+                  </div>
+                  <div class="col-4">
+                    <p style="color: #7581A8; margin: 0 0 5px 0; font-size: clamp(0.7rem, 1.8vw, 0.8rem);">Ganado</p>
+                    <p class="counter-number" style="color: #C946FF; font-weight: 700; margin: 0; font-size: clamp(0.9rem, 2.5vw, 1.1rem);">
+                      \${{(investment.total_earned || 0) | number:'1.0-0'}}
+                    </p>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="badge" style="background: rgba(255,0,128,0.1); color: #FF0080; padding: 6px 12px; border-radius: 8px; font-size: 0.75rem;">
+                    <i class="bi bi-shield-check me-1"></i>{{investment.investment_plan?.risk_level || 'Medium'}}
+                  </span>
+                  <div class="progress progress-glow" style="flex: 1; margin: 0 15px; height: 8px; background: rgba(0,240,255,0.1); border-radius: 10px; overflow: hidden;">
+                    <div class="progress-bar progress-bar-animated" [style.width]="((investment.completed_days || 0) / (investment.investment_plan?.duration_days || 1) * 100) + '%'"></div>
+                  </div>
+                  <span style="color: #00F0FF; font-weight: 700; font-size: 0.85rem;">
+                    {{((investment.completed_days || 0) / (investment.investment_plan?.duration_days || 1) * 100) | number:'1.0-0'}}%
+                  </span>
+                </div>
+              </div>
+            </div>
+          }
+        } @else {
+          <div class="col-12">
+            <div style="background: rgba(26,31,77,0.3); border: 1px dashed rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(30px, 6vw, 60px); text-align: center;">
+              <i class="bi bi-graph-up" style="font-size: clamp(3rem, 8vw, 5rem); color: rgba(0,240,255,0.2);"></i>
+              <h5 style="color: white; margin-top: 20px; font-size: clamp(1.1rem, 3vw, 1.4rem);">No tienes inversiones activas</h5>
+              <p style="color: #A1A9C9; margin: 10px 0 20px 0; font-size: clamp(0.9rem, 2vw, 1rem);">Comienza a invertir en nuestros planes para generar rendimientos</p>
+              <button class="btn" style="background: linear-gradient(135deg, #00F0FF, #C946FF); color: #0A0E27; font-weight: 700; padding: 12px 30px; border: none; border-radius: 10px; font-size: clamp(0.9rem, 2vw, 1rem);">
+                <i class="bi bi-plus-circle me-2"></i>Ver Planes
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Transacciones Recientes - Responsive -->
+      <div class="row mb-3">
+        <div class="col-12">
+          <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center">
+            <h4 style="color: white; font-weight: 700; font-size: clamp(1.2rem, 4vw, 1.5rem); margin: 0;">
+              💳 Transacciones Recientes
+            </h4>
+            <a class="btn btn-sm mt-2 mt-sm-0" [routerLink]="['/transactions']" style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; padding: 8px 16px; border-radius: 8px; font-size: 0.85rem;">
+              Ver Todas <i class="bi bi-arrow-right ms-2"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="animate-fade-in-up" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; backdrop-filter: blur(10px); overflow: hidden;">
+            @if (dashboardData()?.recent_transactions && dashboardData()!.recent_transactions.length > 0) {
+              <!-- Desktop View -->
+              <div class="d-none d-md-block">
+                <div class="table-responsive">
+                  <div style="background: linear-gradient(180deg, rgba(13,17,46,0.95) 0%, rgba(19,23,56,0.85) 100%); border-radius: 12px; overflow: hidden;">
+                    <table class="table mb-0" style="color: #CDD2E5;">
+                      <thead style="background: linear-gradient(135deg, rgba(89,227,255,0.12), rgba(0,240,255,0.08)); border-bottom: 2px solid rgba(89,227,255,0.25);">
+                        <tr>
+                          <th style="color: #59E3FF; padding: 18px 20px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;">Fecha</th>
+                          <th style="color: #59E3FF; padding: 18px 20px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;">Tipo</th>
+                          <th style="color: #59E3FF; padding: 18px 20px; font-weight: 700; font-size: 0.8rem; text-align: right; text-transform: uppercase; letter-spacing: 0.1em;">Monto</th>
+                          <th style="color: #59E3FF; padding: 18px 20px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;">Estado</th>
+                          <th style="color: #59E3FF; padding: 18px 20px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;">Descripción</th>
+                        </tr>
+                      </thead>
+                      <tbody style="font-variant-numeric: tabular-nums;">
+                        @for (transaction of dashboardData()!.recent_transactions; track transaction.id) {
+                          <tr style="border-bottom: 1px solid rgba(0,240,255,0.06); transition: all 0.2s;" 
+                              onmouseover="this.style.background='rgba(0,240,255,0.04)'" 
+                              onmouseout="this.style.background='transparent'">
+                            <td style="padding: 18px 20px; color: #CDD2E5; font-size: 0.9rem;">
+                              {{transaction.created_at | date:'short'}}
+                            </td>
+                            <td style="padding: 18px 20px;">
+                              <span class="badge badge-animated" 
+                                    [style.background]="transaction.type === 'earnings' ? 'rgba(0,240,255,0.25)' : 
+                                                       transaction.type === 'investment' ? 'rgba(77,124,255,0.25)' : 
+                                                       transaction.type === 'withdrawal' ? 'rgba(255,0,128,0.25)' : 'rgba(117,129,168,0.25)'"
+                                    [style.color]="transaction.type === 'earnings' ? '#00F0FF' : 
+                                                 transaction.type === 'investment' ? '#4D7CFF' : 
+                                                 transaction.type === 'withdrawal' ? '#FF0080' : '#7581A8'"
+                                    style="display: inline-block; padding: 7px 16px; border-radius: 20px; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; border: 1px solid currentColor;">
+                                {{transaction.type}}
+                              </span>
+                            </td>
+                            <td style="padding: 18px 20px; text-align: right;">
+                              <span class="counter-number" style="color: white; font-weight: 700; font-size: 1.05rem;">
+                                \${{transaction.amount | number:'1.2-2'}}
+                              </span>
+                            </td>
+                            <td style="padding: 18px 20px;">
+                              <span class="badge" 
+                                    [style.background]="transaction.status === 'completed' ? 'rgba(0,240,255,0.25)' : 
+                                                       transaction.status === 'pending' ? 'rgba(255,159,67,0.25)' : 'rgba(255,0,128,0.25)'"
+                                    [style.color]="transaction.status === 'completed' ? '#00F0FF' : 
+                                                 transaction.status === 'pending' ? '#FF9F43' : '#FF0080'"
+                                    style="display: inline-block; padding: 7px 16px; border-radius: 20px; font-weight: 600; font-size: 0.75rem; text-transform: capitalize; border: 1px solid currentColor;">
+                                <i class="bi" [class.bi-check-circle]="transaction.status === 'completed'" 
+                                   [class.bi-clock]="transaction.status === 'pending'"
+                                   [class.bi-x-circle]="transaction.status !== 'completed' && transaction.status !== 'pending'"
+                                   style="margin-right: 5px;"></i>
+                                {{transaction.status}}
+                              </span>
+                            </td>
+                            <td style="padding: 18px 20px; color: #A1A9C9; font-size: 0.9rem;">
+                              {{transaction.description || 'Sin descripción'}}
+                            </td>
+                          </tr>
+                        }
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mobile View -->
+              <div class="d-block d-md-none" style="padding: 15px;">
+                @for (transaction of dashboardData()!.recent_transactions; track transaction.id) {
+                  <div style="background: rgba(13,17,46,0.5); border: 1px solid rgba(0,240,255,0.1); border-radius: 12px; padding: 15px; margin-bottom: 15px;">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                      <span class="badge" 
+                            [style.background]="transaction.type === 'earnings' ? 'rgba(0,240,255,0.25)' : 
+                                               transaction.type === 'investment' ? 'rgba(77,124,255,0.25)' : 
+                                               transaction.type === 'withdrawal' ? 'rgba(255,0,128,0.25)' : 'rgba(117,129,168,0.25)'"
+                            [style.color]="transaction.type === 'earnings' ? '#00F0FF' : 
+                                         transaction.type === 'investment' ? '#4D7CFF' : 
+                                         transaction.type === 'withdrawal' ? '#FF0080' : '#7581A8'"
+                            style="display: inline-block; padding: 7px 16px; border-radius: 20px; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; border: 1px solid currentColor;">
+                        {{transaction.type}}
+                      </span>
+                      <span class="badge" 
+                            [style.background]="transaction.status === 'completed' ? 'rgba(0,240,255,0.25)' : 
+                                               transaction.status === 'pending' ? 'rgba(255,159,67,0.25)' : 'rgba(255,0,128,0.25)'"
+                            [style.color]="transaction.status === 'completed' ? '#00F0FF' : 
+                                         transaction.status === 'pending' ? '#FF9F43' : '#FF0080'"
+                            style="display: inline-block; padding: 7px 16px; border-radius: 20px; font-weight: 600; font-size: 0.75rem; border: 1px solid currentColor;">
+                        {{transaction.status}}
+                      </span>
+                    </div>
+                    <h4 style="color: white; font-weight: 800; margin: 10px 0; font-size: 1.3rem;">
+                      \${{transaction.amount | number:'1.2-2'}}
+                    </h4>
+                    <p style="color: #A1A9C9; margin: 0 0 8px 0; font-size: 0.85rem;">
+                      {{transaction.description || 'Sin descripción'}}
+                    </p>
+                    <p style="color: #7581A8; margin: 0; font-size: 0.75rem;">
+                      <i class="bi bi-calendar me-1"></i>{{transaction.created_at | date:'short'}}
+                    </p>
+                  </div>
+                }
+              </div>
+            } @else {
+              <div style="padding: clamp(30px, 6vw, 60px); text-align: center;">
+                <i class="bi bi-list-check" style="font-size: clamp(3rem, 8vw, 5rem); color: rgba(0,240,255,0.2);"></i>
+                <h5 style="color: white; margin-top: 20px; font-size: clamp(1.1rem, 3vw, 1.4rem);">No hay transacciones recientes</h5>
+                <p style="color: #A1A9C9; margin: 10px 0 0 0; font-size: clamp(0.9rem, 2vw, 1rem);">Tus transacciones aparecerán aquí cuando realices operaciones</p>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,240,255,0.2);
+    border-color: rgba(0,240,255,0.5) !important;
+  }
+
+  .investment-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,240,255,0.2);
+    border-color: rgba(0,240,255,0.5) !important;
+  }
+
+  .nav-link:hover {
+    background: rgba(0,240,255,0.1) !important;
+    color: #00F0FF !important;
+  }
+
+  .nav-link.active {
+    background: rgba(0,240,255,0.2) !important;
+    color: #00F0FF !important;
+  }
+
+  .table tbody tr:hover {
+    background: rgba(0,240,255,0.05) !important;
+  }
+
+  @media (max-width: 768px) {
+    .navbar-collapse {
+      background: rgba(13,17,46,0.95);
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+      border: 1px solid rgba(0,240,255,0.2);
+    }
+  }
+</style>

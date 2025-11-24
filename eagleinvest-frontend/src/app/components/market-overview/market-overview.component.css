@@ -1,0 +1,6 @@
+/* Market Overview Component Styles */
+:host {
+  display: block;
+  background: linear-gradient(135deg, #0A0E27 0%, #13172E 50%, #0A0E27 100%);
+  min-height: 100vh;
+}
