@@ -62,7 +62,7 @@
               <div class="d-flex gap-2 flex-wrap mt-4 animate-slide-down">
                 <button type="submit" [disabled]="profileForm.invalid"
                         class="btn-neon"
-                        style="flex: 1; min-width: 150px; padding: 12px 20px; background: linear-gradient(135deg, #00F0FF, #C946FF); color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: clamp(0.9rem, 2vw, 1rem);">
+                        style="flex: 1; min-width: 150px; padding: 12px 20px; background: linear-gradient(135deg, #00F0FF, #1D4ED8); color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: clamp(0.9rem, 2vw, 1rem);">
                   <i class="bi bi-check-lg me-1"></i>Guardar Cambios
                 </button>
                 <button type="button" (click)="cancelEdit()"
@@ -116,15 +116,15 @@
               </div>
             </div>
             <div class="col-12">
-              <div class="stat-card gpu-accelerated" style="background: rgba(201,70,255,0.1); border-left: 3px solid #C946FF; padding: 15px; border-radius: 10px;">
+              <div class="stat-card gpu-accelerated" style="background: rgba(29,78,216,0.1); border-left: 3px solid #1D4ED8; padding: 15px; border-radius: 10px;">
                 <p style="color: #7581A8; margin: 0 0 5px 0; font-size: clamp(0.8rem, 2vw, 0.9rem);">Valor Total del Portafolio</p>
-                <h3 class="counter-number badge-glow" style="color: #C946FF; margin: 0; font-weight: 800; font-size: clamp(1.5rem, 4vw, 2rem);">{{ investmentOverview()?.total_portfolio_value | currency }}</h3>
+                <h3 class="counter-number badge-glow" style="color: #1D4ED8; margin: 0; font-weight: 800; font-size: clamp(1.5rem, 4vw, 2rem);">{{ investmentOverview()?.total_portfolio_value | currency }}</h3>
               </div>
             </div>
             <div class="col-12">
-              <div class="stat-card gpu-accelerated" style="background: rgba(255,0,128,0.1); border-left: 3px solid #FF0080; padding: 15px; border-radius: 10px;">
+              <div class="stat-card gpu-accelerated" style="background: rgba(37,99,235,0.1); border-left: 3px solid #2563EB; padding: 15px; border-radius: 10px;">
                 <p style="color: #7581A8; margin: 0 0 5px 0; font-size: clamp(0.8rem, 2vw, 0.9rem);">Retorno Promedio</p>
-                <h3 class="counter-number badge-glow" style="color: #FF0080; margin: 0; font-weight: 800; font-size: clamp(1.5rem, 4vw, 2rem);">+{{ investmentOverview()?.average_return }}%</h3>
+                <h3 class="counter-number badge-glow" style="color: #2563EB; margin: 0; font-weight: 800; font-size: clamp(1.5rem, 4vw, 2rem);">+{{ investmentOverview()?.average_return }}%</h3>
               </div>
             </div>
           </div>
@@ -134,10 +134,10 @@
             <button [routerLink]="['/dashboard']" class="btn-bot-control" style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; text-align: left; font-size: clamp(0.85rem, 2vw, 0.95rem);">
               <i class="bi bi-graph-up me-2"></i>Ver Dashboard
             </button>
-            <button [routerLink]="['/withdrawals']" class="btn-bot-control" style="background: rgba(201,70,255,0.1); border: 1px solid rgba(201,70,255,0.3); color: #C946FF; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; text-align: left; font-size: clamp(0.85rem, 2vw, 0.95rem);">
+            <button [routerLink]="['/withdrawals']" class="btn-bot-control" style="background: rgba(29,78,216,0.1); border: 1px solid rgba(29,78,216,0.3); color: #1D4ED8; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; text-align: left; font-size: clamp(0.85rem, 2vw, 0.95rem);">
               <i class="bi bi-cash-coin me-2"></i>Realizar Retiro
             </button>
-            <button [routerLink]="['/transactions']" class="btn-bot-control" style="background: rgba(255,0,128,0.1); border: 1px solid rgba(255,0,128,0.3); color: #FF0080; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; text-align: left; font-size: clamp(0.85rem, 2vw, 0.95rem);">
+            <button [routerLink]="['/transactions']" class="btn-bot-control" style="background: rgba(37,99,235,0.1); border: 1px solid rgba(37,99,235,0.3); color: #2563EB; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; text-align: left; font-size: clamp(0.85rem, 2vw, 0.95rem);">
               <i class="bi bi-list-check me-2"></i>Ver Transacciones
             </button>
           </div>

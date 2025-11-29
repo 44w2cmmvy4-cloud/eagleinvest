@@ -89,8 +89,8 @@
 }
 
 .plan-card.selected {
-  border-color: #C946FF !important;
-  background: rgba(201, 70, 255, 0.1) !important;
+  border-color: #1D4ED8 !important;
+  background: rgba(29, 78, 216, 0.1) !important;
   transform: scale(1.02);
 }
 
@@ -109,7 +109,7 @@ input[type="range"]::-webkit-slider-thumb {
   appearance: none;
   width: 20px;
   height: 20px;
-  background: linear-gradient(135deg, #00F0FF, #C946FF);
+  background: linear-gradient(135deg, #00F0FF, #1D4ED8);
   border-radius: 50%;
   cursor: pointer;
   box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
@@ -118,7 +118,7 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]::-moz-range-thumb {
   width: 20px;
   height: 20px;
-  background: linear-gradient(135deg, #00F0FF, #C946FF);
+  background: linear-gradient(135deg, #00F0FF, #1D4ED8);
   border-radius: 50%;
   cursor: pointer;
   box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
@@ -127,7 +127,7 @@ input[type="range"]::-moz-range-thumb {
 
 /* Crypto address QR */
 .qr-placeholder {
-  background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(201, 70, 255, 0.1));
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(29, 78, 216, 0.1));
   border: 2px dashed rgba(0, 240, 255, 0.3);
 }
 

@@ -27,15 +27,15 @@
 @keyframes priceDown {
   0% {
     transform: translateY(0);
-    color: #FF0080;
+    color: #1D4ED8;
   }
   50% {
     transform: translateY(5px);
-    color: #FF4444;
+    color: #0F1F5B;
   }
   100% {
     transform: translateY(0);
-    color: #FF0080;
+    color: #1D4ED8;
   }
 }
 

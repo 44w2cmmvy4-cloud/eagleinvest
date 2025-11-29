@@ -11,7 +11,7 @@
     </button>
     <div class="collapse navbar-collapse" [class.show]="!isNavbarCollapsed()">
       <ul class="navbar-nav ms-auto align-items-center">
-        @if (!isAuthenticated()) {
+        <ng-container *ngIf="!isAuthenticated(); else authenticatedNav">
           <li class="nav-item"><a class="nav-link" (click)="navigateTo('landing')" style="color: #e0e0e0; cursor: pointer;">Inicio</a></li>
           <li class="nav-item"><a class="nav-link" (click)="navigateTo('education')" style="color: #e0e0e0; cursor: pointer;">Educación</a></li>
           <li class="nav-item"><a class="nav-link" (click)="navigateTo('blog')" style="color: #e0e0e0; cursor: pointer;">Blog</a></li>
@@ -20,7 +20,8 @@
               Ingresar
             </button>
           </li>
-        } @else {
+        </ng-container>
+        <ng-template #authenticatedNav>
           <li class="nav-item"><a class="nav-link" (click)="navigateTo('dashboard')" style="color: #e0e0e0; cursor: pointer;">Dashboard</a></li>
           <li class="nav-item"><a class="nav-link" (click)="navigateTo('market-analysis')" style="color: #e0e0e0; cursor: pointer;">Mercado</a></li>
           <li class="nav-item"><a class="nav-link" (click)="navigateTo('account')" style="color: #e0e0e0; cursor: pointer;">Cuenta</a></li>
@@ -30,29 +31,29 @@
               <i class="bi bi-box-arrow-right me-1"></i>Salir
             </button>
           </li>
-        }
+        </ng-template>
       </ul>
     </div>
   </div>
 </nav>
 
 <!-- LANDING PAGE -->
-@if (currentPage() === 'landing') {
+<ng-container *ngIf="currentPage() === 'landing'">
 <section class="py-5" style="background: linear-gradient(135deg, #0A0E27 0%, #13172E 50%, #1A1F4D 100%); position: relative; overflow: hidden; min-height: 600px; display: flex; align-items: center;">
-  <div style="position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(0,240,255,0.15), rgba(201,70,255,0.08)); border-radius: 50%; animation: float 8s ease-in-out infinite;"></div>
+  <div style="position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(0,240,255,0.15), rgba(29,78,216,0.08)); border-radius: 50%; animation: hero-orb-float 8s ease-in-out infinite;"></div>
   <div class="container position-relative" style="z-index: 1;">
     <div class="row align-items-center">
       <div class="col-lg-6 mb-5 mb-lg-0 pe-lg-5">
         <h1 style="font-size: 3.8rem; font-weight: 800; color: white; line-height: 1.1; margin-bottom: 20px; text-shadow: 0 0 30px rgba(0,240,255,0.3);">
           Tu Futuro <br>
-          <span style="background: linear-gradient(135deg, #00F0FF, #C946FF); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Financiero Seguro</span>
+          <span style="background: linear-gradient(135deg, #00F0FF, #1D4ED8); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Financiero Seguro</span>
         </h1>
         <p style="font-size: 1.2rem; color: #b0b0b0; line-height: 1.8; margin-bottom: 30px;">
           Invierte con confianza en una plataforma regulada, con análisis en tiempo real, seguridad bancaria y atención 24/7.
         </p>
         <div class="d-flex flex-wrap gap-3">
-          <button class="btn btn-lg" (click)="navigateTo('register')" style="background: linear-gradient(135deg, #00F0FF, #5FF4FF); color: #0A0E27; border: none; padding: 16px 40px; border-radius: 30px; font-weight: 700; box-shadow: 0 0 30px rgba(0,240,255,0.5);">
-            Crear Cuenta Gratis
+          <button class="btn btn-lg" (click)="navigateTo('login')" style="background: linear-gradient(135deg, #00F0FF, #5FF4FF); color: #0A0E27; border: none; padding: 16px 40px; border-radius: 30px; font-weight: 700; box-shadow: 0 0 30px rgba(0,240,255,0.5);">
+            Acceder al Panel
           </button>
           <button class="btn btn-lg" style="border: 2.5px solid #00F0FF; color: #00F0FF; background: rgba(0,240,255,0.05); padding: 14px 38px; border-radius: 30px; font-weight: 700; transition: all 0.3s;">
             Ver Demo
@@ -66,7 +67,7 @@
 <!-- Características -->
 <section class="py-5" style="background: linear-gradient(180deg, #0A0E27 0%, #13172E 100%);">
   <div class="container">
-    <h2 style="font-size: 2.8rem; font-weight: 800; color: white; margin-bottom: 40px; text-align: center; background: linear-gradient(135deg, #00F0FF, #C946FF); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Características Principales</h2>
+    <h2 style="font-size: 2.8rem; font-weight: 800; color: white; margin-bottom: 40px; text-align: center; background: linear-gradient(135deg, #00F0FF, #1D4ED8); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Características Principales</h2>
     <div class="row g-4">
       @for (feature of features(); track $index) {
         <div class="col-md-6 col-lg-3">
@@ -84,16 +85,16 @@
 <!-- Planes -->
 <section class="py-5" style="background: linear-gradient(180deg, #13172E 0%, #0A0E27 100%);">
   <div class="container">
-    <h2 style="font-size: 2.8rem; font-weight: 800; color: white; margin-bottom: 40px; text-align: center; background: linear-gradient(135deg, #00F0FF, #C946FF); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Paquetes de Inversión</h2>
+    <h2 style="font-size: 2.8rem; font-weight: 800; color: white; margin-bottom: 40px; text-align: center; background: linear-gradient(135deg, #00F0FF, #1D4ED8); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Paquetes de Inversión</h2>
     <div class="row g-4">
       @for (plan of plans(); track plan.name) {
         <div class="col-lg-4 col-md-6">
           <div style="border-radius: 24px; padding: 38px 30px; height: 100%; border: 1px solid rgba(0,240,255,0.15); backdrop-filter: blur(14px);" [ngStyle]="{ 'background': plan.background, 'box-shadow': plan.glow, 'border-color': plan.accent }">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
               <span style="padding: 6px 14px; border-radius: 999px; font-size: 0.8rem; font-weight: 600; background: rgba(0,0,0,0.25); color: #CDD2E5;">{{ plan.tagline }}</span>
-              @if (plan.recommended) {
-                <span style="background: linear-gradient(135deg, #00F0FF, #C946FF); color: #0A0E27; padding: 8px 14px; border-radius: 999px; font-weight: 700; font-size: 0.85rem;">⭐ Recomendado</span>
-              }
+              <ng-container *ngIf="plan.recommended">
+                <span style="background: linear-gradient(135deg, #00F0FF, #1D4ED8); color: #0A0E27; padding: 8px 14px; border-radius: 999px; font-weight: 700; font-size: 0.85rem;">⭐ Recomendado</span>
+              </ng-container>
             </div>
             <h4 style="color: white; font-weight: 800; margin-bottom: 12px; font-size: 1.5rem;">{{ plan.name }}</h4>
             <div style="font-size: 2.4rem; font-weight: 800; margin-bottom: 10px;" [style.color]="plan.accent">Desde ${{ plan.price | number: '1.0-0' }}</div>
@@ -123,9 +124,9 @@
                 </li>
               }
             </ul>
-            <button class="btn w-100" (click)="navigateTo('register')" style="border: none; padding: 14px; border-radius: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;"
-                    [ngStyle]="{ 'background': plan.recommended ? 'linear-gradient(135deg, #00F0FF, #C946FF)' : plan.accent, 'color': '#0A0E27', 'box-shadow': plan.recommended ? '0 0 25px rgba(0,240,255,0.5)' : '0 0 15px rgba(0,0,0,0.35)' }">
-              Invertir ahora
+            <button class="btn w-100" (click)="navigateTo('login')" style="border: none; padding: 14px; border-radius: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;"
+                    [ngStyle]="{ 'background': plan.recommended ? 'linear-gradient(135deg, #00F0FF, #1D4ED8)' : plan.accent, 'color': '#0A0E27', 'box-shadow': plan.recommended ? '0 0 25px rgba(0,240,255,0.5)' : '0 0 15px rgba(0,0,0,0.35)' }">
+              Acceder para invertir
             </button>
           </div>
         </div>
@@ -141,7 +142,7 @@
       <div class="col-md-3 mb-4">
         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
           <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #00F0FF, #5FF4FF); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 0 20px rgba(0,240,255,0.5);">🦅</div>
-          <h5 style="color: white; margin: 0; font-weight: 800;">EAGLE<span style="background: linear-gradient(135deg, #00F0FF, #C946FF); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">INVEST</span></h5>
+          <h5 style="color: white; margin: 0; font-weight: 800;">EAGLE<span style="background: linear-gradient(135deg, #00F0FF, #1D4ED8); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">INVEST</span></h5>
         </div>
       </div>
       <div class="col-md-2 mb-4">
@@ -166,7 +167,7 @@
     </div>
   </div>
 </footer>
-}
+</ng-container>
 
 <!-- LOGIN PAGE -->
 @if (currentPage() === 'login') {
@@ -207,7 +208,7 @@
                 {{ loginForm().loading ? 'Iniciando...' : 'Iniciar Sesión' }}
               </button>
               <p style="text-align: center; color: #A1A9C9; margin-top: 25px;">
-                ¿No tienes cuenta? <span (click)="navigateTo('register')" style="color: #00F0FF; font-weight: 700; cursor: pointer; text-decoration: underline;">Regístrate</span>
+                ¿Necesitas acceso? Contacta al administrador para habilitar tu cuenta.
               </p>
             </form>
           } @else {
@@ -238,7 +239,7 @@
                 Reenviar Código
               </button>
               <p style="text-align: center; color: #A1A9C9; margin-top: 20px; font-size: 0.85rem;">
-                <span (click)="loginForm.update(f => ({ ...f, requires2FA: false, twoFactorCode: '', error: '' }))" style="color: #00F0FF; cursor: pointer; text-decoration: underline;">← Volver al inicio de sesión</span>
+                <span (click)="resetToLogin()" style="color: #00F0FF; cursor: pointer; text-decoration: underline;">← Volver al inicio de sesión</span>
               </p>
             </form>
           }
@@ -251,44 +252,19 @@
 
 <!-- REGISTER PAGE -->
 @if (currentPage() === 'register') {
-<div style="background: linear-gradient(135deg, #0A0E27 0%, #13172E 100%); min-height: 100vh; display: flex; align-items: center; padding: 20px 0;">
+<div style="background: linear-gradient(135deg, #0A0E27 0%, #13172E 100%); min-height: 60vh; display: flex; align-items: center; padding: 40px 0;">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-lg-5 col-md-7">
-        <div style="background: rgba(26,31,77,0.6); border: 1px solid rgba(0,240,255,0.3); border-radius: 30px; padding: 50px 40px; backdrop-filter: blur(20px); box-shadow: 0 0 40px rgba(0,240,255,0.2);">
-          <div style="text-align: center; margin-bottom: 40px;">
-            <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #00F0FF, #C946FF); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 2.5rem; box-shadow: 0 0 30px rgba(0,240,255,0.5);">🚀</div>
-            <h2 style="color: white; font-weight: 800; margin-bottom: 10px; font-size: 2rem;">Crear Cuenta</h2>
-          </div>
-          <form (ngSubmit)="register()">
-            <div class="mb-3">
-              <input type="text" [(ngModel)]="registerForm().name" name="name" placeholder="Nombre" 
-                     style="width: 100%; padding: 14px 18px; border: 1px solid rgba(0,240,255,0.3); border-radius: 12px; background: rgba(19,23,46,0.8); color: white;">
-            </div>
-            <div class="mb-3">
-              <input type="email" [(ngModel)]="registerForm().email" name="email" placeholder="tu@email.com" 
-                     style="width: 100%; padding: 14px 18px; border: 1px solid rgba(0,240,255,0.3); border-radius: 12px; background: rgba(19,23,46,0.8); color: white;">
-            </div>
-            <div class="mb-3">
-              <input type="password" [(ngModel)]="registerForm().password" name="password" placeholder="Contraseña" 
-                     style="width: 100%; padding: 14px 18px; border: 1px solid rgba(0,240,255,0.3); border-radius: 12px; background: rgba(19,23,46,0.8); color: white;">
-            </div>
-            <div class="mb-4">
-              <input type="password" [(ngModel)]="registerForm().password_confirmation" name="password_confirmation" placeholder="Confirmar contraseña" 
-                     style="width: 100%; padding: 14px 18px; border: 1px solid rgba(0,240,255,0.3); border-radius: 12px; background: rgba(19,23,46,0.8); color: white;">
-            </div>
-            @if (registerForm().error) {
-              <div style="background: rgba(220, 53, 69, 0.1); color: #ff6b6b; padding: 12px 15px; border-radius: 10px; margin-bottom: 20px;">
-                {{ registerForm().error }}
-              </div>
-            }
-            <button type="submit" [disabled]="registerForm().loading" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #00F0FF, #5FF4FF); color: #0A0E27; border: none; border-radius: 12px; font-weight: 700; text-transform: uppercase; box-shadow: 0 0 25px rgba(0,240,255,0.5);">
-              {{ registerForm().loading ? 'Creando...' : 'Crear Cuenta' }}
-            </button>
-            <p style="text-align: center; color: #A1A9C9; margin-top: 25px;">
-              ¿Ya tienes cuenta? <span (click)="navigateTo('login')" style="color: #00F0FF; font-weight: 700; cursor: pointer; text-decoration: underline;">Inicia sesión</span>
-            </p>
-          </form>
+      <div class="col-lg-6 col-md-8">
+        <div style="background: rgba(26,31,77,0.6); border: 1px solid rgba(0,240,255,0.3); border-radius: 30px; padding: 40px; text-align: center; backdrop-filter: blur(20px); box-shadow: 0 0 40px rgba(0,240,255,0.2);">
+          <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #00F0FF, #1D4ED8); border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 2.5rem; box-shadow: 0 0 30px rgba(0,240,255,0.5);">🔒</div>
+          <h2 style="color: white; font-weight: 800; margin-bottom: 15px; font-size: 2rem;">Registro cerrado</h2>
+          <p style="color: #A1A9C9; font-size: 1rem; margin-bottom: 25px;">
+            El registro de nuevos usuarios está deshabilitado. Si necesitas una cuenta, contacta directamente a tu administrador o equipo de soporte para solicitar acceso.
+          </p>
+          <button class="btn btn-lg" (click)="navigateTo('login')" style="background: linear-gradient(135deg, #00F0FF, #5FF4FF); color: #0A0E27; border: none; padding: 14px 32px; border-radius: 999px; font-weight: 700; box-shadow: 0 0 30px rgba(0,240,255,0.5);">
+            Ir al inicio de sesión
+          </button>
         </div>
       </div>
     </div>
@@ -357,9 +333,9 @@
           <div style="color: #00F0FF; font-weight: 800; font-size: 1.3rem; text-shadow: 0 0 10px rgba(0,240,255,0.5);">$2,450.50</div>
         </div>
 
-        <div style="background: rgba(201,70,255,0.1); border: 1px solid rgba(201,70,255,0.3); border-radius: 10px; padding: 15px; text-align: center;">
+        <div style="background: rgba(29,78,216,0.1); border: 1px solid rgba(29,78,216,0.3); border-radius: 10px; padding: 15px; text-align: center;">
           <div style="color: #A1A9C9; font-size: 0.85rem; margin-bottom: 8px;">Saldo de Referidos</div>
-          <div style="color: #C946FF; font-weight: 800; font-size: 1.3rem; text-shadow: 0 0 10px rgba(201,70,255,0.5);">$890.25</div>
+          <div style="color: #1D4ED8; font-weight: 800; font-size: 1.3rem; text-shadow: 0 0 10px rgba(29,78,216,0.5);">$890.25</div>
         </div>
 
         <button style="width: 100%; padding: 12px; background: linear-gradient(135deg, #00F0FF, #5FF4FF); color: #0A0E27; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 10px; box-shadow: 0 0 20px rgba(0,240,255,0.4);">
@@ -379,191 +355,161 @@
         <p style="color: #b0b0b0; margin: 8px 0 0;">{{ 'now' | date: 'long' }}</p>
       </div>
       <div style="text-align: right;">
-        <button style="padding: 12px 24px; background: linear-gradient(135deg, #00F0FF, #C946FF); color: #0A0E27; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 1rem; box-shadow: 0 0 25px rgba(0,240,255,0.5);">
+        <button style="padding: 12px 24px; background: linear-gradient(135deg, #00F0FF, #1D4ED8); color: #0A0E27; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 1rem; box-shadow: 0 0 25px rgba(0,240,255,0.5);">
           <i class="bi bi-play-circle me-2"></i>Comenzar Inversión con IA
         </button>
       </div>
     </div>
 
     <!-- Main Stats Cards -->
-    @if (portfolio() && !portfolioLoading()) {
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px;">
-        
-        <!-- Saldo de Ganancias -->
-        <div style="background: rgba(0,240,255,0.1); border: 2px solid rgba(0,240,255,0.3); border-radius: 15px; padding: 25px; backdrop-filter: blur(10px);">
-          <p style="color: #A1A9C9; margin: 0 0 15px; font-size: 0.9rem; font-weight: 600;">💰 Saldo de Ganancias</p>
-          <h2 style="color: #00F0FF; font-weight: 800; margin: 0; font-size: 2rem; text-shadow: 0 0 20px rgba(0,240,255,0.5);">${{ portfolio()!.total_return | number: '1.2-2' }}</h2>
-          <p style="color: #00F0FF; margin: 10px 0 0; font-size: 0.85rem;">+12.5% vs última semana</p>
-        </div>
+    <div *ngIf="portfolio() && !portfolioLoading()">
+      <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 35px;">
+        <article style="background: rgba(0,240,255,0.12); border: 1px solid rgba(0,240,255,0.35); border-radius: 16px; padding: 22px; backdrop-filter: blur(10px);">
+          <p style="color: #A1A9C9; margin: 0 0 10px; font-size: 0.85rem; font-weight: 600;">💰 Saldo de Ganancias</p>
+          <h2 style="color: #00F0FF; margin: 0; font-weight: 800; font-size: 1.9rem;">${{ portfolio()!.total_return | number: '1.2-2' }}</h2>
+          <small style="color: #00F0FF; opacity: 0.8;">+12.5% semanal</small>
+        </article>
+        <article style="background: rgba(29,78,216,0.12); border: 1px solid rgba(29,78,216,0.35); border-radius: 16px; padding: 22px; backdrop-filter: blur(10px);">
+          <p style="color: #A1A9C9; margin: 0 0 10px; font-size: 0.85rem; font-weight: 600;">🔒 Saldo Bloqueado</p>
+          <h2 style="color: #2563EB; margin: 0; font-weight: 800; font-size: 1.9rem;">$850.00</h2>
+          <small style="color: #2563EB; opacity: 0.8;">Liberación en 5 días</small>
+        </article>
+        <article style="background: rgba(77,124,255,0.12); border: 1px solid rgba(77,124,255,0.35); border-radius: 16px; padding: 22px; backdrop-filter: blur(10px);">
+          <p style="color: #A1A9C9; margin: 0 0 10px; font-size: 0.85rem; font-weight: 600;">💼 Capital Invertido</p>
+          <h2 style="color: #4D7CFF; margin: 0; font-weight: 800; font-size: 1.9rem;">${{ portfolio()!.invested_amount | number: '1.2-2' }}</h2>
+          <small style="color: #4D7CFF; opacity: 0.8;">5 paquetes activos</small>
+        </article>
+        <article style="background: rgba(15,118,255,0.12); border: 1px solid rgba(15,118,255,0.35); border-radius: 16px; padding: 22px; backdrop-filter: blur(10px);">
+          <p style="color: #A1A9C9; margin: 0 0 10px; font-size: 0.85rem; font-weight: 600;">📊 Rentabilidad anual</p>
+          <h2 style="color: #1D4ED8; margin: 0; font-weight: 800; font-size: 1.9rem;">+{{ portfolio()!.return_percentage | number: '1.2-2' }}%</h2>
+          <small style="color: #1D4ED8; opacity: 0.8;">Basado en cierre fiscal</small>
+        </article>
+      </section>
 
-        <!-- Saldo Bloqueado -->
-        <div style="background: rgba(255,0,128,0.1); border: 2px solid rgba(255,0,128,0.3); border-radius: 15px; padding: 25px; backdrop-filter: blur(10px);">
-          <p style="color: #A1A9C9; margin: 0 0 15px; font-size: 0.9rem; font-weight: 600;">🔒 Saldo Bloqueado</p>
-          <h2 style="color: #FF0080; font-weight: 800; margin: 0; font-size: 2rem; text-shadow: 0 0 20px rgba(255,0,128,0.5);">$850.00</h2>
-          <p style="color: #FF0080; margin: 10px 0 0; font-size: 0.85rem;">Disponible en 5 días</p>
+      <section style="background: rgba(26,31,77,0.6); border: 1px solid rgba(0,240,255,0.18); border-radius: 16px; padding: 28px; margin-bottom: 30px; backdrop-filter: blur(14px);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px;">
+          <h3 style="color: white; font-weight: 800; margin: 0;">📈 Mis Inversiones</h3>
+          <span style="color: #A1A9C9; font-size: 0.9rem;">Actualizado {{ 'now' | date: 'short' }}</span>
         </div>
-
-        <!-- Total Invertido -->
-        <div style="background: rgba(77,124,255,0.1); border: 2px solid rgba(77,124,255,0.3); border-radius: 15px; padding: 25px; backdrop-filter: blur(10px);">
-          <p style="color: #A1A9C9; margin: 0 0 15px; font-size: 0.9rem; font-weight: 600;">💼 Total Invertido</p>
-          <h2 style="color: #4D7CFF; font-weight: 800; margin: 0; font-size: 2rem; text-shadow: 0 0 20px rgba(77,124,255,0.5);">${{ portfolio()!.invested_amount | number: '1.2-2' }}</h2>
-          <p style="color: #4D7CFF; margin: 10px 0 0; font-size: 0.85rem;">5 inversiones activas</p>
-        </div>
-
-        <!-- Rentabilidad -->
-        <div style="background: rgba(201,70,255,0.1); border: 2px solid rgba(201,70,255,0.3); border-radius: 15px; padding: 25px; backdrop-filter: blur(10px);">
-          <p style="color: #A1A9C9; margin: 0 0 15px; font-size: 0.9rem; font-weight: 600;">📊 Rentabilidad Acumulada</p>
-          <h2 style="color: #C946FF; font-weight: 800; margin: 0; font-size: 2rem; text-shadow: 0 0 20px rgba(201,70,255,0.5);">+{{ portfolio()!.return_percentage | number: '1.2-2' }}%</h2>
-          <p style="color: #C946FF; margin: 10px 0 0; font-size: 0.85rem;">Performance anual</p>
-        </div>
-      </div>
-
-      <!-- Mis Inversiones -->
-      <div style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: 30px; margin-bottom: 40px; backdrop-filter: blur(10px);">
-        <h3 style="color: white; font-weight: 800; margin-bottom: 25px; font-size: 1.4rem;">📈 Mis Inversiones Activas</h3>
         <div class="table-responsive">
-          <div style="background: linear-gradient(180deg, rgba(13,17,46,0.95) 0%, rgba(19,23,56,0.85) 100%); border-radius: 12px; overflow: hidden; border: 1px solid rgba(0,240,255,0.15);">
-            <table style="width: 100%; color: #CDD2E5; border-collapse: collapse;">
-              <colgroup>
-                <col style="width: 22%;">
-                <col style="width: 20%;">
-                <col style="width: 18%;">
-                <col style="width: 15%;">
-                <col style="width: 15%;">
-                <col style="width: 10%;">
-              </colgroup>
-              <thead style="background: linear-gradient(135deg, rgba(89,227,255,0.12), rgba(0,240,255,0.08)); border-bottom: 2px solid rgba(89,227,255,0.25);">
-                <tr>
-                  <th style="text-align: left; padding: 18px 20px; color: #59E3FF; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em;">Paquete</th>
-                  <th style="text-align: right; padding: 18px 20px; color: #59E3FF; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em;">Capital</th>
-                  <th style="text-align: right; padding: 18px 20px; color: #59E3FF; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em;">Rentabilidad</th>
-                  <th style="text-align: center; padding: 18px 20px; color: #59E3FF; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em;">Días activos</th>
-                  <th style="text-align: left; padding: 18px 20px; color: #59E3FF; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em;">Progreso</th>
-                  <th style="text-align: center; padding: 18px 20px; color: #59E3FF; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em;">Estado</th>
-                </tr>
-              </thead>
-              <tbody style="font-variant-numeric: tabular-nums;">
+          <table style="width: 100%; border-collapse: collapse; color: #CDD2E5;">
+            <thead>
+              <tr style="background: rgba(0,240,255,0.08);">
+                <th style="text-align: left; padding: 14px; font-size: 0.8rem; letter-spacing: 0.05em;">Activo</th>
+                <th style="text-align: right; padding: 14px;">Capital</th>
+                <th style="text-align: right; padding: 14px;">Rentabilidad</th>
+                <th style="text-align: center; padding: 14px;">Días</th>
+                <th style="text-align: left; padding: 14px;">Progreso</th>
+                <th style="text-align: center; padding: 14px;">Estado</th>
+              </tr>
+            </thead>
+            <tbody>
               @for (inv of portfolio()!.investments; track inv.id) {
                 @let theme = getInvestmentTheme(inv.symbol);
                 @let gain = getInvestmentGain(inv);
                 @let progress = getInvestmentProgress(inv);
                 @let daysActive = getInvestmentDaysActive(inv);
-                <tr style="border-bottom: 1px solid rgba(0,240,255,0.08);">
-                  <td style="padding: 18px;">
-                    <div style="display: flex; align-items: center; gap: 14px;">
-                      <div style="width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.05rem;"
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                  <td style="padding: 16px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <div style="width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-weight: 700;"
                            [ngStyle]="{ 'background': theme.gradient, 'color': theme.badgeColor, 'box-shadow': theme.shadow }">
                         {{ inv.symbol }}
                       </div>
                       <div>
-                        <div style="color: white; font-weight: 700;">{{ inv.name || inv.symbol }}</div>
-                        <div style="color: #7581A8; font-size: 0.85rem;">{{ inv.symbol }} · {{ inv.change_percentage | number: '1.1-2' }}%</div>
+                        <p style="color: white; margin: 0; font-weight: 700;">{{ inv.name || inv.symbol }}</p>
+                        <small style="color: #7581A8;">{{ inv.symbol }} · {{ inv.change_percentage | number: '1.1-2' }}%</small>
                       </div>
                     </div>
                   </td>
-                  <td style="padding: 18px;">
-                    <div style="color: white; font-weight: 700;">${{ (inv.quantity * inv.purchase_price) | number: '1.2-2' }}</div>
-                    <div style="color: #7581A8; font-size: 0.85rem;">Capital inicial</div>
-                    <div style="color: #00F0FF; font-size: 0.85rem; margin-top: 6px;">Valor actual: ${{ inv.value | number: '1.2-2' }}</div>
+                  <td style="padding: 16px; text-align: right;">
+                    <p style="color: white; margin: 0; font-weight: 700;">${{ (inv.quantity * inv.purchase_price) | number: '1.2-2' }}</p>
+                    <small style="color: #7581A8;">Valor actual ${{ inv.value | number: '1.2-2' }}</small>
                   </td>
-                  <td style="padding: 18px;">
-                    <div style="color: #56F39A; font-weight: 700;">{{ gain >= 0 ? '+' : '-' }}${{ Math.abs(gain) | number: '1.2-2' }}</div>
-                    <div style="display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 4px 10px; border-radius: 999px; font-size: 0.8rem; font-weight: 600;"
-                         [ngStyle]="{ 'background': 'rgba(0,240,255,0.15)', 'color': '#00F0FF' }">
-                      +{{ inv.change_percentage | number: '1.1-2' }}%
-                    </div>
-                    <div style="color: #7581A8; font-size: 0.85rem; margin-top: 6px;">Cambio diario: ${{ inv.change | number: '1.2-2' }}</div>
+                  <td style="padding: 16px; text-align: right;">
+                    <p style="color: #56F39A; margin: 0; font-weight: 700;">{{ gain >= 0 ? '+' : '-' }}${{ Math.abs(gain) | number: '1.2-2' }}</p>
+                    <small style="color: #7581A8;">Cambio diario ${{ inv.change | number: '1.2-2' }}</small>
                   </td>
-                  <td style="padding: 18px;">
-                    <div style="color: white; font-weight: 700;">{{ daysActive }} días</div>
-                    <div style="color: #A1A9C9; font-size: 0.85rem;">Estimado cierre: {{ getInvestmentMaturity(inv) }}</div>
+                  <td style="padding: 16px; text-align: center; color: white; font-weight: 700;">
+                    {{ daysActive }}<br>
+                    <small style="color: #7581A8; font-weight: 400;">cierre {{ getInvestmentMaturity(inv) }}</small>
                   </td>
-                  <td style="padding: 18px;">
-                    <div style="background: rgba(0,240,255,0.12); border-radius: 12px; padding: 10px 12px;">
-                      <div style="background: rgba(0,240,255,0.2); border-radius: 8px; height: 8px; overflow: hidden;">
-                        <div style="background: linear-gradient(90deg, #00F0FF, #C946FF); height: 100%; box-shadow: 0 0 10px rgba(0,240,255,0.5);"
+                  <td style="padding: 16px;">
+                    <div style="background: rgba(0,240,255,0.12); border-radius: 10px; padding: 8px 10px;">
+                      <div style="height: 6px; border-radius: 999px; background: rgba(0,240,255,0.15); overflow: hidden;">
+                        <div style="height: 100%; background: linear-gradient(90deg, #00F0FF, #1D4ED8); box-shadow: 0 0 12px rgba(0,240,255,0.5);"
                              [style.width]="progress + '%'">
                         </div>
                       </div>
-                      <div style="color: #A1A9C9; font-size: 0.85rem; margin-top: 6px;">{{ progress }}% completado</div>
+                      <small style="color: #A1A9C9;">{{ progress }}% completado</small>
                     </div>
                   </td>
-                  <td style="padding: 18px;">
-                    <span style="padding: 6px 12px; border-radius: 10px; font-weight: 600; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px;"
-                          [ngStyle]="{ 'background': theme.badgeBg, 'color': theme.badgeColor }">
-                      <span style="font-size: 0.9rem;">●</span> Activa
-                    </span>
+                  <td style="padding: 16px; text-align: center;">
+                    <span style="padding: 6px 14px; border-radius: 999px; font-size: 0.8rem; font-weight: 600;"
+                          [ngStyle]="{ 'background': theme.badgeBg, 'color': theme.badgeColor }">Activa</span>
                   </td>
                 </tr>
               }
             </tbody>
           </table>
         </div>
-      </div>
+      </section>
 
-      <!-- Transacciones -->
-      <div style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: 30px; backdrop-filter: blur(10px);">
-        <h3 style="color: white; font-weight: 800; margin-bottom: 25px; font-size: 1.4rem;">💳 Últimas Transacciones</h3>
+      <section style="background: rgba(26,31,77,0.6); border: 1px solid rgba(77,124,255,0.25); border-radius: 16px; padding: 28px; backdrop-filter: blur(14px);">
+        <h3 style="color: white; font-weight: 800; margin-bottom: 22px;">💳 Últimas transacciones</h3>
         <div class="table-responsive">
-          <table style="width: 100%; color: #CDD2E5;">
-            <thead style="border-bottom: 2px solid rgba(0,240,255,0.3);">
-              <tr>
-                <th style="text-align: left; padding: 15px; color: #00F0FF; font-weight: 700;">Tipo</th>
-                <th style="text-align: left; padding: 15px; color: #00F0FF; font-weight: 700;">Activo</th>
-                <th style="text-align: right; padding: 15px; color: #00F0FF; font-weight: 700;">Cantidad</th>
-                <th style="text-align: right; padding: 15px; color: #00F0FF; font-weight: 700;">Total</th>
-                <th style="text-align: left; padding: 15px; color: #00F0FF; font-weight: 700;">Estatus</th>
-                <th style="text-align: left; padding: 15px; color: #00F0FF; font-weight: 700;">Fecha</th>
+          <table style="width: 100%; border-collapse: collapse; color: #CDD2E5;">
+            <thead>
+              <tr style="background: rgba(77,124,255,0.12);">
+                <th style="text-align: left; padding: 12px;">Tipo</th>
+                <th style="text-align: left; padding: 12px;">Activo</th>
+                <th style="text-align: right; padding: 12px;">Cantidad</th>
+                <th style="text-align: right; padding: 12px;">Total</th>
+                <th style="text-align: left; padding: 12px;">Estado</th>
+                <th style="text-align: left; padding: 12px;">Fecha</th>
               </tr>
             </thead>
             <tbody>
               @for (tx of transactions(); track tx.id) {
-                <tr style="border-bottom: 1px solid rgba(0,240,255,0.1);">
-                  <td style="padding: 15px;">
-                    <span style="padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.8rem;" 
-                          [ngStyle]="{ 'background': tx.type === 'BUY' ? 'rgba(0,240,255,0.2)' : 'rgba(255,0,128,0.2)', 'color': tx.type === 'BUY' ? '#00F0FF' : '#FF0080' }">
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                  <td style="padding: 14px;">
+                    <span style="padding: 6px 12px; border-radius: 10px; font-weight: 600; font-size: 0.8rem;"
+                          [ngStyle]="{ 'background': tx.type === 'BUY' ? 'rgba(0,240,255,0.15)' : 'rgba(37,99,235,0.15)', 'color': tx.type === 'BUY' ? '#00F0FF' : '#2563EB' }">
                       {{ tx.type === 'BUY' ? '📈 COMPRA' : '📉 VENTA' }}
                     </span>
                   </td>
-                  <td style="padding: 15px;"><strong>{{ tx.symbol }}</strong></td>
-                  <td style="text-align: right; padding: 15px;">{{ tx.quantity }}</td>
-                  <td style="text-align: right; padding: 15px; font-weight: 700; color: #00F0FF;">${{ tx.total | number: '1.2-2' }}</td>
-                  <td style="padding: 15px;"><span style="padding: 6px 12px; background: rgba(77,124,255,0.2); color: #4D7CFF; border-radius: 8px; font-weight: 600; font-size: 0.8rem;">✓ Completada</span></td>
-                  <td style="padding: 15px; color: #7581A8;">{{ tx.date | date: 'short' }}</td>
+                  <td style="padding: 14px; font-weight: 600;">{{ tx.symbol }}</td>
+                  <td style="padding: 14px; text-align: right;">{{ tx.quantity }}</td>
+                  <td style="padding: 14px; text-align: right; font-weight: 700; color: #00F0FF;">${{ tx.total | number: '1.2-2' }}</td>
+                  <td style="padding: 14px;">
+                    <span style="padding: 6px 12px; border-radius: 8px; background: rgba(77,124,255,0.2); color: #4D7CFF; font-weight: 600; font-size: 0.8rem;">✓ Completada</span>
+                  </td>
+                  <td style="padding: 14px; color: #7581A8;">{{ tx.date | date: 'short' }}</td>
                 </tr>
               }
             </tbody>
           </table>
         </div>
-      </div>
-    }
+      </section>
+    </div>
 
-    @if (portfolioLoading()) {
+    <div *ngIf="portfolioLoading()">
       <div style="text-align: center; padding: 60px 20px;">
         <div style="display: inline-block; width: 50px; height: 50px; border: 4px solid rgba(255,117,15,0.2); border-top: 4px solid #FF750F; border-radius: 50%; animation: spin 1s linear infinite;"></div>
         <p style="color: #b0b0b0; margin-top: 20px; font-weight: 600;">Cargando datos...</p>
       </div>
-    }
+    </div>
+
   </main>
 </div>
-
-<style>
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
-  }
-</style>
 }
+
 
 <!-- MARKET ANALYSIS PAGE -->
 @if (currentPage() === 'market-analysis' && isAuthenticated()) {
 <div style="background: linear-gradient(135deg, #0A0E27 0%, #13172E 100%); min-height: 100vh; padding: 40px 0;">
   <div class="container">
-    <h1 style="color: white; font-weight: 800; margin-bottom: 30px; background: linear-gradient(135deg, #00F0FF, #C946FF); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">📊 Análisis de Mercado</h1>
+    <h1 style="color: white; font-weight: 800; margin-bottom: 30px; background: linear-gradient(135deg, #00F0FF, #1D4ED8); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">📊 Análisis de Mercado</h1>
     
     <div class="row mb-4">
       <div class="col-lg-4">
@@ -574,10 +520,10 @@
         </div>
       </div>
       <div class="col-lg-4">
-        <div style="background: rgba(201,70,255,0.1); border-left: 4px solid #C946FF; border-radius: 15px; padding: 30px; backdrop-filter: blur(10px);">
-          <h5 style="color: #C946FF; font-weight: 700; text-transform: uppercase; font-size: 0.9rem;">NASDAQ</h5>
+        <div style="background: rgba(29,78,216,0.1); border-left: 4px solid #1D4ED8; border-radius: 15px; padding: 30px; backdrop-filter: blur(10px);">
+          <h5 style="color: #1D4ED8; font-weight: 700; text-transform: uppercase; font-size: 0.9rem;">NASDAQ</h5>
           <h2 style="color: white; font-weight: 800; margin: 15px 0; font-size: 2.5rem;">19,243</h2>
-          <p style="color: #C946FF; font-size: 1.1rem; margin: 0;"><i class="bi bi-arrow-up"></i> +1.25%</p>
+          <p style="color: #1D4ED8; font-size: 1.1rem; margin: 0;"><i class="bi bi-arrow-up"></i> +1.25%</p>
         </div>
       </div>
       <div class="col-lg-4">
@@ -608,7 +554,6 @@
   </div>
 </div>
 }
-
 <!-- EDUCATION PAGE -->
 @if (currentPage() === 'education') {
 <div style="background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%); min-height: 100vh; padding: 40px 0;">
@@ -757,13 +702,3 @@
 </div>
 }
 
-<!-- Agregar estilos necesarios -->
-<style>
-  ::placeholder {
-    color: #666 !important;
-  }
-  select option {
-    background: #1a1a2e;
-    color: white;
-  }
-</style>

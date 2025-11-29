@@ -25,16 +25,16 @@
       </div>
 
       <div class="col-6 col-lg-3">
-        <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(201,70,255,0.2); border-radius: 12px; padding: clamp(15px, 3vw, 20px); backdrop-filter: blur(10px); text-align: center;">
-          <i class="bi bi-person-check" style="color: #C946FF; font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 10px; display: block; opacity: 0.9;"></i>
+        <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(29,78,216,0.2); border-radius: 12px; padding: clamp(15px, 3vw, 20px); backdrop-filter: blur(10px); text-align: center;">
+          <i class="bi bi-person-check" style="color: #1D4ED8; font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 10px; display: block; opacity: 0.9;"></i>
           <h3 class="counter-number" style="color: white; margin: 0 0 5px 0; font-weight: 800; font-size: clamp(1.5rem, 4vw, 2rem);">{{ referralStats()?.active_referrals || 0 }}</h3>
           <p style="color: #7581A8; margin: 0; font-size: clamp(0.75rem, 1.8vw, 0.9rem);">Activos</p>
         </div>
       </div>
 
       <div class="col-6 col-lg-3">
-        <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(255,0,128,0.2); border-radius: 12px; padding: clamp(15px, 3vw, 20px); backdrop-filter: blur(10px); text-align: center;">
-          <i class="bi bi-cash-stack" style="color: #FF0080; font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 10px; display: block; opacity: 0.9;"></i>
+        <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(37,99,235,0.2); border-radius: 12px; padding: clamp(15px, 3vw, 20px); backdrop-filter: blur(10px); text-align: center;">
+          <i class="bi bi-cash-stack" style="color: #2563EB; font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 10px; display: block; opacity: 0.9;"></i>
           <h3 class="counter-number" style="color: white; margin: 0 0 5px 0; font-weight: 800; font-size: clamp(1.3rem, 3.5vw, 1.8rem);">${{ referralStats()?.total_commission || 0 }}</h3>
           <p style="color: #7581A8; margin: 0; font-size: clamp(0.75rem, 1.8vw, 0.9rem);">Comisión Total</p>
         </div>
@@ -102,14 +102,14 @@
               <p style="margin: 0;">Comparte tu enlace de referido con amigos y familia</p>
             </div>
             <div class="d-flex gap-3 mb-3">
-              <div class="badge-animated" style="background: rgba(201,70,255,0.2); width: 35px; height: 35px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                <span style="color: #C946FF; font-weight: 700;">2</span>
+              <div class="badge-animated" style="background: rgba(29,78,216,0.2); width: 35px; height: 35px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <span style="color: #1D4ED8; font-weight: 700;">2</span>
               </div>
               <p style="margin: 0;">Ellos se registran usando tu código único</p>
             </div>
             <div class="d-flex gap-3">
-              <div class="badge-animated" style="background: rgba(255,0,128,0.2); width: 35px; height: 35px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                <span style="color: #FF0080; font-weight: 700;">3</span>
+              <div class="badge-animated" style="background: rgba(37,99,235,0.2); width: 35px; height: 35px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <span style="color: #2563EB; font-weight: 700;">3</span>
               </div>
               <p style="margin: 0;">Ganas comisiones por sus inversiones activas</p>
             </div>
@@ -192,7 +192,7 @@
                     <div class="investment-card gpu-accelerated" style="background: rgba(13,17,46,0.6); border: 1px solid rgba(0,240,255,0.15); border-radius: 12px; padding: 15px;">
                       <div class="d-flex justify-content-between align-items-start mb-3">
                         <div class="d-flex align-items-center gap-2 flex-1">
-                          <div class="icon-wrapper" style="background: linear-gradient(135deg, #00F0FF, #C946FF); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #0A0E27; font-weight: 700; font-size: 1.1rem;">
+                          <div class="icon-wrapper" style="background: linear-gradient(135deg, #00F0FF, #1D4ED8); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #0A0E27; font-weight: 700; font-size: 1.1rem;">
                             {{ referral.name.charAt(0) }}
                           </div>
                           <div style="flex: 1;">
@@ -231,7 +231,7 @@
               <i class="bi bi-people" style="font-size: clamp(3rem, 8vw, 5rem); color: #4A5578; margin-bottom: 20px; display: block;"></i>
               <h4 style="color: white; margin: 0 0 10px 0; font-size: clamp(1.1rem, 3vw, 1.3rem);">No tienes referidos aún</h4>
               <p style="color: #7581A8; margin: 0 0 20px 0; font-size: clamp(0.9rem, 2vw, 1rem);">Comparte tu enlace para empezar a ganar comisiones</p>
-              <button (click)="copyReferralCode()" style="background: linear-gradient(135deg, #00F0FF, #C946FF); color: #0A0E27; padding: 12px 24px; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: clamp(0.85rem, 2vw, 0.95rem);">
+              <button (click)="copyReferralCode()" style="background: linear-gradient(135deg, #00F0FF, #1D4ED8); color: #0A0E27; padding: 12px 24px; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: clamp(0.85rem, 2vw, 0.95rem);">
                 <i class="bi bi-clipboard me-2"></i>Copiar Código
               </button>
             </div>

@@ -30,8 +30,7 @@ import { AuthService } from '../../services/auth.service';
         <li class="nav-item"><a class="nav-link" href="#plans">Planes</a></li>
         <li class="nav-item"><a class="nav-link" href="#about">Acerca de</a></li>
         <li class="nav-item ms-2">
-          <button class="btn btn-outline-warning btn-sm me-2" [routerLink]="['/login']">Iniciar Sesión</button>
-          <button class="btn btn-warning btn-sm" [routerLink]="['/register']">Registrarse</button>
+          <button class="btn btn-warning btn-sm" [routerLink]="['/login']">Iniciar Sesión</button>
         </li>
       </ul>
     </div>
@@ -50,8 +49,8 @@ import { AuthService } from '../../services/auth.service';
           Invierte de forma inteligente con EagleInvest. Accede a herramientas profesionales de análisis, seguridad de nivel bancario y ejecución instantánea.
         </p>
         <div class="d-flex flex-wrap gap-3">
-          <button class="btn btn-warning btn-lg" [routerLink]="['/register']">
-            <i class="bi bi-rocket-takeoff me-2"></i>Comenzar Ahora
+          <button class="btn btn-warning btn-lg" [routerLink]="['/login']">
+            <i class="bi bi-box-arrow-in-right me-2"></i>Acceder al Panel
           </button>
           <a href="#features" class="btn btn-outline-light btn-lg">
             <i class="bi bi-play-circle me-2"></i>Ver Más
@@ -179,8 +178,8 @@ import { AuthService } from '../../services/auth.service';
                 }
               </ul>
               
-              <button class="btn w-100" [class]="plan.recommended ? 'btn-warning' : 'btn-outline-warning'" [routerLink]="['/register']">
-                Invertir Ahora
+              <button class="btn w-100" [class]="plan.recommended ? 'btn-warning' : 'btn-outline-warning'" [routerLink]="['/login']">
+                Acceder para invertir
               </button>
             </div>
           </div>
@@ -195,8 +194,8 @@ import { AuthService } from '../../services/auth.service';
   <div class="container text-center">
     <h2 class="display-5 fw-bold mb-4">¿Listo para comenzar?</h2>
     <p class="lead mb-4">Únete a miles de inversores que confían en EagleInvest</p>
-    <button class="btn btn-light btn-lg px-5" [routerLink]="['/register']">
-      <i class="bi bi-check-circle me-2"></i>Crear Cuenta Gratis
+    <button class="btn btn-light btn-lg px-5" [routerLink]="['/login']">
+      <i class="bi bi-box-arrow-in-right me-2"></i>Iniciar Sesión
     </button>
   </div>
 </section>

@@ -186,9 +186,9 @@ export class App implements OnInit {
       price: 2500,
       features: ['Estrategias cuantitativas', 'Gestor dedicado', 'Reportes semanales', 'Cobertura multi-activo'],
       recommended: true,
-      accent: '#C946FF',
-      background: 'linear-gradient(135deg, rgba(201,70,255,0.2), rgba(24,6,49,0.85))',
-      glow: '0 20px 45px rgba(201,70,255,0.35)',
+      accent: '#1D4ED8',
+      background: 'linear-gradient(135deg, rgba(29,78,216,0.2), rgba(24,6,49,0.85))',
+      glow: '0 20px 45px rgba(29,78,216,0.35)',
       tagline: 'Impulsa tu capital con algoritmos híbridos',
       roi: '24% anual',
       lockPeriod: '60 días',
@@ -235,10 +235,10 @@ export class App implements OnInit {
       shadow: '0 10px 25px rgba(77,124,255,0.35)'
     },
     MSFT: {
-      badgeBg: 'rgba(201,70,255,0.25)',
-      badgeColor: '#C946FF',
-      gradient: 'linear-gradient(135deg, rgba(201,70,255,0.35), rgba(32,6,54,0.4))',
-      shadow: '0 10px 25px rgba(201,70,255,0.35)'
+      badgeBg: 'rgba(29,78,216,0.25)',
+      badgeColor: '#1D4ED8',
+      gradient: 'linear-gradient(135deg, rgba(29,78,216,0.35), rgba(32,6,54,0.4))',
+      shadow: '0 10px 25px rgba(29,78,216,0.35)'
     }
   };
 
@@ -472,6 +472,11 @@ export class App implements OnInit {
         console.error('Error reenviando código:', error);
       }
     });
+  }
+
+  // Reset to login from 2FA
+  resetToLogin() {
+    this.loginForm.update(f => ({ ...f, requires2FA: false, twoFactorCode: '', error: '' }));
   }
 
   // Register

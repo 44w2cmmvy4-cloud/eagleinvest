@@ -57,7 +57,7 @@ export class ReferralService {
    * Genera un nuevo enlace de referido
    */
   generateReferralLink(userId: number): string {
-    return `https://eagleinvest.com/register?ref=${userId}`;
+    return `https://eagleinvest.com/login?ref=${userId}`;
   }
 
   /**

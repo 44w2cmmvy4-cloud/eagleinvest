@@ -104,9 +104,8 @@ import { AuthService } from '../../../services/auth.service';
             </button>
 
             <div class="text-center">
-              <p class="text-muted">
-                ¿No tienes cuenta? 
-                <a [routerLink]="['/register']" class="text-decoration-none fw-bold">Regístrate aquí</a>
+              <p class="text-muted mb-0">
+                ¿Necesitas una cuenta? Contacta a tu administrador para habilitar el acceso.
               </p>
             </div>
           </form>

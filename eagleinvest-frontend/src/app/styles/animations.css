@@ -30,6 +30,24 @@
   }
 }
 
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes hero-orb-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
 @keyframes pulse {
   0%, 100% {
     transform: scale(1);
@@ -203,7 +221,7 @@
   left: 0;
   width: 100%;
   height: 3px;
-  background: linear-gradient(90deg, #00F0FF, #C946FF, #FF0080);
+  background: linear-gradient(90deg, #00F0FF, #1D4ED8, #2563EB);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.4s ease;
@@ -225,7 +243,7 @@
 
 .btn-neon {
   position: relative;
-  background: linear-gradient(135deg, #00F0FF, #C946FF);
+  background: linear-gradient(135deg, #00F0FF, #1D4ED8);
   border: none;
   color: #0A0E27;
   font-weight: 700;
@@ -264,7 +282,7 @@
    ======================================== */
 
 .progress-bar-animated {
-  background: linear-gradient(90deg, #00F0FF, #C946FF, #FF0080);
+  background: linear-gradient(90deg, #00F0FF, #1D4ED8, #2563EB);
   background-size: 200% 100%;
   animation: gradientShift 3s ease infinite;
   transition: width 0.6s ease;
@@ -344,7 +362,7 @@
   top: 0;
   height: 100%;
   width: 3px;
-  background: linear-gradient(180deg, #00F0FF, #C946FF);
+  background: linear-gradient(180deg, #00F0FF, #1D4ED8);
   transform: scaleY(0);
   transition: transform 0.3s ease;
 }

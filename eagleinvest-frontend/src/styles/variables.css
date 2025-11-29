@@ -12,20 +12,20 @@
   --accent-gold-light: #5FF4FF; /* Cian claro */
   --accent-gold-dark: #00D4E5;  /* Cian oscuro */
   
-  /* Colores Secundarios - Magenta/Rosa Neón */
+  /* Colores Secundarios - Paleta Azul */
   --secondary-teal: #00F0FF;    /* Cian turquesa */
-  --secondary-purple: #C946FF;  /* Magenta/rosa neón */
-  --secondary-blue: #4D7CFF;    /* Azul eléctrico */
+  --secondary-purple: #1D4ED8;  /* Azul real intenso */
+  --secondary-blue: #3B82F6;    /* Azul eléctrico */
   
   /* Estados y Feedback */
   --success: #00F0FF;           /* Cian neón éxito */
   --success-light: #5FF4FF;
-  --warning: #C946FF;           /* Magenta advertencia */
-  --warning-light: #E07AFF;
-  --danger: #FF0080;            /* Rosa neón peligro */
-  --danger-light: #FF4DA6;
-  --info: #4D7CFF;              /* Azul eléctrico información */
-  --info-light: #7A9FFF;
+  --warning: #2563EB;           /* Azul medio advertencia */
+  --warning-light: #93C5FD;
+  --danger: #1E3A8A;            /* Azul profundo alerta */
+  --danger-light: #8093E8;
+  --info: #38BDF8;              /* Azul claro información */
+  --info-light: #7DD3FC;
   
   /* Grises y Neutros */
   --gray-900: #0A0E27;
@@ -65,15 +65,15 @@
   --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.7);
   --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.8);
   --shadow-glow: 0 0 20px rgba(0, 240, 255, 0.5);
-  --shadow-glow-magenta: 0 0 20px rgba(201, 70, 255, 0.5);
+  --shadow-glow-magenta: 0 0 20px rgba(29, 78, 216, 0.5);
   
   /* Gradientes */
   --gradient-primary: linear-gradient(135deg, #0A0E27 0%, #1A1F4D 100%);
   --gradient-accent: linear-gradient(135deg, #00F0FF 0%, #5FF4FF 100%);
   --gradient-success: linear-gradient(135deg, #00F0FF 0%, #00D4E5 100%);
-  --gradient-premium: linear-gradient(135deg, #C946FF 0%, #4D7CFF 100%);
+  --gradient-premium: linear-gradient(135deg, #0F1F5B 0%, #3B82F6 100%);
   --gradient-overlay: linear-gradient(180deg, rgba(10, 14, 39, 0) 0%, rgba(10, 14, 39, 0.95) 100%);
-  --gradient-neon: linear-gradient(135deg, #00F0FF 0%, #C946FF 100%);
+  --gradient-neon: linear-gradient(135deg, #00F0FF 0%, #1D4ED8 100%);
   
   /* Animaciones */
   --transition-fast: 150ms ease-in-out;
@@ -133,7 +133,7 @@
   --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.7);
   --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.8);
   --shadow-glow: 0 0 20px rgba(0, 240, 255, 0.5);
-  --shadow-glow-magenta: 0 0 20px rgba(201, 70, 255, 0.5);
+  --shadow-glow-magenta: 0 0 20px rgba(29, 78, 216, 0.5);
 }
 
 /* Animaciones globales */

@@ -58,7 +58,7 @@ export class ReferralsComponent implements OnInit {
       // Set referral code and link
       const refCode = (user as any).referral_code || 'EAGLE' + user.id;
       this.referralCode.set(refCode);
-      this.referralLink.set(`https://eagleinvest.com/register?ref=${this.referralCode()}`);
+      this.referralLink.set(`https://eagleinvest.com/login?ref=${this.referralCode()}`);
     }
   }
 

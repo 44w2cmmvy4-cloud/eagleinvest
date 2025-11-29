@@ -48,7 +48,7 @@
                       </div>
                       <div class="col-6">
                         <p style="color: #7581A8; margin: 0; font-size: 0.8rem;">Duración</p>
-                        <h5 class="counter-number" style="color: #C946FF; margin: 0; font-weight: 800;">{{ plan.duration_days }} días</h5>
+                        <h5 class="counter-number" style="color: #1D4ED8; margin: 0; font-weight: 800;">{{ plan.duration_days }} días</h5>
                       </div>
                     </div>
                   </div>
@@ -96,12 +96,12 @@
                 </button>
               </div>
               <div class="col-4">
-                <button (click)="amount.set((selectedPlan()!.min_amount + selectedPlan()!.max_amount) / 2)" class="btn-bot-control" style="width: 100%; padding: 12px 8px; background: rgba(201,70,255,0.1); border: 1px solid rgba(201,70,255,0.3); color: #C946FF; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">
+                <button (click)="amount.set((selectedPlan()!.min_amount + selectedPlan()!.max_amount) / 2)" class="btn-bot-control" style="width: 100%; padding: 12px 8px; background: rgba(29,78,216,0.1); border: 1px solid rgba(29,78,216,0.3); color: #1D4ED8; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">
                   Medio
                 </button>
               </div>
               <div class="col-4">
-                <button (click)="amount.set(selectedPlan()!.max_amount)" class="btn-bot-control" style="width: 100%; padding: 12px 8px; background: rgba(255,0,128,0.1); border: 1px solid rgba(255,0,128,0.3); color: #FF0080; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">
+                <button (click)="amount.set(selectedPlan()!.max_amount)" class="btn-bot-control" style="width: 100%; padding: 12px 8px; background: rgba(37,99,235,0.1); border: 1px solid rgba(37,99,235,0.3); color: #2563EB; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">
                   Máximo
                 </button>
               </div>
@@ -118,7 +118,7 @@
             </div>
 
             <!-- Investment Summary -->
-            <div class="stat-card gpu-accelerated" style="background: linear-gradient(135deg, rgba(0,240,255,0.1), rgba(201,70,255,0.1)); border: 2px solid rgba(0,240,255,0.3); border-radius: 12px; padding: 20px;">
+            <div class="stat-card gpu-accelerated" style="background: linear-gradient(135deg, rgba(0,240,255,0.1), rgba(29,78,216,0.1)); border: 2px solid rgba(0,240,255,0.3); border-radius: 12px; padding: 20px;">
               <h6 style="color: white; margin: 0 0 15px 0; font-weight: 700;">📈 Resumen de Inversión</h6>
               <div class="row g-3">
                 <div class="col-6">
@@ -135,7 +135,7 @@
                 </div>
                 <div class="col-6">
                   <p style="color: #7581A8; margin: 0; font-size: 0.85rem;">Total Retorno</p>
-                  <p class="counter-number badge-glow" style="color: #C946FF; margin: 0; font-weight: 700; font-size: 1.1rem;">\${{ totalReturn() | number:'1.2-2' }}</p>
+                  <p class="counter-number badge-glow" style="color: #1D4ED8; margin: 0; font-weight: 700; font-size: 1.1rem;">\${{ totalReturn() | number:'1.2-2' }}</p>
                 </div>
               </div>
             </div>
@@ -173,7 +173,7 @@
                             <span class="badge-animated" style="background: rgba(0,240,255,0.2); color: #00F0FF; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600;">
                               {{ method.fee }}% comisión
                             </span>
-                            <span class="badge-animated" style="background: rgba(201,70,255,0.2); color: #C946FF; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600;">
+                            <span class="badge-animated" style="background: rgba(29,78,216,0.2); color: #1D4ED8; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600;">
                               {{ method.processingTime }}
                             </span>
                           </div>
@@ -225,9 +225,9 @@
               }
             </div>
 
-            <div class="stat-card gpu-accelerated" style="background: linear-gradient(135deg, rgba(0,240,255,0.1), rgba(201,70,255,0.1)); border: 1px solid rgba(0,240,255,0.3); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+            <div class="stat-card gpu-accelerated" style="background: linear-gradient(135deg, rgba(0,240,255,0.1), rgba(29,78,216,0.1)); border: 1px solid rgba(0,240,255,0.3); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
               <p style="color: #7581A8; margin: 0 0 10px 0; font-size: 0.85rem;">Retorno Estimado Total</p>
-              <p class="counter-number badge-glow" style="color: #C946FF; margin: 0; font-weight: 800; font-size: 1.5rem;">\${{ totalReturn() | number:'1.2-2' }}</p>
+              <p class="counter-number badge-glow" style="color: #1D4ED8; margin: 0; font-weight: 800; font-size: 1.5rem;">\${{ totalReturn() | number:'1.2-2' }}</p>
               <p class="badge-animated" style="color: #00F0FF; margin: 5px 0 0 0; font-size: 0.85rem;">
                 +{{ ((estimatedReturn() / amount()) * 100) | number:'1.1-1' }}% de ganancia
               </p>
@@ -244,7 +244,7 @@
                     [disabled]="!selectedPlan() || !validateAmount() || !selectedPaymentMethod()"
                     class="btn-neon"
                     [style.opacity]="!selectedPlan() || !validateAmount() || !selectedPaymentMethod() ? '0.5' : '1'"
-                    style="width: 100%; padding: 15px; background: linear-gradient(135deg, #00F0FF, #C946FF); color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 1.1rem; margin-bottom: 15px;">
+                    style="width: 100%; padding: 15px; background: linear-gradient(135deg, #00F0FF, #1D4ED8); color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 1.1rem; margin-bottom: 15px;">
               <i class="bi bi-lock-fill me-2"></i>Proceder al Pago Seguro
             </button>
 
@@ -409,7 +409,7 @@
         <button (click)="processPayment()" 
                 [disabled]="isProcessing()"
                 class="btn-neon"
-                style="width: 100%; padding: 15px; background: linear-gradient(135deg, #00F0FF, #C946FF); color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 1.1rem;">
+                style="width: 100%; padding: 15px; background: linear-gradient(135deg, #00F0FF, #1D4ED8); color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 1.1rem;">
           @if (isProcessing()) {
             <span class="processing-spinner">
               <i class="bi bi-arrow-repeat me-2"></i>Procesando...
