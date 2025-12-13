@@ -1,0 +1,687 @@
+<app-navbar></app-navbar>
+
+<div class="dashboard-shell referrals-shell">
+    <section class="hero-panel">
+        <div>
+            <p class="eyebrow">Programa de referidos</p>
+            <h1>Convierte tu comunidad en ingresos recurrentes</h1>
+            <p class="lede">
+                Comparte tu enlace personalizado y gana comisiones cada vez que alguien invierte. Todo el rendimiento queda registrado en tiempo real.
+            </p>
+            <div class="hero-actions">
+                <button (click)="copyReferralCode()" class="btn-primary">
+                    <i class="bi bi-clipboard"></i>
+                    Copiar código
+                </button>
+                <button (click)="shareOnWhatsApp()" class="btn-secondary">
+                    <i class="bi bi-whatsapp"></i>
+                    Compartir ahora
+                </button>
+            </div>
+        </div>
+        <div class="hero-score">
+            <p class="eyebrow">Actividad actual</p>
+            <h2>{{ referralStats()?.active_referrals || 0 }} activos</h2>
+            <div class="progress">
+                <div class="progress__track">
+                    <span class="progress__fill" [style.width]="((referralStats()?.active_referrals || 0) / ((referralStats()?.total_referrals || 1)) * 100) + '%'">
+                    </span>
+                </div>
+                <small>
+                    {{ referralStats()?.total_referrals || 0 }} referidos totales ·
+                    ${{ referralStats()?.total_commission || 0 }} comisión generada
+                </small>
+            </div>
+        </div>
+    </section>
+
+    <section class="stat-grid">
+        <article class="stat-card">
+            <p class="eyebrow">Referidos totales</p>
+            <h3>{{ referralStats()?.total_referrals || 0 }}</h3>
+            <span>Usuarios que usan tu código</span>
+        </article>
+        <article class="stat-card">
+            <p class="eyebrow">Activos</p>
+            <h3>{{ referralStats()?.active_referrals || 0 }}</h3>
+            <span>Con inversiones vigentes</span>
+        </article>
+        <article class="stat-card">
+            <p class="eyebrow">Comisión acumulada</p>
+            <h3>${{ referralStats()?.total_commission || 0 }}</h3>
+            <span>Pagos listos para retiro</span>
+        </article>
+        <article class="stat-card">
+            <p class="eyebrow">Tasa actual</p>
+            <h3>{{ referralStats()?.commission_rate || 0 }}%</h3>
+            <span>Por inversión confirmada</span>
+        </article>
+    </section>
+
+    <section class="share-layout">
+        <article class="share-card">
+            <header>
+                <p class="eyebrow">Tu enlace maestro</p>
+                <h4>Comparte y haz seguimiento en segundos</h4>
+            </header>
+            <div class="share-field">
+                <label>Código</label>
+                <div class="field">
+                    <input [value]="referralCode()" readonly>
+                    <button (click)="copyReferralCode()" aria-label="Copiar código">
+                        <i class="bi bi-copy"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="share-field">
+                <label>URL completa</label>
+                <div class="field">
+                    <input [value]="referralLink()" readonly>
+                    <button (click)="copyReferralCode()" aria-label="Copiar enlace">
+                        <i class="bi bi-link-45deg"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="social-row">
+                <button (click)="shareOnFacebook()"><i class="bi bi-facebook"></i>Facebook</button>
+                <button (click)="shareOnTelegram()"><i class="bi bi-telegram"></i>Telegram</button>
+                <button (click)="shareOnTwitter()"><i class="bi bi-twitter"></i>X / Twitter</button>
+            </div>
+        </article>
+
+        <article class="steps-card">
+            <p class="eyebrow">Cómo funciona</p>
+            <ul>
+                <li>
+                    <span>01</span>
+                    <div>
+                        <h5>Comparte tu enlace</h5>
+                        <p>Usa redes sociales, email o mensajes directos.</p>
+                    </div>
+                </li>
+                <li>
+                    <span>02</span>
+                    <div>
+                        <h5>Seguimiento automático</h5>
+                        <p>Cada registro queda asociado a tu código.</p>
+                    </div>
+                </li>
+                <li>
+                    <span>03</span>
+                    <div>
+                        <h5>Cobra tus comisiones</h5>
+                        <p>Recibe alertas cuando una inversión se activa.</p>
+                    </div>
+                </li>
+            </ul>
+        </article>
+    </section>
+
+    <section class="data-panel">
+        <div class="data-panel__head">
+            <div>
+                <p class="eyebrow">Historial en vivo</p>
+                <h4>Referidos conectados ({{ referrals().length }})</h4>
+            </div>
+            <div class="data-panel__actions">
+                <button class="chip">Exportar CSV</button>
+            </div>
+        </div>
+
+        @if (referrals() && referrals().length) {
+        <div class="table-scroll">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Registro</th>
+                        <th class="align-right">Inversión</th>
+                        <th class="align-right">Comisión</th>
+                        <th class="align-center">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (referral of referrals(); track referral.id) {
+                    <tr>
+                        <td>
+                            <div class="avatar">
+                                <span>{{ referral.name.charAt(0) }}</span>
+                                <div>
+                                    <strong>{{ referral.name }}</strong>
+                                    <small>{{ referral.email }}</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <strong>{{ referral.joined_date | date: 'dd MMM yyyy' }}</strong>
+                            <small>{{ referral.joined_date | date: 'h:mm a' }}</small>
+                        </td>
+                        <td class="align-right">${{ referral.total_invested | number: '1.0-0' }}</td>
+                        <td class="align-right">+${{ referral.commission_earned | number: '1.0-0' }}</td>
+                        <td class="align-center">
+                            @if (referral.total_invested > 0) {
+                            <span class="badge badge--success">
+                                <i class="bi bi-lightning-charge"></i>
+                                Activo
+                            </span> } @else {
+                            <span class="badge">
+                                <i class="bi bi-dot"></i>
+                                Pendiente
+                            </span> }
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="cards-mobile">
+            @for (referral of referrals(); track referral.id) {
+            <article>
+                <header>
+                    <div>
+                        <strong>{{ referral.name }}</strong>
+                        <small>{{ referral.email }}</small>
+                    </div>
+                    <span class="badge" [class.badge--success]="referral.total_invested > 0">
+                        {{ referral.total_invested > 0 ? 'Activo' : 'Pendiente' }}
+                    </span>
+                </header>
+                <dl>
+                    <div>
+                        <dt>Registro</dt>
+                        <dd>{{ referral.joined_date | date: 'dd MMM yyyy' }}</dd>
+                    </div>
+                    <div>
+                        <dt>Inversión</dt>
+                        <dd>${{ referral.total_invested | number: '1.0-0' }}</dd>
+                    </div>
+                    <div>
+                        <dt>Comisión</dt>
+                        <dd>+${{ referral.commission_earned | number: '1.0-0' }}</dd>
+                    </div>
+                </dl>
+            </article>
+            }
+        </div>
+        } @else {
+        <div class="empty-state">
+            <i class="bi bi-people"></i>
+            <h5>Sin referidos por ahora</h5>
+            <p>Comparte tu enlace para ver cómo se llena esta tabla.</p>
+            <button class="btn-primary" (click)="copyReferralCode()">Copiar enlace</button>
+        </div>
+        }
+    </section>
+</div>
+
+<style>
+     :host {
+        display: block;
+        --bg-radial-start: #131735;
+        --bg-radial-end: #050914;
+        --panel-gradient: linear-gradient(135deg, rgba(30, 38, 96, 0.92), rgba(6, 8, 24, 0.96));
+        --panel-overlay: rgba(3, 5, 20, 0.85);
+        --panel-border: rgba(110, 219, 255, 0.2);
+        --card-surface: rgba(255, 255, 255, 0.03);
+        --card-border: rgba(255, 255, 255, 0.06);
+        --chip-bg: rgba(255, 255, 255, 0.06);
+        --badge-bg: rgba(255, 255, 255, 0.08);
+        --success-bg: rgba(0, 255, 163, 0.2);
+        --text-primary: #eef2ff;
+        --text-muted: #8f9ac7;
+        --accent-soft: #6edbff;
+        --accent-1: #00d4ff;
+        --accent-2: #00ffa3;
+        min-height: 100vh;
+        padding-bottom: 60px;
+        background: radial-gradient(circle at top, var(--bg-radial-start), var(--bg-radial-end) 65%);
+    }
+    
+    .dashboard-shell {
+        width: min(1440px, 100%);
+        margin: 0 auto;
+        padding: clamp(24px, 4vw, 56px);
+        display: flex;
+        flex-direction: column;
+        gap: clamp(24px, 4vw, 48px);
+        color: var(--text-primary);
+        font-family: "Space Grotesk", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    .eyebrow {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: var(--accent-soft);
+        margin: 0 0 8px;
+    }
+    
+    h1 {
+        font-size: clamp(2rem, 4vw, 3rem);
+        margin: 0 0 16px;
+        line-height: 1.1;
+    }
+    
+    .lede {
+        color: var(--text-muted);
+        font-size: 1rem;
+        margin-bottom: 24px;
+        max-width: 560px;
+    }
+    
+    .hero-panel {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: clamp(20px, 3vw, 40px);
+        padding: clamp(24px, 4vw, 48px);
+        border-radius: 28px;
+        background: var(--panel-gradient);
+        border: 1px solid var(--panel-border);
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+    }
+    
+    .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    
+    .btn-primary,
+    .btn-secondary {
+        border: none;
+        border-radius: 999px;
+        padding: 12px 22px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(120deg, var(--accent-1), var(--accent-2));
+        color: #05060c;
+        box-shadow: 0 12px 30px rgba(0, 119, 255, 0.35);
+    }
+    
+    .btn-secondary {
+        background: rgba(255, 255, 255, 0.08);
+        color: #c3d2ff;
+        border: 1px solid var(--card-border);
+    }
+    
+    .btn-primary:hover,
+    .btn-secondary:hover {
+        transform: translateY(-1px);
+    }
+    
+    .hero-score {
+        background: var(--panel-overlay);
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        padding: 24px;
+    }
+    
+    .hero-score h2 {
+        margin: 0 0 12px;
+        font-size: clamp(1.5rem, 3vw, 2.2rem);
+    }
+    
+    .progress__track {
+        width: 100%;
+        height: 8px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        overflow: hidden;
+        margin-bottom: 8px;
+    }
+    
+    .progress__fill {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+    }
+    
+    .progress small {
+        color: #7e8ab4;
+    }
+    
+    .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+    }
+    
+    .stat-card {
+        padding: 20px;
+        border-radius: 18px;
+        background: var(--card-surface);
+        border: 1px solid var(--card-border);
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    
+    .stat-card h3 {
+        margin: 0;
+        font-size: 1.8rem;
+    }
+    
+    .stat-card span {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+    }
+    
+    .share-layout {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: clamp(16px, 2vw, 32px);
+    }
+    
+    .share-card,
+    .steps-card {
+        border-radius: 24px;
+        padding: clamp(20px, 3vw, 32px);
+        background: rgba(7, 10, 34, 0.7);
+        border: 1px solid var(--card-border);
+        backdrop-filter: blur(18px);
+    }
+    
+    .share-card h4 {
+        margin: 0 0 24px;
+        font-size: 1.3rem;
+    }
+    
+    .share-field {
+        margin-bottom: 18px;
+    }
+    
+    .share-field label {
+        display: block;
+        font-size: 0.8rem;
+        color: #7d8ab7;
+        margin-bottom: 6px;
+    }
+    
+    .field {
+        display: flex;
+        align-items: stretch;
+        gap: 8px;
+        background: rgba(4, 6, 20, 0.6);
+        border-radius: 14px;
+        border: 1px solid var(--card-border);
+        padding: 4px;
+    }
+    
+    .field input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        color: var(--text-primary);
+        font-weight: 600;
+        padding: 10px 12px;
+    }
+    
+    .field button {
+        border: none;
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--text-primary);
+        border-radius: 10px;
+        padding: 0 14px;
+        cursor: pointer;
+    }
+    
+    .social-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .social-row button {
+        flex: 1;
+        min-width: 120px;
+        border-radius: 12px;
+        border: 1px solid var(--card-border);
+        background: rgba(255, 255, 255, 0.04);
+        color: #cfd7ff;
+        padding: 10px 12px;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .steps-card ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+    
+    .steps-card li {
+        display: grid;
+        grid-template-columns: 54px 1fr;
+        gap: 16px;
+        align-items: center;
+    }
+    
+    .steps-card li span {
+        width: 54px;
+        height: 54px;
+        border-radius: 16px;
+        background: linear-gradient(160deg, var(--accent-2), #00a2ff);
+        color: #050914;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+    }
+    
+    .steps-card h5 {
+        margin: 0 0 4px;
+        font-size: 1rem;
+    }
+    
+    .steps-card p {
+        margin: 0;
+        color: #8a96c4;
+        font-size: 0.9rem;
+    }
+    
+    .data-panel {
+        background: linear-gradient(160deg, rgba(3, 5, 20, 0.92), rgba(2, 4, 14, 0.98));
+        border-radius: 28px;
+        padding: clamp(24px, 3vw, 40px);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+    }
+    
+    .data-panel__head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+    
+    .data-panel__actions {
+        display: flex;
+        gap: 12px;
+    }
+    
+    .chip {
+        background: var(--chip-bg);
+        border-radius: 999px;
+        border: none;
+        color: #dbe6ff;
+        padding: 10px 18px;
+        cursor: pointer;
+    }
+    
+    .table-scroll {
+        overflow-x: auto;
+        border-radius: 20px;
+        border: 1px solid var(--card-border);
+    }
+    
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 720px;
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: 18px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .data-table th {
+        text-align: left;
+        font-size: 0.8rem;
+        letter-spacing: 0.15em;
+        color: #7c89b7;
+        text-transform: uppercase;
+    }
+    
+    .align-right {
+        text-align: right;
+    }
+    
+    .align-center {
+        text-align: center;
+    }
+    
+    .avatar {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+    
+    .avatar span {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #00a2ff, var(--accent-2));
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #041124;
+        font-weight: 700;
+    }
+    
+    .avatar strong {
+        display: block;
+    }
+    
+    .avatar small {
+        color: #8c96c0;
+    }
+    
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border-radius: 999px;
+        padding: 6px 14px;
+        background: var(--badge-bg);
+        font-size: 0.8rem;
+    }
+    
+    .badge--success {
+        background: var(--success-bg);
+        color: #6dfcd9;
+    }
+    
+    .cards-mobile {
+        margin-top: 24px;
+        display: none;
+        flex-direction: column;
+        gap: 14px;
+    }
+    
+    .cards-mobile article {
+        border: 1px solid var(--card-border);
+        border-radius: 18px;
+        padding: 18px;
+        background: rgba(255, 255, 255, 0.02);
+    }
+    
+    .cards-mobile header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+    
+    .cards-mobile dl {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin: 0;
+    }
+    
+    .cards-mobile dt {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #7d8bbf;
+    }
+    
+    .cards-mobile dd {
+        margin: 4px 0 0;
+        font-weight: 600;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px dashed rgba(255, 255, 255, 0.08);
+    }
+    
+    .empty-state i {
+        font-size: 3rem;
+        color: #29345d;
+        margin-bottom: 12px;
+        display: inline-block;
+    }
+    
+    .empty-state p {
+        color: #9aa5d1;
+        margin-bottom: 18px;
+    }
+    
+    @media (max-width: 960px) {
+        .data-table {
+            min-width: 600px;
+        }
+        .cards-mobile {
+            display: flex;
+        }
+    }
+    
+    @media (max-width: 640px) {
+        .hero-panel {
+            padding: 20px;
+        }
+        .steps-card li {
+            grid-template-columns: 1fr;
+        }
+        .steps-card li span {
+            width: 48px;
+            height: 48px;
+        }
+        .cards-mobile dl {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+</style>

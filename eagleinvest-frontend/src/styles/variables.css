@@ -1,0 +1,206 @@
+/* EagleInvest - Color Palette & Variables */
+
+
+/* Basado en análisis de plataformas de inversión profesionales */
+
+:root {
+    /* Colores Primarios - Navy Oscuro (de la imagen) */
+    --primary-dark: #010915;
+    /* Midnight navy casi negro */
+    --primary-blue: #041633;
+    /* Azul petróleo profundo */
+    --primary-accent: #08254D;
+    /* Azul cobalto oscuro */
+    /* Colores de Acento - Cian Neón (águila de la imagen) */
+    --accent-gold: #00EAFF;
+    /* Cian neón brillante */
+    --accent-gold-light: #4CE7FF;
+    /* Cian claro */
+    --accent-gold-dark: #0098D3;
+    /* Cian oscuro */
+    /* Colores Secundarios - Paleta Azul */
+    --secondary-teal: #00D9FF;
+    /* Cian eléctrico */
+    --secondary-cobalt: #0F4CFF;
+    /* Azul cobalto intenso */
+    --secondary-blue: #1F7BFF;
+    /* Azul eléctrico */
+    /* Estados y Feedback */
+    --success: #00EAFF;
+    /* Cian neón éxito */
+    --success-light: #4CE7FF;
+    --warning: #0F62FE;
+    /* Azul medio advertencia */
+    --warning-light: #6FB3FF;
+    --danger: #0B2E64;
+    /* Azul profundo alerta */
+    --danger-light: #6A8DFF;
+    --info: #35B2FF;
+    /* Azul claro información */
+    --info-light: #7ED0FF;
+    /* Grises y Neutros */
+    --gray-900: #010915;
+    --gray-800: #041633;
+    --gray-700: #08254D;
+    --gray-600: #0E366D;
+    --gray-500: #1B4C86;
+    --gray-400: #4B6C9C;
+    --gray-300: #7E95B9;
+    --gray-200: #B5C6DE;
+    --gray-100: #DBE4F2;
+    --gray-50: #F3F6FB;
+    /* Fondos */
+    --bg-primary: #010915;
+    --bg-secondary: #041633;
+    --bg-tertiary: #08254D;
+    --bg-card: #0B1F3D;
+    --bg-card-hover: #123059;
+    --bg-overlay: rgba(3, 11, 24, 0.95);
+    /* Texto */
+    --text-primary: #FFFFFF;
+    --text-secondary: #CDD2E5;
+    --text-tertiary: #A1A9C9;
+    --text-muted: #7581A8;
+    /* Bordes */
+    --border-color: rgba(0, 217, 255, 0.22);
+    --border-color-light: rgba(0, 217, 255, 0.12);
+    --border-color-strong: rgba(0, 217, 255, 0.45);
+    /* Sombras */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.6);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.7);
+    --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.8);
+    --shadow-glow: 0 0 20px rgba(0, 240, 255, 0.5);
+    --shadow-glow-cobalt: 0 0 20px rgba(31, 123, 255, 0.45);
+    /* Gradientes */
+    --gradient-primary: linear-gradient(135deg, #010915 0%, #05204F 100%);
+    --gradient-accent: linear-gradient(135deg, #00EAFF 0%, #0098D3 100%);
+    --gradient-success: linear-gradient(135deg, #00EAFF 0%, #00A6E0 100%);
+    --gradient-premium: linear-gradient(135deg, #031733 0%, #0A459A 100%);
+    --gradient-overlay: linear-gradient(180deg, rgba(1, 9, 21, 0) 0%, rgba(1, 9, 21, 0.92) 100%);
+    --gradient-neon: linear-gradient(135deg, #00EAFF 0%, #1F7BFF 100%);
+    /* Animaciones */
+    --transition-fast: 150ms ease-in-out;
+    --transition-base: 250ms ease-in-out;
+    --transition-slow: 350ms ease-in-out;
+    /* Espaciado */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    /* Bordes redondeados */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-2xl: 1.5rem;
+    --radius-full: 9999px;
+    /* Tamaños de fuente */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 1.875rem;
+    --text-4xl: 2.25rem;
+    --text-5xl: 3rem;
+}
+
+
+/* Tema Claro - Deshabilitado, solo tema oscuro */
+
+[data-theme="light"] {
+    /* Forzar tema oscuro incluso si se activa el modo claro */
+    --bg-primary: #010915;
+    --bg-secondary: #041633;
+    --bg-tertiary: #08254D;
+    --bg-card: #0B1F3D;
+    --bg-card-hover: #123059;
+    --bg-overlay: rgba(3, 11, 24, 0.95);
+    --text-primary: #FFFFFF;
+    --text-secondary: #B5C6DE;
+    --text-tertiary: #7E95B9;
+    --text-muted: #4B6C9C;
+    --border-color: rgba(0, 217, 255, 0.22);
+    --border-color-light: rgba(0, 217, 255, 0.12);
+    --border-color-strong: rgba(0, 217, 255, 0.45);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.6);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.7);
+    --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.8);
+    --shadow-glow: 0 0 20px rgba(0, 234, 255, 0.5);
+    --shadow-glow-cobalt: 0 0 20px rgba(31, 123, 255, 0.45);
+}
+
+
+/* Animaciones globales */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+
+/* Clases de utilidad */
+
+.fade-in {
+    animation: fadeIn var(--transition-base) ease-out;
+}
+
+.slide-in-right {
+    animation: slideInRight var(--transition-base) ease-out;
+}
+
+.transition-all {
+    transition: all var(--transition-base);
+}
+
+.hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.hover-glow:hover {
+    box-shadow: var(--shadow-glow);
+}
