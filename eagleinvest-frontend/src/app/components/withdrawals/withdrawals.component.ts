@@ -26,7 +26,7 @@ interface Investment {
 })
 export class WithdrawalsComponent implements OnInit {
   withdrawalForm: FormGroup;
-  balance = 12450.75;
+  balance = 0;
   investments = signal<Investment[]>([]);
 
   constructor(
@@ -36,7 +36,7 @@ export class WithdrawalsComponent implements OnInit {
     private dashboardService: DashboardService
   ) {
     this.withdrawalForm = this.fb.group({
-      amount: ['', [Validators.required, Validators.min(50), Validators.max(this.balance)]],
+      amount: ['', [Validators.required, Validators.min(50)]],
       payment_method: ['', Validators.required],
       wallet_address: ['', Validators.required]
     });
@@ -47,6 +47,14 @@ export class WithdrawalsComponent implements OnInit {
       this.router.navigate(['/login']);
       return;
     }
+    
+    const user = this.authService.getCurrentUser();
+    if (user) {
+      this.balance = user.earnings_balance || 0;
+      this.withdrawalForm.get('amount')?.addValidators(Validators.max(this.balance));
+      this.withdrawalForm.get('amount')?.updateValueAndValidity();
+    }
+
     this.loadInvestments();
   }
 
@@ -78,7 +86,7 @@ export class WithdrawalsComponent implements OnInit {
     if (this.withdrawalForm.valid) {
       const withdrawalData = this.withdrawalForm.value;
       console.log('Withdrawal requested:', withdrawalData);
-      alert('Solicitud de retiro enviada exitosamente. Procesamiento en 24-48 horas.');
+      alert('Solicitud de retiro enviada exitosamente. Procesamiento en 1-3 minutos (Sim).');
       this.withdrawalForm.reset();
     }
   }

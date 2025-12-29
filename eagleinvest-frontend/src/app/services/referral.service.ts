@@ -1,7 +1,34 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+export interface InvitationTokenValidationResponse {
+  valid: boolean;
+  message?: string;
+  sponsor_id?: number;
+  sponsor_name?: string;
+  sponsor_email?: string;
+}
+
+export interface RegisterByInvitationPayload {
+  name: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+  phone_number: string;
+  wallet: string;
+  referral_code: string;
+  firebase_id_token: string;
+}
+
+export interface RegisterByInvitationResponse {
+  success: boolean;
+  message?: string;
+  user?: any;
+  token?: string;
+  error?: string;
+}
 
 export interface Referral {
   id: number;
@@ -23,6 +50,62 @@ export interface ReferralStats {
   referral_link: string;
 }
 
+// Nuevas interfaces para sistema de diagramas
+export interface ReferralCheck {
+  has_invitation: boolean;
+  sponsor?: {
+    id: number;
+    name: string;
+    referral_code: string;
+  };
+  can_register: boolean;
+  message: string;
+}
+
+export interface RegisterRequest {
+  name: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+  wallet: string;
+  referral_code: string;
+  two_factor_code?: string;
+}
+
+export interface RegisterResponse {
+  message: string;
+  user?: any;
+  access_token?: string;
+  token_type?: string;
+  sponsor?: any;
+  requires_2fa?: boolean;
+  email?: string;
+}
+
+export interface ReferralCodeInfo {
+  referral_code: string;
+  referral_link: string;
+  total_referrals: number;
+}
+
+export interface NetworkMember {
+  id: number;
+  name: string;
+  email: string;
+  level: number;
+  joined_at: string;
+  children: NetworkMember[];
+}
+
+export interface NetworkResponse {
+  user: any;
+  network: NetworkMember[];
+  statistics: {
+    direct_referrals: number;
+    total_network: number;
+  };
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -34,6 +117,22 @@ export class ReferralService {
   stats = signal<ReferralStats | null>(null);
 
   constructor(private http: HttpClient) {}
+
+  /**
+   * Valida un token de invitación y retorna info del sponsor.
+   * Endpoint público: POST /api/referrals/validate-token
+   */
+  validateInvitationToken(token: string): Observable<InvitationTokenValidationResponse> {
+    return this.http.post<InvitationTokenValidationResponse>(`${this.apiUrl}/referrals/validate-token`, { token });
+  }
+
+  /**
+   * Registro de usuario por invitación.
+   * Endpoint público: POST /api/referrals/register-by-invitation
+   */
+  registerByInvitation(payload: RegisterByInvitationPayload): Observable<RegisterByInvitationResponse> {
+    return this.http.post<RegisterByInvitationResponse>(`${this.apiUrl}/referrals/register-by-invitation`, payload);
+  }
 
   /**
    * Obtiene las estadísticas de referidos
@@ -103,5 +202,37 @@ export class ReferralService {
     };
     
     return amount * (rates[level as keyof typeof rates] || 0);
+  }
+
+  // Nuevos métodos para sistema de diagramas
+
+  /**
+   * Verificar código de invitación
+   */
+  checkInvitation(referralCode: string): Observable<ReferralCheck> {
+    return this.http.get<ReferralCheck>(`${this.apiUrl}/referrals/check`, {
+      params: { ref: referralCode }
+    });
+  }
+
+  /**
+   * Registro con sistema de invitación obligatoria
+   */
+  register(data: RegisterRequest): Observable<RegisterResponse> {
+    return this.http.post<RegisterResponse>(`${this.apiUrl}/referrals/register`, data);
+  }
+
+  /**
+   * Obtener código de referido del usuario
+   */
+  getReferralCode(): Observable<ReferralCodeInfo> {
+    return this.http.get<ReferralCodeInfo>(`${this.apiUrl}/referrals/code`);
+  }
+
+  /**
+   * Obtener red unilevel
+   */
+  getNetwork(): Observable<NetworkResponse> {
+    return this.http.get<NetworkResponse>(`${this.apiUrl}/referrals/network`);
   }
 }

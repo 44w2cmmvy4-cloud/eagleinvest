@@ -16,7 +16,17 @@ class InvestmentPlan extends Model
         'total_return_rate',
         'is_active',
         'risk_level',
-        'features'
+        'features',
+        // Added fields from migration
+        'user_id',
+        'plan_name',
+        'plan_tier',
+        'amount',
+        'status',
+        'start_date',
+        'withdrawal_interval_days',
+        'minimum_withdrawal_amount',
+        'meets_withdrawal_requirements'
     ];
 
     protected $casts = [

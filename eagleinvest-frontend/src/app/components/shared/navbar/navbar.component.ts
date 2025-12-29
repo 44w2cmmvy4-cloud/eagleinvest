@@ -14,8 +14,8 @@ import { Subscription } from 'rxjs';
     <ng-container>
       <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container-xl nav-container">
-        <a class="navbar-brand" [routerLink]="['/dashboard']">
-          <i class="bi bi-graph-up-arrow me-2"></i>
+        <a class="navbar-brand" [routerLink]="['/dashboard']" aria-label="EagleInvest">
+          <img class="brand-logo me-2" [src]="brandLogo" alt="EagleInvest" />
           <span class="brand-text">EagleInvest</span>
         </a>
         
@@ -127,9 +127,11 @@ import { Subscription } from 'rxjs';
       transition: all var(--transition-base);
     }
 
-    .navbar-brand i {
-      color: var(--accent-gold);
-      font-size: 1.75rem;
+    .brand-logo {
+      height: 36px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
     }
 
     .navbar-brand:hover {
@@ -326,6 +328,7 @@ export class NavbarComponent implements OnDestroy {
   isCollapsed = true;
   showUserMenu = false;
   userName = '';
+  brandLogo = '/assets/logo/logo.png';
   private routerSubscription?: Subscription;
 
   ngOnInit() {

@@ -19,7 +19,7 @@ import { AuthService } from '../../../services/auth.service';
             <!-- Left Side - Form -->
             <div class="col-lg-6" style="padding: clamp(30px, 5vw, 50px);">
               <div class="text-center mb-4">
-                <div class="icon-wrapper mb-3" style="background: linear-gradient(135deg, #00F0FF, #C946FF); width: 70px; height: 70px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 0 20px rgba(0,240,255,0.5);">
+                <div class="icon-wrapper mb-3" style="background: linear-gradient(135deg, #00F0FF, #4D7CFF); width: 70px; height: 70px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 0 20px rgba(0,240,255,0.5);">
                   <i class="bi bi-person-plus-fill" style="color: #0A0E27; font-size: 2rem;"></i>
                 </div>
                 <h2 class="icon-glow" style="color: white; font-weight: 800; margin: 0 0 10px 0; font-size: clamp(1.5rem, 4vw, 2rem);">Crear Cuenta</h2>
@@ -139,7 +139,7 @@ import { AuthService } from '../../../services/auth.service';
                   class="btn-neon"
                   [disabled]="registerForm.invalid || isLoading()"
                   [style.opacity]="registerForm.invalid || isLoading() ? '0.6' : '1'"
-                  style="width: 100%; padding: 15px; background: linear-gradient(135deg, #00F0FF, #C946FF); color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 1.1rem; margin-bottom: 15px;">
+                  style="width: 100%; padding: 15px; background: linear-gradient(135deg, #00F0FF, #4D7CFF); color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 1.1rem; margin-bottom: 15px;">
                   @if (isLoading()) {
                     <i class="bi bi-arrow-repeat processing-spinner me-2"></i>Procesando...
                   } @else {
@@ -163,7 +163,7 @@ import { AuthService } from '../../../services/auth.service';
             </div>
             
             <!-- Right Side - Benefits -->
-            <div class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, rgba(0,240,255,0.1), rgba(201,70,255,0.1)); padding: 50px;">
+            <div class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, rgba(0,240,255,0.1), rgba(77,124,255,0.08)); padding: 50px;">
               <div class="text-center stagger-children">
                 <div class="animate-fade-in icon-glow" style="margin-bottom: 30px;">
                   <i class="bi bi-graph-up-arrow" style="font-size: 5rem; color: #00F0FF;"></i>
@@ -186,10 +186,10 @@ import { AuthService } from '../../../services/auth.service';
                     </div>
                   </div>
                   <div class="col-12">
-                    <div class="stat-card gpu-accelerated" style="background: rgba(13,17,46,0.6); padding: 20px; border-radius: 15px; border: 1px solid rgba(201,70,255,0.2);">
+                    <div class="stat-card gpu-accelerated" style="background: rgba(13,17,46,0.6); padding: 20px; border-radius: 15px; border: 1px solid rgba(0,240,255,0.2);">
                       <div class="d-flex align-items-center gap-3">
-                        <div class="icon-wrapper" style="background: rgba(201,70,255,0.2); width: 60px; height: 60px; border-radius: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                          <i class="bi bi-graph-up" style="color: #C946FF; font-size: 2rem;"></i>
+                        <div class="icon-wrapper" style="background: rgba(0,240,255,0.15); width: 60px; height: 60px; border-radius: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                          <i class="bi bi-graph-up" style="color: #00F0FF; font-size: 2rem;"></i>
                         </div>
                         <div style="text-align: left;">
                           <h5 style="color: white; margin: 0 0 5px 0; font-weight: 700;">Rendimientos Superiores</h5>
@@ -199,10 +199,10 @@ import { AuthService } from '../../../services/auth.service';
                     </div>
                   </div>
                   <div class="col-12">
-                    <div class="stat-card gpu-accelerated" style="background: rgba(13,17,46,0.6); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,0,128,0.2);">
+                    <div class="stat-card gpu-accelerated" style="background: rgba(13,17,46,0.6); padding: 20px; border-radius: 15px; border: 1px solid rgba(0,240,255,0.2);">
                       <div class="d-flex align-items-center gap-3">
-                        <div class="icon-wrapper" style="background: rgba(255,0,128,0.2); width: 60px; height: 60px; border-radius: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                          <i class="bi bi-people" style="color: #FF0080; font-size: 2rem;"></i>
+                        <div class="icon-wrapper" style="background: rgba(0,240,255,0.15); width: 60px; height: 60px; border-radius: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                          <i class="bi bi-people" style="color: #00F0FF; font-size: 2rem;"></i>
                         </div>
                         <div style="text-align: left;">
                           <h5 style="color: white; margin: 0 0 5px 0; font-weight: 700;">Soporte Experto</h5>

@@ -2,41 +2,30 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AuthController as ApiAuthController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\MarketDataController;
+use App\Http\Controllers\Api\ReferralController as ApiReferralController;
+use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\WalletController;
+use App\Http\Controllers\WithdrawalController;
+use App\Http\Controllers\InvestmentController;
+use App\Http\Controllers\SupportTicketController;
 
 // Rutas públicas de autenticación
-Route::post('/auth/register', [AuthController::class, 'register']);
-Route::post('/auth/login', [ApiAuthController::class, 'login']);
-Route::post('/auth/verify-2fa', [TwoFactorController::class, 'verify2FACode']);
-Route::post('/auth/resend-2fa', [TwoFactorController::class, 'resend2FACode']);
+Route::post('/auth/register', [AuthController::class, 'register'])->middleware('throttle:60,1');
+Route::post('/auth/login', [AuthController::class, 'login'])->middleware('throttle:60,1');
+Route::post('/auth/verify-2fa', [TwoFactorController::class, 'verify2FACode'])->middleware('throttle:60,1');
+Route::post('/auth/resend-2fa', [TwoFactorController::class, 'resend2FACode'])->middleware('throttle:60,1');
 
-// Wallet routes (public for connection)
-Route::get('/wallet/{userId}', [WalletController::class, 'getWalletInfo']);
-Route::post('/wallet/connect', [WalletController::class, 'connectWallet']);
-Route::post('/wallet/disconnect', [WalletController::class, 'disconnectWallet']);
-
-
-// Rutas de demo (sin autenticación)
-Route::post('/demo/login', [DashboardController::class, 'login']);
-Route::prefix('demo')->group(function () {
-    Route::get('/dashboard/{userId}', [DashboardController::class, 'getDashboardData']);
-    Route::get('/plans', [DashboardController::class, 'getInvestmentPlans']);
-    Route::get('/transactions/{userId}', [DashboardController::class, 'getTransactions']);
-    Route::get('/withdrawals/{userId}', [DashboardController::class, 'getWithdrawals']);
-    Route::post('/withdrawals', [DashboardController::class, 'createWithdrawal']);
-    Route::get('/profile/{userId}', [DashboardController::class, 'getProfile']);
-    Route::put('/profile/{userId}', [DashboardController::class, 'updateProfile']);
-    Route::get('/referrals/{userId}/stats', [DashboardController::class, 'getReferralStats']);
-    Route::get('/referrals/{userId}', [DashboardController::class, 'getReferrals']);
-});
+// Rutas de invitación (públicas) - Sistema de diagramas
+Route::get('/referrals/check', [ReferralController::class, 'checkInvitation'])->middleware('throttle:20,1');
+Route::post('/referrals/register', [ReferralController::class, 'register'])->middleware('throttle:3,10');
 
 // Rutas de datos de mercado (públicas)
-Route::prefix('market')->group(function () {
+Route::prefix('market')->middleware('throttle:30,1')->group(function () {
     Route::get('/crypto/prices', [MarketDataController::class, 'getCryptoPrices']);
     Route::get('/crypto/{coinId}/history', [MarketDataController::class, 'getCryptoHistory']);
     Route::get('/indices', [MarketDataController::class, 'getMarketIndices']);
@@ -45,22 +34,59 @@ Route::prefix('market')->group(function () {
 });
 
 // Rutas protegidas
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function () {
     // Autenticación
     Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::get('/auth/me', [AuthController::class, 'me']);
-    Route::post('/auth/verify', [AuthController::class, 'verify']);
-
-    // Portafolio
-    Route::get('/portfolio', [PortfolioController::class, 'index']);
-    Route::get('/portfolio/market-analysis', [PortfolioController::class, 'marketAnalysis']);
-    Route::get('/portfolio/transactions', [PortfolioController::class, 'transactions']);
 
     // Usuario
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
 
-    Route::get('/profile', ProfileController::class);
+    Route::get('/profile', [ProfileController::class, 'show']);
+    Route::put('/profile', [ProfileController::class, 'update']);
+    
+    // Inversiones - Sistema de diagramas
+    Route::prefix('investments')->group(function () {
+        Route::post('/', [InvestmentController::class, 'createInvestment'])->middleware('throttle:10,60');
+        Route::get('/', [InvestmentController::class, 'userInvestments']);
+        Route::get('/{id}', [InvestmentController::class, 'getInvestment']);
+    });
+
+    // Retiros - Sistema de diagramas
+    Route::prefix('withdrawals')->group(function () {
+        Route::post('/', [WithdrawalController::class, 'requestWithdrawal'])->middleware('throttle:5,60');
+        Route::get('/', [WithdrawalController::class, 'userWithdrawals']);
+        
+        // Admin routes
+        Route::middleware('admin')->group(function () {
+            Route::get('/pending/all', [WithdrawalController::class, 'pendingWithdrawals']);
+            Route::post('/{id}/approve', [WithdrawalController::class, 'approveWithdrawal']);
+            Route::post('/{id}/complete', [WithdrawalController::class, 'completeWithdrawal']);
+        });
+    });
+
+    // Tickets de soporte - Sistema de diagramas
+    Route::prefix('support')->group(function () {
+        Route::post('/wallet-change', [SupportTicketController::class, 'requestWalletChange'])->middleware('throttle:3,60');
+        Route::get('/tickets', [SupportTicketController::class, 'userTickets']);
+        Route::get('/tickets/{id}', [SupportTicketController::class, 'getTicket']);
+
+        // Admin routes
+        Route::middleware('admin')->group(function () {
+            Route::get('/tickets/pending/all', [SupportTicketController::class, 'pendingTickets']);
+            Route::post('/tickets/{id}/review', [SupportTicketController::class, 'reviewTicket']);
+            Route::post('/tickets/{id}/verify-identity', [SupportTicketController::class, 'verifyIdentity']);
+            Route::post('/tickets/{id}/approve', [SupportTicketController::class, 'approveWalletChange']);
+            Route::post('/tickets/{id}/reject', [SupportTicketController::class, 'rejectWalletChange']);
+        });
+    });
+
+    // Red de referidos - Sistema de diagramas
+    Route::prefix('referrals')->group(function () {
+        Route::get('/code', [ReferralController::class, 'getReferralCode']);
+        Route::get('/network', [ReferralController::class, 'getNetwork']);
+    });
 });
 

@@ -187,3 +187,5 @@ bower_components/
 connect.lock
 typings/
 .angular/
+
+/eagleinvest-api/storage/firebase-credentials.json

@@ -2,456 +2,488 @@
    GLOBAL ANIMATIONS & EFFECTS
    ======================================== */
 
+
 /* Keyframe Animations */
+
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 @keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.05);
-    opacity: 0.8;
-  }
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
 }
 
 @keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 3px rgba(0, 240, 255, 0.3), 0 0 6px rgba(0, 240, 255, 0.2);
-  }
-  50% {
-    box-shadow: 0 0 8px rgba(0, 240, 255, 0.5), 0 0 12px rgba(0, 240, 255, 0.3);
-  }
+    0%,
+    100% {
+        box-shadow: 0 0 3px rgba(0, 240, 255, 0.3), 0 0 6px rgba(0, 240, 255, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 8px rgba(0, 240, 255, 0.5), 0 0 12px rgba(0, 240, 255, 0.3);
+    }
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
 }
 
 @keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 @keyframes countUp {
-  from {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 @keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes scaleIn {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
+
 /* Animation Classes */
+
 .animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
+    animation: fadeIn 0.5s ease-out forwards;
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out forwards;
+    animation: fadeInUp 0.6s ease-out forwards;
 }
 
 .animate-slide-in-right {
-  animation: slideInRight 0.5s ease-out forwards;
+    animation: slideInRight 0.5s ease-out forwards;
 }
 
 .animate-slide-down {
-  animation: slideDown 0.4s ease-out forwards;
+    animation: slideDown 0.4s ease-out forwards;
 }
 
 .animate-scale-in {
-  animation: scaleIn 0.4s ease-out forwards;
+    animation: scaleIn 0.4s ease-out forwards;
 }
+
 
 /* Stagger animations for children */
-.stagger-children > * {
-  opacity: 0;
-  animation: fadeInUp 0.6s ease-out forwards;
+
+.stagger-children>* {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out forwards;
 }
 
-.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
-.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
-.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
-.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
-.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
-.stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+.stagger-children>*:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.stagger-children>*:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.stagger-children>*:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.stagger-children>*:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.stagger-children>*:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.stagger-children>*:nth-child(6) {
+    animation-delay: 0.6s;
+}
+
 
 /* ========================================
    CARD EFFECTS
    ======================================== */
 
 .stat-card {
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .stat-card::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    45deg,
-    transparent,
-    rgba(0, 240, 255, 0.1),
-    transparent
-  );
-  transform: rotate(45deg);
-  transition: all 0.6s;
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient( 45deg, transparent, rgba(0, 240, 255, 0.1), transparent);
+    transform: rotate(45deg);
+    transition: all 0.6s;
 }
 
 .stat-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(0, 240, 255, 0.4) !important;
-  box-shadow: 0 8px 20px rgba(0, 240, 255, 0.2);
+    transform: translateY(-5px);
+    border-color: rgba(0, 240, 255, 0.4) !important;
+    box-shadow: 0 8px 20px rgba(0, 240, 255, 0.2);
 }
 
 .stat-card:hover::before {
-  left: 100%;
+    left: 100%;
 }
 
 .investment-card {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(135deg, rgba(26,31,77,0.5), rgba(13,17,46,0.8));
-  border: 1px solid rgba(0,240,255,0.2);
-  border-radius: 15px;
-  padding: 20px;
-  backdrop-filter: blur(10px);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(26, 31, 77, 0.5), rgba(13, 17, 46, 0.8));
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .investment-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, #00F0FF, #C946FF, #FF0080);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s ease;
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #00F0FF, #4D7CFF, #00F0FF);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
 }
 
 .investment-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(0,240,255,0.4);
-  box-shadow: 0 10px 25px rgba(0, 240, 255, 0.25);
+    transform: translateY(-5px);
+    border-color: rgba(0, 240, 255, 0.4);
+    box-shadow: 0 10px 25px rgba(0, 240, 255, 0.25);
 }
 
 .investment-card:hover::after {
-  transform: scaleX(1);
+    transform: scaleX(1);
 }
+
 
 /* ========================================
    BUTTON EFFECTS
    ======================================== */
 
 .btn-neon {
-  position: relative;
-  background: linear-gradient(135deg, #00F0FF, #C946FF);
-  border: none;
-  color: #0A0E27;
-  font-weight: 700;
-  padding: 12px 24px;
-  border-radius: 10px;
-  overflow: hidden;
-  transition: all 0.3s ease;
+    position: relative;
+    background: linear-gradient(135deg, #00F0FF, #4D7CFF);
+    border: none;
+    color: #0A0E27;
+    font-weight: 700;
+    padding: 12px 24px;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
 }
 
 .btn-neon::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-  transition: left 0.5s;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
 }
 
 .btn-neon:hover::before {
-  left: 100%;
+    left: 100%;
 }
 
 .btn-neon:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+    transform: scale(1.03);
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
 }
 
 .btn-neon:active {
-  transform: scale(0.98);
+    transform: scale(0.98);
 }
+
 
 /* ========================================
    PROGRESS BAR EFFECTS
    ======================================== */
 
 .progress-bar-animated {
-  background: linear-gradient(90deg, #00F0FF, #C946FF, #FF0080);
-  background-size: 200% 100%;
-  animation: gradientShift 3s ease infinite;
-  transition: width 0.6s ease;
+    background: linear-gradient(90deg, #00F0FF, #4D7CFF, #00F0FF);
+    background-size: 200% 100%;
+    animation: gradientShift 3s ease infinite;
+    transition: width 0.6s ease;
 }
 
 .progress-glow {
-  position: relative;
+    position: relative;
 }
 
 .progress-glow::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: inherit;
-  filter: blur(8px);
-  opacity: 0.5;
-  z-index: -1;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    filter: blur(8px);
+    opacity: 0.5;
+    z-index: -1;
 }
+
 
 /* ========================================
    NUMBER COUNTER EFFECT
    ======================================== */
 
 .counter-number {
-  display: inline-block;
-  animation: countUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    display: inline-block;
+    animation: countUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
+
 
 /* ========================================
    ICON EFFECTS
    ======================================== */
 
 .icon-wrapper {
-  transition: all 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .stat-card:hover .icon-wrapper {
-  transform: scale(1.1) rotate(5deg);
-  animation: pulse 2s ease-in-out infinite;
+    transform: scale(1.1) rotate(5deg);
+    animation: pulse 2s ease-in-out infinite;
 }
 
 .icon-glow {
-  /* Disabled for cleaner appearance */
+    /* Disabled for cleaner appearance */
 }
+
 
 /* ========================================
    BADGE EFFECTS
    ======================================== */
 
 .badge-animated {
-  position: relative;
-  overflow: hidden;
-  /* Removed excessive pulse animation */
+    position: relative;
+    overflow: hidden;
+    /* Removed excessive pulse animation */
 }
 
 .badge-glow {
-  /* Reduced glow for subtler appearance */
-  box-shadow: 0 0 6px rgba(0, 240, 255, 0.3);
+    /* Reduced glow for subtler appearance */
+    box-shadow: 0 0 6px rgba(0, 240, 255, 0.3);
 }
+
 
 /* ========================================
    TABLE EFFECTS
    ======================================== */
 
 .table-row-hover {
-  transition: all 0.3s ease;
-  position: relative;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
 .table-row-hover::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 3px;
-  background: linear-gradient(180deg, #00F0FF, #C946FF);
-  transform: scaleY(0);
-  transition: transform 0.3s ease;
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: linear-gradient(180deg, #00F0FF, #4D7CFF);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
 }
 
 .table-row-hover:hover {
-  background: rgba(0, 240, 255, 0.05) !important;
-  transform: translateX(5px);
+    background: rgba(0, 240, 255, 0.05) !important;
+    transform: translateX(5px);
 }
 
 .table-row-hover:hover::before {
-  transform: scaleY(1);
+    transform: scaleY(1);
 }
+
 
 /* ========================================
    LOADING SKELETON
    ======================================== */
 
 .skeleton {
-  background: linear-gradient(
-    90deg,
-    rgba(26,31,77,0.3) 25%,
-    rgba(0,240,255,0.1) 50%,
-    rgba(26,31,77,0.3) 75%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
-  border-radius: 8px;
+    background: linear-gradient( 90deg, rgba(26, 31, 77, 0.3) 25%, rgba(0, 240, 255, 0.1) 50%, rgba(26, 31, 77, 0.3) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+    border-radius: 8px;
 }
 
 .skeleton-text {
-  height: 16px;
-  margin-bottom: 8px;
+    height: 16px;
+    margin-bottom: 8px;
 }
 
 .skeleton-title {
-  height: 24px;
-  width: 60%;
-  margin-bottom: 12px;
+    height: 24px;
+    width: 60%;
+    margin-bottom: 12px;
 }
 
 .skeleton-circle {
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
 }
+
 
 /* ========================================
    TOOLTIP EFFECTS
    ======================================== */
 
 .tooltip-custom {
-  position: relative;
+    position: relative;
 }
 
 .tooltip-custom::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-8px);
-  background: rgba(13,17,46,0.95);
-  color: #00F0FF;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(0,240,255,0.3);
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    background: rgba(13, 17, 46, 0.95);
+    color: #00F0FF;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 240, 255, 0.3);
 }
 
 .tooltip-custom:hover::after {
-  opacity: 1;
-  transform: translateX(-50%) translateY(-4px);
+    opacity: 1;
+    transform: translateX(-50%) translateY(-4px);
 }
+
 
 /* ========================================
    RESPONSIVE ADJUSTMENTS
    ======================================== */
 
 @media (max-width: 768px) {
-  .stat-card:hover {
-    transform: translateY(-3px);
-  }
-  
-  .investment-card:hover {
-    transform: translateY(-5px) scale(1.01);
-  }
+    .stat-card:hover {
+        transform: translateY(-3px);
+    }
+    .investment-card:hover {
+        transform: translateY(-5px) scale(1.01);
+    }
 }
+
 
 /* ========================================
    PERFORMANCE OPTIMIZATION
    ======================================== */
 
 .gpu-accelerated {
-  transform: translateZ(0);
-  will-change: transform, opacity;
+    transform: translateZ(0);
+    will-change: transform, opacity;
 }
 
+
 /* Reduce motion for accessibility */
+
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }

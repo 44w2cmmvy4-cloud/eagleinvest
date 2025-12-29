@@ -8,6 +8,7 @@ import { MarketDataService, CryptoPrice } from '../../services/market-data.servi
 import { AchievementService } from '../../services/achievement.service';
 import { PriceAlertService } from '../../services/price-alert.service';
 import { Subscription, interval } from 'rxjs';
+import { InvestmentPlan } from '../../models/api-models';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,6 +21,81 @@ export class DashboardComponent implements OnInit, OnDestroy {
   dashboardData = signal<DashboardData | null>(null);
   cryptoPrices = signal<CryptoPrice[]>([]);
   achievements = signal<any[]>([]);
+
+  plans = signal<InvestmentPlan[]>([
+    {
+      id: 1,
+      name: 'Plan Básico',
+      min_amount: 100,
+      max_amount: 1000,
+      daily_return_rate: 1.2,
+      duration_days: 30,
+      withdrawal_interval_days: 10,
+      minimum_withdrawal_amount: 10,
+      is_active: true,
+      features: ['Retorno diario garantizado', 'Capital protegido', 'Soporte 24/7', 'Retiro instantáneo'],
+      recommended: false,
+      accent: '#00F0FF',
+      tagline: 'Perfecto para principiantes. Inversión segura.',
+      risk_level: 'Bajo',
+      liquidity: '24h',
+      roi_display: '36% Total'
+    },
+    {
+      id: 2,
+      name: 'Plan Intermedio',
+      min_amount: 1000,
+      max_amount: 5000,
+      daily_return_rate: 1.8,
+      duration_days: 45,
+      withdrawal_interval_days: 10,
+      minimum_withdrawal_amount: 50,
+      is_active: true,
+      features: ['Retorno diario del 1.8%', 'Bonus de bienvenida', 'Asesor personal', 'Análisis de mercado'],
+      recommended: true,
+      accent: '#D4AF37',
+      tagline: 'Mayor rentabilidad para inversores con experiencia.',
+      risk_level: 'Medio',
+      liquidity: '48h',
+      roi_display: '81% Total'
+    },
+    {
+      id: 3,
+      name: 'Plan Premium',
+      min_amount: 5000,
+      max_amount: 25000,
+      daily_return_rate: 2.5,
+      duration_days: 60,
+      withdrawal_interval_days: 15,
+      minimum_withdrawal_amount: 100,
+      is_active: true,
+      features: ['Retorno diario del 2.5%', 'Acceso VIP', 'Estrategias exclusivas', 'Retiros prioritarios'],
+      recommended: false,
+      accent: '#9D00FF',
+      tagline: 'Para inversores que buscan máxima rentabilidad.',
+      risk_level: 'Alto',
+      liquidity: '72h',
+      roi_display: '150% Total'
+    },
+    {
+      id: 4,
+      name: 'Plan Elite',
+      min_amount: 25000,
+      max_amount: 100000,
+      daily_return_rate: 3.2,
+      duration_days: 90,
+      withdrawal_interval_days: 30,
+      minimum_withdrawal_amount: 500,
+      is_active: true,
+      features: ['Retorno diario del 3.2%', 'Cuenta gerenciada', 'Acceso a mercados exclusivos', 'Gestor dedicado'],
+      recommended: false,
+      accent: '#FF0000',
+      tagline: 'El plan más exclusivo para grandes inversores.',
+      risk_level: 'Muy Alto',
+      liquidity: 'Instantánea',
+      roi_display: '288% Total'
+    }
+  ]);
   
   private authService = inject(AuthService);
   private dashboardService = inject(DashboardService);
@@ -155,5 +231,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
         console.error('Error loading dashboard data:', error);
       }
     });
+  }
+
+  hexToRgb(hex: string): string {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result
+      ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
+      : '0, 0, 0';
   }
 }

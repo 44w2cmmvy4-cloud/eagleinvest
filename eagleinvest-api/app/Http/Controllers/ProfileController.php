@@ -8,7 +8,7 @@ use App\Models\UserInvestment;
 
 class ProfileController extends Controller
 {
-    public function __invoke(Request $request)
+    public function show(Request $request)
     {
         $user = Auth::user();
 
@@ -31,12 +31,40 @@ class ProfileController extends Controller
                 'phone_number' => $user->phone_number,
                 'address' => $user->address,
                 'member_since' => $user->created_at->toFormattedDateString(),
+                'two_factor_enabled' => (boolean)$user->two_factor_enabled,
             ],
             'investment_overview' => [
                 'active_investments' => $activeInvestments,
                 'total_portfolio_value' => $totalPortfolioValue,
                 'average_return' => round($averageReturn, 2),
             ]
+        ]);
+    }
+
+    public function update(Request $request)
+    {
+        \Illuminate\Support\Facades\Log::info('Profile update request received', [
+            'user_id' => Auth::id(),
+            'data' => $request->all()
+        ]);
+
+        $user = Auth::user();
+        
+        $validated = $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'email' => 'sometimes|email|unique:users,email,' . $user->id,
+            'phone_number' => 'nullable|string|max:20',
+            'address' => 'nullable|string|max:255',
+            'two_factor_enabled' => 'sometimes|boolean',
+        ]);
+
+        \Illuminate\Support\Facades\Log::info('Profile update validation passed', ['validated' => $validated]);
+
+        $user->update($validated);
+
+        return response()->json([
+            'message' => 'Perfil actualizado exitosamente',
+            'user' => $user
         ]);
     }
 }

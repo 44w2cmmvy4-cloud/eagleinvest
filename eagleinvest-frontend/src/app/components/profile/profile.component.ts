@@ -12,6 +12,9 @@ interface UserProfile {
   phone_number: string;
   address: string;
   member_since: string;
+  wallet_address?: string;
+  wallet_network?: 'TRC20' | 'BEP20' | null;
+  two_factor_enabled?: boolean;
 }
 
 interface InvestmentOverview {
@@ -29,7 +32,11 @@ interface InvestmentOverview {
 })
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
+  walletForm: FormGroup;
   isEditing = false;
+  showWalletSection = signal<boolean>(false);
+  walletChangeRequested = signal<boolean>(false);
+  currentWallet = signal<{ address: string, network: string } | null>(null);
   
   userProfile = signal<UserProfile | null>(null);
   investmentOverview = signal<InvestmentOverview | null>(null);
@@ -45,7 +52,13 @@ export class ProfileComponent implements OnInit {
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       phone_number: [''],
-      address: ['']
+      address: [''],
+      two_factor_enabled: [false]
+    });
+
+    this.walletForm = this.fb.group({
+      wallet_address: ['', [Validators.required, Validators.minLength(34)]],
+      wallet_network: ['TRC20', [Validators.required]]
     });
   }
 
@@ -65,15 +78,17 @@ export class ProfileComponent implements OnInit {
       this.userProfile.set({
         name: user.name || '',
         email: user.email || '',
-        phone_number: '',
+        phone_number: user.phone_number || '',
         address: '',
-        member_since: new Date().toISOString()
+        member_since: new Date().toISOString(),
+        two_factor_enabled: user.two_factor_enabled || false
       });
       this.profileForm.patchValue({
         name: user.name || '',
         email: user.email || '',
-        phone_number: '',
-        address: ''
+        phone_number: user.phone_number || '',
+        address: '',
+        two_factor_enabled: user.two_factor_enabled || false
       });
       this.initialFormValue = this.profileForm.value;
     }
@@ -136,6 +151,71 @@ export class ProfileComponent implements OnInit {
         });
       }
     }
+  }
+
+  updateTwoFactor() {
+    const user = this.authService.getCurrentUser();
+    const enabled = this.profileForm.get('two_factor_enabled')?.value ?? false;
+    
+    console.log('Intentando actualizar 2FA:', enabled);
+
+    if (user?.id) {
+      this.profileService.updateProfile(user.id, { two_factor_enabled: enabled }).subscribe({
+        next: (response) => {
+          console.log('2FA actualizado exitosamente:', response);
+          // Actualizar el usuario en el AuthService también
+          const currentUser = this.authService.getCurrentUser();
+          if (currentUser) {
+             currentUser.two_factor_enabled = enabled;
+             // Hack: update local storage manually since AuthService doesn't expose a setter for just one field
+             localStorage.setItem('userData', JSON.stringify(currentUser));
+          }
+        },
+        error: (error) => {
+          console.error('Error al actualizar 2FA:', error);
+          // Revertir cambio en UI si falla
+          this.profileForm.patchValue({ two_factor_enabled: !enabled }, { emitEvent: false });
+        }
+      });
+    } else {
+      console.error('No se encontró ID de usuario para actualizar 2FA');
+    }
+  }
+
+  onTwoFactorChange(event: Event) {
+    const checked = (event.target as HTMLInputElement).checked;
+    console.log('Toggle cambiado:', checked);
+    this.profileForm.patchValue({ two_factor_enabled: checked });
+    this.updateTwoFactor();
+  }
+
+  toggleWalletSection() {
+    this.showWalletSection.set(!this.showWalletSection());
+  }
+
+  requestWalletChange() {
+    if (this.walletForm.valid) {
+      // En producción, esto enviaría una solicitud de soporte
+      console.log('Solicitud de cambio de wallet:', this.walletForm.value);
+      this.walletChangeRequested.set(true);
+      
+      // Simular envío de email de verificación
+      setTimeout(() => {
+        alert('Se ha enviado una solicitud al equipo de soporte. Recibirás un email de confirmación.');
+        this.walletChangeRequested.set(false);
+      }, 1500);
+    } else {
+      Object.keys(this.walletForm.controls).forEach(key => {
+        const control = this.walletForm.get(key);
+        if (control?.invalid) {
+          control.markAsTouched();
+        }
+      });
+    }
+  }
+
+  selectNetwork(network: 'TRC20' | 'BEP20') {
+    this.walletForm.patchValue({ wallet_network: network });
   }
 
   logout() {

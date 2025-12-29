@@ -23,8 +23,17 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
+        'phone_number',
+        'firebase_uid',
+        'phone_verified',
         'country',
         'language',
+        'wallet',
+        'wallet_editable',
+        'referral_code',
+        'sponsor_id',
+        'value_cortyycado',
+        'requires_invitation',
         'total_invested',
         'total_earnings',
         'earnings_balance',
@@ -81,6 +90,13 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'two_factor_enabled' => 'boolean',
+            'phone_verified' => 'boolean',
+            'wallet_editable' => 'boolean',
+            'value_cortyycado' => 'boolean',
+            'requires_invitation' => 'boolean',
+            'is_admin' => 'boolean',
+            'notifications_enabled' => 'boolean'
         ];
     }
 }

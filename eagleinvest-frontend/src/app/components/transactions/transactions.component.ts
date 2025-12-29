@@ -115,7 +115,7 @@ export class TransactionsComponent implements OnInit {
       case 'profit':
         return 'linear-gradient(135deg, rgba(12,235,221,0.35), rgba(6,40,59,0.8))';
       default:
-        return 'linear-gradient(135deg, rgba(201,70,255,0.3), rgba(20,6,41,0.7))';
+        return 'linear-gradient(135deg, rgba(77,124,255,0.28), rgba(20,6,41,0.7))';
     }
   }
 
@@ -126,7 +126,7 @@ export class TransactionsComponent implements OnInit {
       case 'pending':
         return 'rgba(255,159,67,0.18)';
       case 'cancelled':
-        return 'rgba(255,0,128,0.15)';
+        return 'rgba(255,107,107,0.15)';
       default:
         return 'rgba(117,129,168,0.18)';
     }
@@ -136,7 +136,7 @@ export class TransactionsComponent implements OnInit {
     switch(status) {
       case 'completed': return '#00F0FF';
       case 'pending': return '#FF9F43';
-      case 'cancelled': return '#FF0080';
+      case 'cancelled': return '#FF6B6B';
       default: return '#7581A8';
     }
   }

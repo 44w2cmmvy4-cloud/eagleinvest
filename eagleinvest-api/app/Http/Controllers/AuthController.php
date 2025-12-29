@@ -6,6 +6,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
@@ -51,31 +55,93 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        // Normalize email to lowercase
+        $request->merge(['email' => strtolower($request->email)]);
+
         $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email',
+            'email' => 'required|string|email|exists:users,email',
             'password' => 'required|string',
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
+            Log::error('Login validation failed', ['errors' => $validator->errors()->toArray(), 'data' => $request->all()]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Revisa los datos ingresados',
+                'errors' => $validator->errors(),
+            ], 422);
         }
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['error' => 'Credenciales inválidas'], 401);
+        if (!$user) {
+            Log::channel('login')->warning('Login failed: email not found', [
+                'email' => $request->email,
+                'ip' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'timestamp' => now()->toDateTimeString(),
+            ]);
+            return response()->json([
+                'success' => false,
+                'message' => 'El email no existe',
+            ], 404);
         }
 
-        // Revocar tokens anteriores
-        $user->tokens()->delete();
+        if (!Hash::check($request->password, $user->password)) {
+            Log::channel('login')->warning('Login failed: wrong password', [
+                'user_id' => $user->id,
+                'email' => $user->email,
+                'ip' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'timestamp' => now()->toDateTimeString(),
+            ]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Contraseña incorrecta',
+            ], 401);
+        }
 
-        $token = $user->createToken('api-token')->plainTextToken;
+        Log::info('Login attempt', ['email' => $user->email, '2fa_enabled' => $user->two_factor_enabled]);
+
+        // Si el usuario no tiene 2FA habilitado, emitir token directo
+        if (!$user->two_factor_enabled) {
+            $user->tokens()->delete();
+            $token = $user->createToken('api-token')->plainTextToken;
+
+            return response()->json([
+                'success' => true,
+                'requires_2fa' => false,
+                'message' => 'Login exitoso',
+                'user' => $user,
+                'token' => $token,
+            ], 200);
+        }
+
+        // Flujo 2FA por email
+        $code = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+
+        // Guardar código y token temporal 10 minutos
+        Cache::put("2fa_code_{$user->id}", $code, 600);
+        $tempToken = Str::random(60);
+        Cache::put("temp_token_{$tempToken}", $user->id, 600);
+
+        // Log code for debugging
+        Log::info("2FA Code for user {$user->email}: {$code}");
+
+        try {
+            Mail::send('emails.2fa-code', ['code' => $code, 'user' => $user], function ($message) use ($user) {
+                $message->to($user->email);
+                $message->subject('Código de Verificación - EagleInvest');
+            });
+        } catch (\Exception $e) {
+            Log::error('No se pudo enviar el email 2FA: ' . $e->getMessage());
+        }
 
         return response()->json([
             'success' => true,
-            'message' => 'Login exitoso',
-            'user' => $user,
-            'token' => $token,
+            'requires_2fa' => true,
+            'temp_token' => $tempToken,
+            'message' => 'Código de verificación enviado a tu correo'
         ], 200);
     }
 

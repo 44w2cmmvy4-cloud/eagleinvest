@@ -1,0 +1,172 @@
+<div class="register-invitation-wrapper" style="min-height: 100vh; background: linear-gradient(135deg, #0A0E27 0%, #13172E 100%); padding: 40px 0;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+
+                <!-- Loading State -->
+                @if (isLoadingToken()) {
+                <div class="card border-0 shadow-lg" style="background: rgba(26,31,77,0.8); backdrop-filter: blur(10px); border-radius: 20px;">
+                    <div class="card-body text-center py-5">
+                        <div class="spinner-border text-info mb-3" role="status" style="width: 3rem; height: 3rem;">
+                            <span class="visually-hidden">Cargando...</span>
+                        </div>
+                        <h5 class="text-white">Validando invitación...</h5>
+                    </div>
+                </div>
+                }
+
+                <!-- Invalid Token State -->
+                @if (!isLoadingToken() && !tokenValid()) {
+                <div class="card border-0 shadow-lg" style="background: rgba(26,31,77,0.8); backdrop-filter: blur(10px); border-radius: 20px;">
+                    <div class="card-body text-center py-5">
+                        <i class="bi bi-x-circle text-danger mb-3" style="font-size: 4rem;"></i>
+                        <h3 class="text-white mb-3">Invitación Inválida</h3>
+                        <p class="text-muted mb-4">{{ errorMessage() }}</p>
+                        <a [routerLink]="['/login']" class="btn btn-primary">
+                            <i class="bi bi-arrow-left me-2"></i>Volver al Login
+                        </a>
+                    </div>
+                </div>
+                }
+
+                <!-- Valid Token - Registration Form -->
+                @if (!isLoadingToken() && tokenValid()) {
+                <div class="card border-0 shadow-lg" style="background: rgba(26,31,77,0.8); backdrop-filter: blur(10px); border-radius: 20px; border: 1px solid rgba(0,240,255,0.2);">
+                    <div class="card-body p-4 p-md-5">
+
+                        <!-- Header -->
+                        <div class="text-center mb-4">
+                            <div class="mb-3">
+                                <i class="bi bi-person-check-fill" style="font-size: 3.5rem; background: linear-gradient(135deg, #00F0FF, #4D7CFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+                            </div>
+                            <h2 class="text-white fw-bold mb-2">Crear Tu Cuenta</h2>
+                            <p class="text-muted">Has sido invitado por</p>
+                            <div class="sponsor-badge mt-2 mb-3" style="display: inline-block; background: linear-gradient(135deg, #00F0FF, #4D7CFF); padding: 10px 24px; border-radius: 30px;">
+                                <i class="bi bi-person-fill me-2" style="color: white;"></i>
+                                <span class="fw-bold" style="color: white;">{{ sponsorName() }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Success Message -->
+                        @if (successMessage()) {
+                        <div class="alert alert-success d-flex align-items-center" role="alert">
+                            <i class="bi bi-check-circle-fill me-2"></i> {{ successMessage() }}
+                        </div>
+                        }
+
+                        <!-- Error Message -->
+                        @if (errorMessage() && tokenValid()) {
+                        <div class="alert alert-danger d-flex align-items-center" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ errorMessage() }}
+                        </div>
+                        }
+
+                        <!-- Registration Form -->
+                        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+                            <!-- Username -->
+                            <div class="mb-3">
+                                <label class="form-label text-white">
+                    <i class="bi bi-person me-1"></i>Nombre de Usuario
+                  </label>
+                                <input type="text" class="form-control form-control-lg custom-input" formControlName="username" [class.is-invalid]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" placeholder="Tu nombre de usuario">                                @if (registerForm.get('username')?.invalid && registerForm.get('username')?.touched) {
+                                <div class="invalid-feedback">
+                                    @if (registerForm.get('username')?.errors?.['required']) { El nombre de usuario es requerido } @if (registerForm.get('username')?.errors?.['minlength']) { Mínimo 3 caracteres }
+                                </div>
+                                }
+                            </div>
+
+                            <!-- Email -->
+                            <div class="mb-3">
+                                <label class="form-label text-white">
+                    <i class="bi bi-envelope me-1"></i>Correo Electrónico
+                  </label>
+                                <input type="email" class="form-control form-control-lg custom-input" formControlName="email" [class.is-invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" placeholder="tu@email.com"> @if
+                                (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+                                <div class="invalid-feedback">
+                                    Ingresa un email válido
+                                </div>
+                                }
+                            </div>
+
+                            <!-- Phone with Country Selector -->
+                            <div class="mb-3">
+                                <label class="form-label text-white">
+                    <i class="bi bi-telephone me-1"></i>Teléfono
+                  </label>
+                                <div class="input-group">
+                                    <button class="btn btn-outline-secondary dropdown-toggle custom-input" type="button" data-bs-toggle="dropdown" style="background: rgba(26,31,77,0.5); border-color: rgba(0,240,255,0.3); color: #00F0FF;">
+                      {{ selectedCountry().flag }} {{ selectedCountry().dialCode }}
+                    </button>
+                                    <ul class="dropdown-menu" style="max-height: 300px; overflow-y: auto; background: rgba(26,31,77,0.95); border: 1px solid rgba(0,240,255,0.3);">
+                                        @for (country of countries; track country.code) {
+                                        <li>
+                                            <a class="dropdown-item" (click)="selectCountry(country)" style="color: white; cursor: pointer;">
+                            {{ country.flag }} {{ country.name }} ({{ country.dialCode }})
+                          </a>
+                                        </li>
+                                        }
+                                    </ul>
+                                    <input type="tel" class="form-control form-control-lg custom-input" formControlName="phone" [class.is-invalid]="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched" placeholder="3101234567">
+                                </div>
+                                @if (registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched) {
+                                <div class="invalid-feedback d-block">
+                                    Ingresa un número de teléfono válido (7-15 dígitos)
+                                </div>
+                                }
+                            </div>
+
+                            <!-- Password -->
+                            <div class="mb-3">
+                                <label class="form-label text-white">
+                    <i class="bi bi-lock me-1"></i>Contraseña
+                  </label>
+                                <input type="password" class="form-control form-control-lg custom-input" formControlName="password" [class.is-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" placeholder="Mínimo 8 caracteres">                                @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+                                <div class="invalid-feedback">
+                                    La contraseña debe tener al menos 8 caracteres
+                                </div>
+                                }
+                            </div>
+
+                            <!-- Confirm Password -->
+                            <div class="mb-4">
+                                <label class="form-label text-white">
+                    <i class="bi bi-lock-fill me-1"></i>Confirmar Contraseña
+                  </label>
+                                <input type="password" class="form-control form-control-lg custom-input" formControlName="password_confirmation" [class.is-invalid]="registerForm.get('password_confirmation')?.invalid && registerForm.get('password_confirmation')?.touched" placeholder="Confirma tu contraseña">                                @if (registerForm.get('password_confirmation')?.errors?.['passwordMismatch'] && registerForm.get('password_confirmation')?.touched) {
+                                <div class="invalid-feedback">
+                                    Las contraseñas no coinciden
+                                </div>
+                                }
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn btn-lg w-100 mb-3" [disabled]="isSubmitting() || !registerForm.valid" style="background: linear-gradient(135deg, #00F0FF, #4D7CFF); color: white; font-weight: 700; border: none; padding: 14px; border-radius: 12px; transition: all 0.3s;">
+                  @if (isSubmitting()) {
+                    <span class="spinner-border spinner-border-sm me-2"></span>
+                    Registrando...
+                  } @else {
+                    <i class="bi bi-check-circle me-2"></i>Crear Mi Cuenta
+                  }
+                </button>
+
+                            <!-- Login Link -->
+                            <div class="text-center">
+                                <p class="text-muted mb-0">
+                                    ¿Ya tienes cuenta?
+                                    <a [routerLink]="['/login']" class="text-decoration-none" style="color: #00F0FF; font-weight: 600;">
+                      Iniciar Sesión
+                    </a>
+                                </p>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

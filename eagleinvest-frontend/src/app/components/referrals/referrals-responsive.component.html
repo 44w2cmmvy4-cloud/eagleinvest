@@ -1,243 +1,363 @@
 <app-navbar></app-navbar>
 
-<div class="page-shell" style="background: linear-gradient(135deg, #0A0E27 0%, #13172E 50%, #0A0E27 100%); min-height: 100vh; padding: clamp(20px, 5vw, 60px); display: flex; justify-content: center;">
-  <div class="container-xl px-2 px-md-4" style="width: 100%; max-width: 1200px;">
-    <!-- Header Responsive -->
-    <div class="row mb-4 animate-fade-in">
-      <div class="col-12">
-        <h1 class="animate-slide-in-right" style="color: white; font-weight: 800; margin: 0 0 10px 0; font-size: clamp(1.5rem, 5vw, 2.5rem);">
-          🤝 Programa de Referidos
-        </h1>
-        <p style="color: #A1A9C9; margin: 0; font-size: clamp(0.9rem, 2vw, 1.1rem);">
-          Invita amigos y gana comisiones por cada inversión que realicen
-        </p>
-      </div>
-    </div>
-
-    <!-- Stats Summary - Responsive Grid -->
-    <div class="row g-3 mb-4 stagger-children">
-      <div class="col-6 col-lg-3">
-        <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 12px; padding: clamp(15px, 3vw, 20px); backdrop-filter: blur(10px); text-align: center;">
-          <i class="bi bi-people" style="color: #00F0FF; font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 10px; display: block; opacity: 0.9;"></i>
-          <h3 class="counter-number" style="color: white; margin: 0 0 5px 0; font-weight: 800; font-size: clamp(1.5rem, 4vw, 2rem);">{{ referralStats()?.total_referrals || 0 }}</h3>
-          <p style="color: #7581A8; margin: 0; font-size: clamp(0.75rem, 1.8vw, 0.9rem);">Referidos Totales</p>
+<div class="page-shell" style="background: linear-gradient(135deg, #0A0E27 0%, #13172E 50%, #0A0E27 100%); min-height: 100vh; padding: clamp(20px, 5vw, 60px); display: flex; flex-direction: column; align-items: center; justify-content: flex-start;">
+    <div class="container-xl px-2 px-md-4" style="width: 100%; max-width: 1200px;">
+        <!-- Header Responsive -->
+        <div class="row mb-4 animate-fade-in">
+            <div class="col-12">
+                <h1 class="animate-slide-in-right" style="color: white; font-weight: 800; margin: 0 0 10px 0; font-size: clamp(1.5rem, 5vw, 2.5rem);">
+                    Programa de Referidos
+                </h1>
+                <p style="color: #A1A9C9; margin: 0; font-size: clamp(0.9rem, 2vw, 1.1rem);">
+                    Invita amigos y gana comisiones por cada inversión que realicen
+                </p>
+            </div>
         </div>
-      </div>
 
-      <div class="col-6 col-lg-3">
-        <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(201,70,255,0.2); border-radius: 12px; padding: clamp(15px, 3vw, 20px); backdrop-filter: blur(10px); text-align: center;">
-          <i class="bi bi-person-check" style="color: #C946FF; font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 10px; display: block; opacity: 0.9;"></i>
-          <h3 class="counter-number" style="color: white; margin: 0 0 5px 0; font-weight: 800; font-size: clamp(1.5rem, 4vw, 2rem);">{{ referralStats()?.active_referrals || 0 }}</h3>
-          <p style="color: #7581A8; margin: 0; font-size: clamp(0.75rem, 1.8vw, 0.9rem);">Activos</p>
+        <!-- Stats Summary - Responsive Grid -->
+        <div class="row g-3 mb-4 stagger-children">
+            <div class="col-6 col-lg-3">
+                <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 12px; padding: clamp(15px, 3vw, 20px); backdrop-filter: blur(10px); text-align: center;">
+                    <i class="bi bi-people" style="color: #00F0FF; font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 10px; display: block; opacity: 0.9;"></i>
+                    <h3 class="counter-number" style="color: white; margin: 0 0 5px 0; font-weight: 800; font-size: clamp(1.5rem, 4vw, 2rem);">{{ referralStats()?.total_referrals || 0 }}</h3>
+                    <p style="color: #7581A8; margin: 0; font-size: clamp(0.75rem, 1.8vw, 0.9rem);">Referidos Totales</p>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3">
+                <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(77,124,255,0.25); border-radius: 12px; padding: clamp(15px, 3vw, 20px); backdrop-filter: blur(10px); text-align: center;">
+                    <i class="bi bi-person-check" style="color: #4D7CFF; font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 10px; display: block; opacity: 0.9;"></i>
+                    <h3 class="counter-number" style="color: white; margin: 0 0 5px 0; font-weight: 800; font-size: clamp(1.5rem, 4vw, 2rem);">{{ referralStats()?.active_referrals || 0 }}</h3>
+                    <p style="color: #7581A8; margin: 0; font-size: clamp(0.75rem, 1.8vw, 0.9rem);">Activos</p>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3">
+                <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 12px; padding: clamp(15px, 3vw, 20px); backdrop-filter: blur(10px); text-align: center;">
+                    <i class="bi bi-cash-stack" style="color: #00F0FF; font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 10px; display: block; opacity: 0.9;"></i>
+                    <h3 class="counter-number" style="color: white; margin: 0 0 5px 0; font-weight: 800; font-size: clamp(1.3rem, 3.5vw, 1.8rem);">${{ (referralStats()?.total_commission || 0) | number:'1.2-2' }}</h3>
+                    <p style="color: #7581A8; margin: 0; font-size: clamp(0.75rem, 1.8vw, 0.9rem);">Comisión Total</p>
+                </div>
+            </div>
+
+            <div class="col-6 col-lg-3">
+                <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(255,159,67,0.2); border-radius: 12px; padding: clamp(15px, 3vw, 20px); backdrop-filter: blur(10px); text-align: center;">
+                    <i class="bi bi-percent" style="color: #FF9F43; font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 10px; display: block; opacity: 0.9;"></i>
+                    <h3 class="counter-number" style="color: white; margin: 0 0 5px 0; font-weight: 800; font-size: clamp(1.5rem, 4vw, 2rem);">{{ referralStats()?.commission_rate || 0 }}%</h3>
+                    <p style="color: #7581A8; margin: 0; font-size: clamp(0.75rem, 1.8vw, 0.9rem);">Tasa de Comisión</p>
+                </div>
+            </div>
         </div>
-      </div>
 
-      <div class="col-6 col-lg-3">
-        <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(255,0,128,0.2); border-radius: 12px; padding: clamp(15px, 3vw, 20px); backdrop-filter: blur(10px); text-align: center;">
-          <i class="bi bi-cash-stack" style="color: #FF0080; font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 10px; display: block; opacity: 0.9;"></i>
-          <h3 class="counter-number" style="color: white; margin: 0 0 5px 0; font-weight: 800; font-size: clamp(1.3rem, 3.5vw, 1.8rem);">${{ referralStats()?.total_commission || 0 }}</h3>
-          <p style="color: #7581A8; margin: 0; font-size: clamp(0.75rem, 1.8vw, 0.9rem);">Comisión Total</p>
-        </div>
-      </div>
+        <div class="row g-3 g-md-4 align-items-stretch">
+            <!-- Referral Link Section -->
+            <div class="col-12 col-lg-5 d-flex flex-column gap-4">
+                <div class="gpu-accelerated animate-fade-in-up" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(15px, 3vw, 25px); backdrop-filter: blur(10px);">
+                    <h5 style="color: white; margin: 0 0 20px 0; font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.3rem);">Tu Enlace de Referido</h5>
 
-      <div class="col-6 col-lg-3">
-        <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(255,159,67,0.2); border-radius: 12px; padding: clamp(15px, 3vw, 20px); backdrop-filter: blur(10px); text-align: center;">
-          <i class="bi bi-percent" style="color: #FF9F43; font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 10px; display: block; opacity: 0.9;"></i>
-          <h3 class="counter-number" style="color: white; margin: 0 0 5px 0; font-weight: 800; font-size: clamp(1.5rem, 4vw, 2rem);">{{ referralStats()?.commission_rate || 0 }}%</h3>
-          <p style="color: #7581A8; margin: 0; font-size: clamp(0.75rem, 1.8vw, 0.9rem);">Tasa de Comisión</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="row g-3 g-md-4 align-items-stretch">
-      <!-- Referral Link Section -->
-      <div class="col-12 col-lg-5 d-flex flex-column gap-4">
-        <div class="gpu-accelerated animate-fade-in-up" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(15px, 3vw, 25px); backdrop-filter: blur(10px);">
-          <h5 style="color: white; margin: 0 0 20px 0; font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.3rem);">🔗 Tu Enlace de Referido</h5>
-
-          <div class="stat-card gpu-accelerated" style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; padding: 15px; margin-bottom: 15px;">
-            <p style="color: #7581A8; margin: 0 0 8px 0; font-size: clamp(0.8rem, 1.8vw, 0.9rem);">Código de Referido</p>
-            <div class="d-flex gap-2 flex-wrap">
-              <input type="text" [value]="referralCode()" readonly 
-                     class="gpu-accelerated"
-                     style="flex: 1; min-width: 150px; padding: 10px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 8px; color: #00F0FF; font-weight: 700; font-size: clamp(0.9rem, 2vw, 1.1rem);">
-              <button (click)="copyReferralCode()" class="btn-neon" style="background: rgba(0,240,255,0.2); border: 1px solid rgba(0,240,255,0.4); color: #00F0FF; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: clamp(0.85rem, 2vw, 0.95rem);">
+                    <div class="stat-card gpu-accelerated" style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; padding: 15px; margin-bottom: 15px;">
+                        <p style="color: #7581A8; margin: 0 0 8px 0; font-size: clamp(0.8rem, 1.8vw, 0.9rem);">Código de Referido</p>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <input type="text" [value]="referralCode()" readonly class="gpu-accelerated" style="flex: 1; min-width: 150px; padding: 10px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 8px; color: #00F0FF; font-weight: 700; font-size: clamp(0.9rem, 2vw, 1.1rem);">
+                            <button (click)="copyReferralCode()" class="btn-neon" style="background: rgba(0,240,255,0.2); border: 1px solid rgba(0,240,255,0.4); color: #00F0FF; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; white-space: nowrap; font-size: clamp(0.85rem, 2vw, 0.95rem);">
                 <i class="bi bi-clipboard me-1"></i>Copiar
               </button>
-            </div>
-          </div>
+                        </div>
+                    </div>
 
-          <div class="gpu-accelerated" style="background: rgba(13,17,46,0.6); border-radius: 10px; padding: 15px; margin-bottom: 15px;">
-            <p style="color: #7581A8; margin: 0 0 8px 0; font-size: clamp(0.8rem, 1.8vw, 0.9rem);">URL Completo</p>
-            <input type="text" [value]="referralLink()" readonly 
-                   class="gpu-accelerated"
-                   style="width: 100%; padding: 10px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.2); border-radius: 8px; color: white; font-size: clamp(0.75rem, 1.8vw, 0.85rem); overflow: hidden; text-overflow: ellipsis;">
-          </div>
+                    <div class="gpu-accelerated" style="background: rgba(13,17,46,0.6); border-radius: 10px; padding: 15px; margin-bottom: 15px;">
+                        <p style="color: #7581A8; margin: 0 0 8px 0; font-size: clamp(0.8rem, 1.8vw, 0.9rem);">URL Completo</p>
+                        <input type="text" [value]="referralLink()" readonly class="gpu-accelerated" style="width: 100%; padding: 10px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.2); border-radius: 8px; color: white; font-size: clamp(0.75rem, 1.8vw, 0.85rem); overflow: hidden; text-overflow: ellipsis;">
+                    </div>
 
-          <h6 class="icon-glow" style="color: white; margin: 0 0 15px 0; font-weight: 700; font-size: clamp(0.95rem, 2.5vw, 1.1rem);">Compartir en Redes Sociales</h6>
-          <div class="d-grid gap-2">
-            <button (click)="shareOnWhatsApp()" class="btn-bot-control" style="background: rgba(37,211,102,0.2); border: 1px solid rgba(37,211,102,0.4); color: #25D366; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; text-align: left; font-size: clamp(0.85rem, 2vw, 0.95rem);">
+                    <h6 class="icon-glow" style="color: white; margin: 0 0 15px 0; font-weight: 700; font-size: clamp(0.95rem, 2.5vw, 1.1rem);">Compartir en Redes Sociales</h6>
+                    <div class="d-grid gap-2">
+                        <button (click)="shareOnWhatsApp()" class="btn-bot-control" style="background: rgba(37,211,102,0.2); border: 1px solid rgba(37,211,102,0.4); color: #25D366; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; text-align: left; font-size: clamp(0.85rem, 2vw, 0.95rem);">
               <i class="bi bi-whatsapp me-2"></i>WhatsApp
             </button>
-            <button (click)="shareOnFacebook()" class="btn-bot-control" style="background: rgba(66,103,178,0.2); border: 1px solid rgba(66,103,178,0.4); color: #4267B2; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; text-align: left; font-size: clamp(0.85rem, 2vw, 0.95rem);">
+                        <button (click)="shareOnFacebook()" class="btn-bot-control" style="background: rgba(66,103,178,0.2); border: 1px solid rgba(66,103,178,0.4); color: #4267B2; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; text-align: left; font-size: clamp(0.85rem, 2vw, 0.95rem);">
               <i class="bi bi-facebook me-2"></i>Facebook
             </button>
-            <button (click)="shareOnTwitter()" class="btn-bot-control" style="background: rgba(29,161,242,0.2); border: 1px solid rgba(29,161,242,0.4); color: #1DA1F2; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; text-align: left; font-size: clamp(0.85rem, 2vw, 0.95rem);">
+                        <button (click)="shareOnTwitter()" class="btn-bot-control" style="background: rgba(29,161,242,0.2); border: 1px solid rgba(29,161,242,0.4); color: #1DA1F2; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; text-align: left; font-size: clamp(0.85rem, 2vw, 0.95rem);">
               <i class="bi bi-twitter me-2"></i>Twitter
             </button>
-            <button (click)="shareOnTelegram()" class="btn-bot-control" style="background: rgba(0,136,204,0.2); border: 1px solid rgba(0,136,204,0.4); color: #0088CC; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; text-align: left; font-size: clamp(0.85rem, 2vw, 0.95rem);">
+                        <button (click)="shareOnTelegram()" class="btn-bot-control" style="background: rgba(0,136,204,0.2); border: 1px solid rgba(0,136,204,0.4); color: #0088CC; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; text-align: left; font-size: clamp(0.85rem, 2vw, 0.95rem);">
               <i class="bi bi-telegram me-2"></i>Telegram
             </button>
-          </div>
-        </div>
-
-        <!-- How It Works -->
-        <div class="gpu-accelerated animate-fade-in-up" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(15px, 3vw, 25px); backdrop-filter: blur(10px);">
-          <h5 style="color: white; margin: 0 0 20px 0; font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.3rem);">💡 ¿Cómo Funciona?</h5>
-          <div style="color: #A1A9C9; line-height: 1.8; font-size: clamp(0.85rem, 2vw, 0.95rem);">
-            <div class="d-flex gap-3 mb-3">
-              <div class="badge-animated" style="background: rgba(0,240,255,0.2); width: 35px; height: 35px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                <span style="color: #00F0FF; font-weight: 700;">1</span>
-              </div>
-              <p style="margin: 0;">Comparte tu enlace de referido con amigos y familia</p>
-            </div>
-            <div class="d-flex gap-3 mb-3">
-              <div class="badge-animated" style="background: rgba(201,70,255,0.2); width: 35px; height: 35px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                <span style="color: #C946FF; font-weight: 700;">2</span>
-              </div>
-              <p style="margin: 0;">Ellos se registran usando tu código único</p>
-            </div>
-            <div class="d-flex gap-3">
-              <div class="badge-animated" style="background: rgba(255,0,128,0.2); width: 35px; height: 35px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                <span style="color: #FF0080; font-weight: 700;">3</span>
-              </div>
-              <p style="margin: 0;">Ganas comisiones por sus inversiones activas</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Referrals List -->
-      <div class="col-12 col-lg-7">
-        <div class="gpu-accelerated animate-fade-in-up" style="background: linear-gradient(145deg, rgba(9,15,45,0.95), rgba(5,8,24,0.93)); border: 1px solid rgba(12,235,221,0.18); border-radius: 18px; padding: clamp(18px, 3vw, 28px); backdrop-filter: blur(12px);">
-          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: clamp(15px, 3vw, 24px);">
-            <div>
-              <p style="color: #4BD4FF; margin: 0; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;">Panel de referidos</p>
-              <h5 style="color: white; margin: 4px 0 0; font-weight: 800; font-size: clamp(1.25rem, 3.2vw, 1.5rem);">👥 Mis Referidos ({{ referrals().length }})</h5>
-            </div>
-            <button style="background: rgba(12,235,221,0.12); border: 1px solid rgba(12,235,221,0.35); color: #0CEBDD; padding: 10px 18px; border-radius: 999px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.75rem;">Exportar</button>
-          </div>
-
-          @if (referrals() && referrals().length > 0) {
-            <!-- Desktop Table -->
-            <div class="d-none d-md-block">
-              <div class="table-responsive" style="border: 1px solid rgba(12,235,221,0.12); border-radius: 16px; overflow: hidden;">
-                <table style="width: 100%; border-collapse: collapse; table-layout: fixed; background: rgba(7,11,33,0.8);">
-                  <colgroup>
-                    <col style="width: 35%">
-                    <col style="width: 18%">
-                    <col style="width: 18%">
-                    <col style="width: 15%">
-                    <col style="width: 14%">
-                  </colgroup>
-                  <thead>
-                    <tr style="background: rgba(13,23,58,0.95); border-bottom: 1px solid rgba(12,235,221,0.15); text-transform: uppercase; letter-spacing: 0.08em;">
-                      <th style="padding: 18px 18px; text-align: left; color: #59E3FF; font-weight: 600; font-size: 0.8rem;">Usuario</th>
-                      <th style="padding: 18px 12px; text-align: left; color: #59E3FF; font-weight: 600; font-size: 0.8rem;">Registro</th>
-                      <th style="padding: 18px 12px; text-align: right; color: #59E3FF; font-weight: 600; font-size: 0.8rem;">Inversiones</th>
-                      <th style="padding: 18px 12px; text-align: right; color: #59E3FF; font-weight: 600; font-size: 0.8rem;">Comisión</th>
-                      <th style="padding: 18px 12px; text-align: center; color: #59E3FF; font-weight: 600; font-size: 0.8rem;">Estado</th>
-                    </tr>
-                  </thead>
-                  <tbody style="font-variant-numeric: tabular-nums;">
-                    @for (referral of referrals(); track referral.id) {
-                      <tr class="table-row-hover" style="border-bottom: 1px solid rgba(12,235,221,0.08);">
-                        <td style="padding: 20px 18px; vertical-align: middle;">
-                          <div class="d-flex align-items-center gap-3">
-                            <div class="icon-wrapper" style="background: linear-gradient(135deg, #4BD4FF, #7F5DFF); width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #0A0E27; font-weight: 700; font-size: 1rem;">
-                              {{ referral.name.charAt(0) }}
-                            </div>
-                            <div>
-                              <p style="color: white; margin: 0; font-weight: 600; font-size: 0.95rem;">{{ referral.name }}</p>
-                              <p style="color: #5B6A95; margin: 0; font-size: 0.8rem;">{{ referral.email }}</p>
-                            </div>
-                          </div>
-                        </td>
-                        <td style="padding: 20px 12px; vertical-align: middle; color: #7C8AB3; font-size: 0.85rem;">{{ referral.joined_date | date: 'dd/MM/yy, h:mm a' }}</td>
-                        <td style="padding: 20px 12px; vertical-align: middle; color: #F0F4FF; font-weight: 600; font-size: 0.95rem; text-align: right;">${{ referral.total_invested | number: '1.0-0' }}</td>
-                        <td style="padding: 20px 12px; vertical-align: middle; text-align: right;">
-                          <span class="counter-number" style="color: #0CEBDD; font-weight: 700; font-size: 0.95rem;">+${{ referral.commission_earned | number: '1.0-0' }}</span>
-                        </td>
-                        <td style="padding: 20px 12px; vertical-align: middle; text-align: center;">
-                          <span class="badge-animated"
-                                [style.background]="referral.status === 'active' ? 'rgba(12,235,221,0.15)' : 'rgba(117,129,168,0.18)'"
-                                [style.color]="referral.status === 'active' ? '#0CEBDD' : '#7F8AB5'"
-                                style="padding: 8px 16px; border-radius: 999px; font-weight: 700; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 6px; justify-content: center; text-transform: capitalize;">
-                            <span>{{ referral.status === 'active' ? '✔' : '•' }}</span>{{ referral.status }}
-                          </span>
-                        </td>
-                      </tr>
-                    }
-                  </tbody>
-                </table>
-              </div>
-              <div style="height: 4px; background: linear-gradient(90deg, transparent, rgba(12,235,221,0.75), transparent); margin-top: 12px;"></div>
-            </div>
-
-            <!-- Mobile Cards -->
-            <div class="d-md-none">
-              <div class="row g-3">
-                @for (referral of referrals(); track referral.id) {
-                  <div class="col-12">
-                    <div class="investment-card gpu-accelerated" style="background: rgba(13,17,46,0.6); border: 1px solid rgba(0,240,255,0.15); border-radius: 12px; padding: 15px;">
-                      <div class="d-flex justify-content-between align-items-start mb-3">
-                        <div class="d-flex align-items-center gap-2 flex-1">
-                          <div class="icon-wrapper" style="background: linear-gradient(135deg, #00F0FF, #C946FF); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #0A0E27; font-weight: 700; font-size: 1.1rem;">
-                            {{ referral.name.charAt(0) }}
-                          </div>
-                          <div style="flex: 1;">
-                            <p style="color: white; margin: 0; font-weight: 600; font-size: clamp(0.95rem, 2.5vw, 1.05rem);">{{ referral.name }}</p>
-                            <p style="color: #7581A8; margin: 0; font-size: clamp(0.75rem, 1.8vw, 0.85rem);">{{ referral.email }}</p>
-                          </div>
-                        </div>
-                        <span [style.background]="referral.status === 'active' ? 'rgba(0,240,255,0.2)' : 'rgba(117,129,168,0.2)'"
-                              [style.color]="referral.status === 'active' ? '#00F0FF' : '#7581A8'"
-                              style="padding: 6px 12px; border-radius: 8px; font-weight: 600; font-size: 0.75rem; flex-shrink: 0;">
-                          {{ referral.status }}
-                        </span>
-                      </div>
-
-                      <div class="row g-2">
-                        <div class="col-4">
-                          <p style="color: #7581A8; margin: 0 0 4px 0; font-size: 0.75rem;">Registro</p>
-                          <p style="color: white; margin: 0; font-weight: 600; font-size: 0.8rem;">{{ referral.joined_date }}</p>
-                        </div>
-                        <div class="col-4">
-                          <p style="color: #7581A8; margin: 0 0 4px 0; font-size: 0.75rem;">Inversiones</p>
-                          <p style="color: white; margin: 0; font-weight: 600; font-size: 0.8rem;">${{ referral.total_invested }}</p>
-                        </div>
-                        <div class="col-4">
-                          <p style="color: #7581A8; margin: 0 0 4px 0; font-size: 0.75rem;">Comisión</p>
-                          <p style="color: #00F0FF; margin: 0; font-weight: 700; font-size: 0.8rem;">+${{ referral.commission_earned }}</p>
-                        </div>
-                      </div>
                     </div>
-                  </div>
-                }
-              </div>
+                </div>
+
+                <!-- How It Works -->
+                <div class="gpu-accelerated animate-fade-in-up" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(15px, 3vw, 25px); backdrop-filter: blur(10px);">
+                    <h5 style="color: white; margin: 0 0 20px 0; font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.3rem);">¿Cómo Funciona?</h5>
+                    <div style="color: #A1A9C9; line-height: 1.8; font-size: clamp(0.85rem, 2vw, 0.95rem);">
+                        <div class="d-flex gap-3 mb-3">
+                            <div class="badge-animated" style="background: rgba(0,240,255,0.2); width: 35px; height: 35px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="color: #00F0FF; font-weight: 700;">1</span>
+                            </div>
+                            <p style="margin: 0;">Comparte tu enlace de referido con amigos y familia</p>
+                        </div>
+                        <div class="d-flex gap-3 mb-3">
+                            <div class="badge-animated" style="background: rgba(77,124,255,0.2); width: 35px; height: 35px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="color: #4D7CFF; font-weight: 700;">2</span>
+                            </div>
+                            <p style="margin: 0;">Ellos se registran usando tu código único</p>
+                        </div>
+                        <div class="d-flex gap-3">
+                            <div class="badge-animated" style="background: rgba(12,235,221,0.2); width: 35px; height: 35px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <span style="color: #0CEBDD; font-weight: 700;">3</span>
+                            </div>
+                            <p style="margin: 0;">Ganas comisiones por sus inversiones activas</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          } @else {
-            <div style="text-align: center; padding: 60px 20px;">
-              <i class="bi bi-people" style="font-size: clamp(3rem, 8vw, 5rem); color: #4A5578; margin-bottom: 20px; display: block;"></i>
-              <h4 style="color: white; margin: 0 0 10px 0; font-size: clamp(1.1rem, 3vw, 1.3rem);">No tienes referidos aún</h4>
-              <p style="color: #7581A8; margin: 0 0 20px 0; font-size: clamp(0.9rem, 2vw, 1rem);">Comparte tu enlace para empezar a ganar comisiones</p>
-              <button (click)="copyReferralCode()" style="background: linear-gradient(135deg, #00F0FF, #C946FF); color: #0A0E27; padding: 12px 24px; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: clamp(0.85rem, 2vw, 0.95rem);">
-                <i class="bi bi-clipboard me-2"></i>Copiar Código
-              </button>
+
+            <!-- Sección eliminada: Lista de referidos se recreará con nuevo diseño -->
+            <div class="col-12 col-lg-7">
+                <div class="gpu-accelerated animate-fade-in-up" style="background: linear-gradient(145deg, rgba(9,15,45,0.95), rgba(5,8,24,0.93)); border: 1px solid rgba(12,235,221,0.18); border-radius: 18px; padding: clamp(18px, 3vw, 28px); backdrop-filter: blur(12px);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: clamp(15px, 3vw, 24px);">
+                        <div>
+                            <p style="color: #4BD4FF; margin: 0; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;">Panel de referidos</p>
+                            <h5 style="color: white; margin: 4px 0 0; font-weight: 800; font-size: clamp(1.25rem, 3.2vw, 1.5rem);">Mis Referidos ({{ referrals().length || 0 }})</h5>
+                        </div>
+                        <button style="background: rgba(12,235,221,0.12); border: 1px solid rgba(12,235,221,0.35); color: #0CEBDD; padding: 10px 18px; border-radius: 999px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.75rem;">Exportar</button>
+                    </div>
+
+                    <!-- Lista unificada de Referidos (sin tablas) -->
+                    @if (referrals() && referrals().length > 0) {
+                    <div class="row g-3">
+                        @for (referral of referrals(); track referral.id) {
+                        <div class="col-12">
+                            <div class="investment-card gpu-accelerated" style="background: linear-gradient(145deg, rgba(13,17,46,0.9), rgba(9,12,33,0.85)); border: 1px solid rgba(0,240,255,0.25); border-radius: 16px; padding: 18px; position: relative; overflow: hidden;">
+                                <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%;" [style.background]="referral.status === 'active' ? 'linear-gradient(180deg, #0CEBDD, #00F0FF)' : 'linear-gradient(180deg, #7581A8, #4A5578)'"></div>
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div class="d-flex align-items-center gap-3" style="flex: 1; min-width: 0;">
+                                        <div style="width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #00F0FF, #4D7CFF); display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 1.2rem; border: 3px solid rgba(0,240,255,0.3); box-shadow: 0 4px 12px rgba(0,240,255,0.3);">
+                                            {{ referral.name.charAt(0).toUpperCase() }}
+                                        </div>
+                                        <div style="min-width: 0;">
+                                            <p style="color: white; margin: 0 0 4px 0; font-weight: 700; font-size: 1rem; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ referral.name }}</p>
+                                            <p style="color: #7581A8; margin: 0; font-size: 0.8rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ referral.email }}</p>
+                                        </div>
+                                    </div>
+                                    <span [style.background]="referral.status === 'active' ? 'rgba(0,240,255,0.2)' : 'rgba(117,129,168,0.2)'" [style.color]="referral.status === 'active' ? '#00F0FF' : '#7581A8'" style="padding: 8px 14px; border-radius: 12px; font-weight: 700; font-size: 0.75rem; border: 1px solid currentColor; flex-shrink: 0; text-transform: capitalize;">
+                                        {{ referral.status }}
+                                    </span>
+                                </div>
+                                <div class="row g-2">
+                                    <div class="col-6 col-md-4">
+                                        <div style="background: rgba(77,124,255,0.1); padding: 12px; border-radius: 10px; border: 1px solid rgba(77,124,255,0.2);">
+                                            <p style="color: #7581A8; margin: 0 0 6px 0; font-size: 0.75rem; font-weight: 600;">Inversiones</p>
+                                            <p style="color: #E0E9FF; margin: 0; font-weight: 700; font-size: 0.95rem;">${{ referral.total_invested | number: '1.2-2' }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <div style="background: rgba(12,235,221,0.08); padding: 12px; border-radius: 10px; border: 1px solid rgba(12,235,221,0.15);">
+                                            <p style="color: #7581A8; margin: 0 0 6px 0; font-size: 0.75rem; font-weight: 600;">Comisión</p>
+                                            <p class="counter-number" style="color: #0CEBDD; margin: 0; font-weight: 800; font-size: 0.95rem;">+${{ referral.commission_earned | number: '1.2-2' }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div style="background: rgba(0,240,255,0.08); padding: 12px; border-radius: 10px; border: 1px solid rgba(0,240,255,0.15);">
+                                            <p style="color: #7581A8; margin: 0 0 6px 0; font-size: 0.75rem; font-weight: 600;">Registro</p>
+                                            <p style="color: #A8D5E2; margin: 0; font-weight: 700; font-size: 0.9rem;">{{ referral.joined_date | date: 'dd/MM/yy' }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                    } @else {
+                    <!-- Estado vacío -->
+                    <div style="text-align: center; padding: 50px 20px;">
+                        <div style="width: 90px; height: 90px; margin: 0 auto 20px; border-radius: 50%; background: linear-gradient(135deg, rgba(12,235,221,0.1), rgba(0,240,255,0.05)); display: flex; align-items: center; justify-content: center; border: 2px dashed rgba(12,235,221,0.3);">
+                            <i class="bi bi-people" style="font-size: 2.5rem; color: #4A5578;"></i>
+                        </div>
+                        <h5 style="color: white; margin: 0 0 10px 0; font-size: 1.2rem; font-weight: 700;">No tienes referidos aún</h5>
+                        <p style="color: #7581A8; margin: 0 0 20px 0; font-size: 0.95rem;">Comparte tu enlace para empezar a ganar comisiones</p>
+                        <button (click)="copyReferralCode()" style="background: linear-gradient(135deg, #00F0FF, #4D7CFF); color: white; padding: 12px 24px; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(0,240,255,0.3); transition: all 0.3s ease;"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,240,255,0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0,240,255,0.3)'">
+                            <i class="bi bi-clipboard me-2"></i>Copiar Código
+                        </button>
+                    </div>
+                    }
+
+                </div>
             </div>
-          }
         </div>
-      </div>
     </div>
-  </div>
+
+    <!-- Red Multinivel 10 Niveles -->
+    <div class="container-xl px-2 px-md-4" style="width: 100%; max-width: 1200px;">
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="gpu-accelerated animate-fade-in-up" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(20px, 4vw, 30px); backdrop-filter: blur(10px);">
+
+                    <!-- Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+                        <div>
+                            <h4 style="color: white; margin: 0 0 8px 0; font-weight: 800; font-size: clamp(1.3rem, 3.5vw, 1.8rem);">
+                                Red Unilevel (10 Niveles)
+                            </h4>
+                            <p style="color: #A1A9C9; margin: 0; font-size: clamp(0.85rem, 2vw, 0.95rem);">
+                                Visualiza tu organización completa hasta 10 niveles de profundidad
+                            </p>
+                        </div>
+                        <button (click)="generateInvitationLink()" class="btn-neon" style="background: linear-gradient(135deg, #00F0FF, #4D7CFF); color: white; padding: 12px 24px; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: clamp(0.85rem, 2vw, 0.95rem); box-shadow: 0 4px 15px rgba(0,240,255,0.3);">
+              <i class="bi bi-link-45deg me-2"></i>Generar Invitación
+            </button>
+                    </div>
+
+                    @if (isLoadingNetwork()) {
+                    <div style="text-align: center; padding: 60px 20px;">
+                        <div class="spinner-border text-info mb-3" role="status" style="width: 3rem; height: 3rem;">
+                            <span class="visually-hidden">Cargando red...</span>
+                        </div>
+                        <p style="color: #A1A9C9; margin: 0;">Cargando red de referidos...</p>
+                    </div>
+                    } @else if (networkData()) {
+                    <!-- Stats Totales -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-6 col-md-4">
+                            <div style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); border-radius: 12px; padding: 15px; text-align: center;">
+                                <i class="bi bi-diagram-3" style="color: #00F0FF; font-size: 2rem; margin-bottom: 8px; display: block;"></i>
+                                <h3 style="color: white; margin: 0 0 5px 0; font-weight: 800; font-size: clamp(1.5rem, 4vw, 2rem);">
+                                    {{ networkData()?.total_referrals || 0 }}
+                                </h3>
+                                <p style="color: #7581A8; margin: 0; font-size: 0.85rem;">Total Referidos</p>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4">
+                            <div style="background: rgba(77,124,255,0.1); border: 1px solid rgba(77,124,255,0.3); border-radius: 12px; padding: 15px; text-align: center;">
+                                <i class="bi bi-cash-stack" style="color: #4D7CFF; font-size: 2rem; margin-bottom: 8px; display: block;"></i>
+                                <h3 style="color: white; margin: 0 0 5px 0; font-weight: 800; font-size: clamp(1.3rem, 3.5vw, 1.8rem);">
+                                    ${{ (networkData()?.total_commissions || 0) | number:'1.2-2' }}
+                                </h3>
+                                <p style="color: #7581A8; margin: 0; font-size: 0.85rem;">Comisiones Totales</p>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div style="background: rgba(77,124,255,0.08); border: 1px solid rgba(77,124,255,0.25); border-radius: 12px; padding: 15px; text-align: center;">
+                                <i class="bi bi-layers" style="color: #4D7CFF; font-size: 2rem; margin-bottom: 8px; display: block;"></i>
+                                <h3 style="color: white; margin: 0 0 5px 0; font-weight: 800; font-size: clamp(1.5rem, 4vw, 2rem);">
+                                    10
+                                </h3>
+                                <p style="color: #7581A8; margin: 0; font-size: 0.85rem;">Niveles Activos</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Selector de Niveles -->
+                    <div class="mb-4" style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+                        <div class="d-flex gap-2" style="min-width: max-content; padding: 2px 0;">
+                            @for (level of [1,2,3,4,5,6,7,8,9,10]; track level) {
+                            <button (click)="selectLevel(level)" [class.active]="selectedLevel() === level" style="background: {{ selectedLevel() === level ? 'linear-gradient(135deg, #00F0FF, #4D7CFF)' : 'rgba(26,31,77,0.5)' }}; 
+                           border: 1px solid {{ selectedLevel() === level ? 'rgba(0,240,255,0.5)' : 'rgba(0,240,255,0.2)' }}; 
+                           color: {{ selectedLevel() === level ? 'white' : '#A1A9C9' }}; 
+                           padding: 12px 20px; border-radius: 10px; cursor: pointer; 
+                           font-weight: {{ selectedLevel() === level ? '700' : '600' }}; 
+                           font-size: 0.9rem; transition: all 0.3s ease; white-space: nowrap;
+                           box-shadow: {{ selectedLevel() === level ? '0 4px 15px rgba(0,240,255,0.3)' : 'none' }};">
+                    <i class="bi bi-layers me-2"></i>Nivel {{ level }}
+                    <span class="badge ms-2" 
+                          style="background: {{ selectedLevel() === level ? 'rgba(255,255,255,0.3)' : 'rgba(0,240,255,0.2)' }}; 
+                                 color: {{ selectedLevel() === level ? 'white' : '#00F0FF' }}; 
+                                 padding: 4px 8px; border-radius: 6px; font-size: 0.75rem;">
+                      {{ getLevelData(level)?.count || 0 }}
+                    </span>
+                  </button> }
+                        </div>
+                    </div>
+
+                    <!-- Información del Nivel Seleccionado -->
+                    @if (getLevelData(selectedLevel())) {
+                    <div style="background: rgba(13,17,46,0.6); border: 1px solid rgba(0,240,255,0.2); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                        <div class="row g-3">
+                            <div class="col-6 col-md-3">
+                                <p style="color: #7581A8; margin: 0 0 5px 0; font-size: 0.85rem;">Nivel</p>
+                                <p style="color: #00F0FF; margin: 0; font-weight: 700; font-size: 1.5rem;">{{ selectedLevel() }}</p>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <p style="color: #7581A8; margin: 0 0 5px 0; font-size: 0.85rem;">Referidos</p>
+                                <p style="color: white; margin: 0; font-weight: 700; font-size: 1.5rem;">{{ getLevelData(selectedLevel())?.count || 0 }}</p>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <p style="color: #7581A8; margin: 0 0 5px 0; font-size: 0.85rem;">Comisiones del Nivel</p>
+                                <p style="color: #4D7CFF; margin: 0; font-weight: 700; font-size: 1.5rem;">
+                                    ${{ (getLevelData(selectedLevel())?.commissions || 0) | number:'1.2-2' }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lista de Usuarios del Nivel (sin tablas) -->
+                    @if (getLevelData(selectedLevel())!.users.length > 0) {
+                    <div class="row g-2">
+                        @for (user of getLevelData(selectedLevel())!.users; track user.id) {
+                        <div class="col-12">
+                            <div class="gpu-accelerated" style="background: rgba(13,17,46,0.6); border: 1px solid rgba(0,240,255,0.15); border-radius: 12px; padding: 12px;">
+                                <div class="d-flex justify-content-between align-items-start gap-2">
+                                    <div class="d-flex align-items-center gap-2" style="min-width: 0;">
+                                        <div style="background: linear-gradient(135deg, #00F0FF, #4D7CFF); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.9rem;">
+                                            {{ user.name.charAt(0) }}
+                                        </div>
+                                        <div style="min-width: 0;">
+                                            <div style="color: white; font-weight: 700; font-size: 0.95rem; line-height: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ user.name }}</div>
+                                            <div style="color: #7581A8; font-size: 0.8rem; max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ user.email }}</div>
+                                        </div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="color: #4D7CFF; font-weight: 800;">${{ user.commission_earned | number:'1.2-2' }}</div>
+                                        <div style="color: #A1A9C9; font-size: 0.8rem;">{{ user.created_at | date:'dd/MM/yy' }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                    } @else {
+                    <div style="text-align: center; padding: 40px 20px; background: rgba(13,17,46,0.4); border-radius: 12px;">
+                        <i class="bi bi-inbox" style="font-size: 3rem; color: #4A5578; margin-bottom: 15px; display: block;"></i>
+                        <p style="color: #7581A8; margin: 0; font-size: 0.95rem;">No hay referidos en este nivel aún</p>
+                    </div>
+                    } } } @else {
+                    <div style="text-align: center; padding: 60px 20px;">
+                        <i class="bi bi-diagram-3" style="font-size: 4rem; color: #4A5578; margin-bottom: 20px; display: block;"></i>
+                        <h5 style="color: white; margin: 0 0 10px 0;">Construye Tu Red</h5>
+                        <p style="color: #7581A8; margin: 0; font-size: 0.95rem;">Invita a personas y construye una red de hasta 10 niveles</p>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- Modal de Invitación -->
+@if (showInvitationModal()) {
+<div class="modal-backdrop" (click)="closeInvitationModal()" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 1050; display: flex; align-items: center; justify-content: center; padding: 20px;">
+    <div (click)="$event.stopPropagation()" style="background: rgba(26,31,77,0.95); border: 2px solid rgba(0,240,255,0.3); border-radius: 20px; padding: 30px; max-width: 500px; width: 100%; box-shadow: 0 10px 50px rgba(0,240,255,0.2);">
+        <div class="text-center mb-4">
+            <i class="bi bi-check-circle-fill" style="font-size: 4rem; color: #00F0FF; margin-bottom: 15px; display: block;"></i>
+            <h3 style="color: white; margin: 0 0 10px 0; font-weight: 800;">¡Link Generado!</h3>
+            <p style="color: #A1A9C9; margin: 0;">Comparte este link para invitar nuevos usuarios</p>
+        </div>
+
+        <div style="background: rgba(13,17,46,0.6); border: 1px solid rgba(0,240,255,0.2); border-radius: 12px; padding: 15px; margin-bottom: 20px;">
+            <p style="color: #7581A8; margin: 0 0 8px 0; font-size: 0.85rem;">Link de Invitación</p>
+            <input type="text" [value]="referralLink()" readonly style="width: 100%; padding: 10px; background: rgba(0,0,0,0.3); border: 1px solid rgba(0,240,255,0.2); border-radius: 8px; color: #00F0FF; font-size: 0.85rem; font-family: monospace;">
+        </div>
+
+        <div class="d-flex gap-2">
+            <button (click)="copyInvitationLink()" style="flex: 1; background: linear-gradient(135deg, #00F0FF, #4D7CFF); color: white; padding: 14px; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.95rem;">
+          <i class="bi bi-clipboard me-2"></i>Copiar Link
+        </button>
+            <button (click)="closeInvitationModal()" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 14px 24px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.95rem;">
+          Cerrar
+        </button>
+        </div>
+    </div>
+</div>
+}

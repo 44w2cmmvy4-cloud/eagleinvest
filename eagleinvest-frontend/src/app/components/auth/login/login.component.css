@@ -1,107 +1,117 @@
 .login-container {
-  min-height: 100vh;
-  background: var(--bg-primary);
-  position: relative;
-  overflow: hidden;
+    min-height: 100vh;
+    background: var(--bg-primary);
+    position: relative;
+    overflow: hidden;
 }
 
 .login-container::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -50%;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgba(0, 240, 255, 0.15) 0%, rgba(201, 70, 255, 0.08) 50%, transparent 70%);
-  animation: float 20s infinite ease-in-out;
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(0, 240, 255, 0.15) 0%, rgba(77, 124, 255, 0.08) 50%, transparent 70%);
+    animation: float 20s infinite ease-in-out;
 }
 
 @keyframes float {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  33% { transform: translate(30px, -30px) rotate(120deg); }
-  66% { transform: translate(-20px, 20px) rotate(240deg); }
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    33% {
+        transform: translate(30px, -30px) rotate(120deg);
+    }
+    66% {
+        transform: translate(-20px, 20px) rotate(240deg);
+    }
 }
 
 .bg-gradient {
-  background: var(--gradient-primary);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-2xl);
+    background: var(--gradient-primary);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-2xl);
 }
 
 .login-form {
-  padding: 2.5rem;
-  animation: fadeIn 0.6s ease-out;
+    padding: 2.5rem;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.login-form .text-muted {
+    color: var(--text-secondary) !important;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .form-control-lg {
-  border-radius: var(--radius-lg);
-  border: 2px solid var(--border-color);
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  transition: all var(--transition-base);
-  padding: 0.875rem 1.25rem;
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--border-color);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    transition: all var(--transition-base);
+    padding: 0.875rem 1.25rem;
 }
 
 .form-control-lg:focus {
-  border-color: var(--accent-gold);
-  box-shadow: 0 0 0 0.25rem rgba(0, 240, 255, 0.25), var(--shadow-glow);
-  background: var(--bg-tertiary);
-  outline: none;
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 0 0.25rem rgba(0, 240, 255, 0.25), var(--shadow-glow);
+    background: var(--bg-tertiary);
+    outline: none;
 }
 
 .form-control-lg::placeholder {
-  color: var(--text-tertiary);
+    color: var(--text-tertiary);
 }
 
 .btn-warning {
-  background: var(--gradient-accent);
-  border: none;
-  color: var(--gray-900);
-  font-weight: 600;
-  padding: 0.875rem 2rem;
-  border-radius: var(--radius-lg);
-  transition: all var(--transition-base);
-  box-shadow: var(--shadow-md);
+    background: var(--gradient-accent);
+    border: none;
+    color: var(--gray-900);
+    font-weight: 600;
+    padding: 0.875rem 2rem;
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-md);
 }
 
 .btn-warning:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-glow);
-  filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+    filter: brightness(1.1);
 }
 
 .btn-warning:active {
-  transform: translateY(0);
+    transform: translateY(0);
 }
 
 .text-warning {
-  color: var(--accent-gold) !important;
+    color: var(--accent-gold) !important;
 }
 
 .text-warning:hover {
-  color: var(--accent-gold-light) !important;
-  text-decoration: underline;
+    color: var(--accent-gold-light) !important;
+    text-decoration: underline;
 }
 
 @media (max-width: 991.98px) {
-  .login-form {
-    padding: 1.5rem;
-  }
-  
-  .login-container::before {
-    width: 150%;
-    height: 150%;
-  }
+    .login-form {
+        padding: 1.5rem;
+    }
+    .login-container::before {
+        width: 150%;
+        height: 150%;
+    }
 }

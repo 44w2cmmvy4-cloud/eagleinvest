@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { PortfolioService, Portfolio, Investment } from './services/portfolio.service';
+import { InvestmentPlan, User } from './models/api-models';
 
 /**
  * Componente raíz de la aplicación EagleInvest
@@ -62,9 +63,9 @@ export class App implements OnInit {
   
   /** 
    * Datos del usuario autenticado actual
-   * @type {Signal<any | null>}
+   * @type {Signal<User | null>}
    */
-  currentUser = signal<any>(null);
+  currentUser = signal<User | null>(null);
   
   /** 
    * Página actual de la aplicación
@@ -164,54 +165,57 @@ export class App implements OnInit {
   ]);
   
   // Planes de suscripción
-  plans = signal([
+  plans = signal<InvestmentPlan[]>([
     {
       name: 'Starter Focus',
-      price: 500,
+      min_amount: 500,
+      max_amount: 2499,
+      daily_return_rate: 0.35,
+      duration_days: 365,
+      withdrawal_interval_days: 10,
+      minimum_withdrawal_amount: 50,
+      is_active: true,
       features: ['Monitoreo diario', 'Alertas de riesgo', 'Panel móvil incluido'],
       recommended: false,
       accent: '#00F0FF',
-      background: 'linear-gradient(135deg, rgba(0,240,255,0.15), rgba(0,48,73,0.8))',
-      glow: '0 15px 40px rgba(0,240,255,0.25)',
       tagline: 'Arranca con control total y baja exposición',
-      roi: '12% anual',
-      lockPeriod: '35 días',
-      dailyReturn: '0.35% diario',
-      minCapital: '$500',
-      risk: 'Bajo',
-      liquidity: '24h'
+      risk_level: 'Bajo',
+      liquidity: '24h',
+      roi_display: '12% anual'
     },
     {
       name: 'Accelerate Pro',
-      price: 2500,
+      min_amount: 2500,
+      max_amount: 9999,
+      daily_return_rate: 0.55,
+      duration_days: 365,
+      withdrawal_interval_days: 10,
+      minimum_withdrawal_amount: 100,
+      is_active: true,
       features: ['Estrategias cuantitativas', 'Gestor dedicado', 'Reportes semanales', 'Cobertura multi-activo'],
       recommended: true,
-      accent: '#C946FF',
-      background: 'linear-gradient(135deg, rgba(201,70,255,0.2), rgba(24,6,49,0.85))',
-      glow: '0 20px 45px rgba(201,70,255,0.35)',
+      accent: '#D4AF37',
       tagline: 'Impulsa tu capital con algoritmos híbridos',
-      roi: '24% anual',
-      lockPeriod: '60 días',
-      dailyReturn: '0.55% diario',
-      minCapital: '$2,500',
-      risk: 'Medio',
-      liquidity: '48h'
+      risk_level: 'Medio',
+      liquidity: '48h',
+      roi_display: '24% anual'
     },
     {
       name: 'Elite Quant',
-      price: 10000,
+      min_amount: 10000,
+      max_amount: 1000000,
+      daily_return_rate: 0.8,
+      duration_days: 365,
+      withdrawal_interval_days: 30,
+      minimum_withdrawal_amount: 500,
+      is_active: true,
       features: ['Despliegue multi-broker', 'Rebalanceo automático', 'Mesa 24/7', 'Backtesting dedicado'],
       recommended: false,
       accent: '#FF750F',
-      background: 'linear-gradient(135deg, rgba(255,117,15,0.25), rgba(45,16,0,0.85))',
-      glow: '0 20px 45px rgba(255,117,15,0.40)',
       tagline: 'Optimiza portafolios grandes con trading cuantitativo',
-      roi: '36% anual',
-      lockPeriod: '90 días',
-      dailyReturn: '0.8% diario',
-      minCapital: '$10,000',
-      risk: 'Intermedio-Alto',
-      liquidity: '72h'
+      risk_level: 'Intermedio-Alto',
+      liquidity: '72h',
+      roi_display: '36% anual'
     }
   ]);
 
@@ -235,10 +239,10 @@ export class App implements OnInit {
       shadow: '0 10px 25px rgba(77,124,255,0.35)'
     },
     MSFT: {
-      badgeBg: 'rgba(201,70,255,0.25)',
-      badgeColor: '#C946FF',
-      gradient: 'linear-gradient(135deg, rgba(201,70,255,0.35), rgba(32,6,54,0.4))',
-      shadow: '0 10px 25px rgba(201,70,255,0.35)'
+      badgeBg: 'rgba(212,175,55,0.25)',
+      badgeColor: '#D4AF37',
+      gradient: 'linear-gradient(135deg, rgba(212,175,55,0.35), rgba(26,31,77,0.4))',
+      shadow: '0 10px 25px rgba(212,175,55,0.35)'
     }
   };
 
@@ -280,7 +284,7 @@ export class App implements OnInit {
       return meta.end_date;
     }
     const remaining = Math.max(5, 90 - this.getInvestmentDaysActive(inv));
-    return `${remaining} días`;
+    return `${remaining} min`;
   }
 
   // Datos de educación y tutoriales
@@ -554,6 +558,16 @@ export class App implements OnInit {
     this.portfolio.set(null);
     this.marketAnalysis.set(null);
     this.transactions.set([]);
+  }
+
+  // Toggle Login Form (reset to main login)
+  toggleLogin() {
+    this.loginForm.update(f => ({ 
+      ...f, 
+      requires2FA: false, 
+      twoFactorCode: '', 
+      error: '' 
+    }));
   }
 
   // Navegar a página

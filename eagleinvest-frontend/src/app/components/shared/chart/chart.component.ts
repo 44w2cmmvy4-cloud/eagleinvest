@@ -64,7 +64,7 @@ interface ChartData {
                 class="bar" 
                 [style.height.%]="(value / maxValue()) * 100"
                 [style.background]="data.colors?.[$index] || color || 'var(--gradient-accent)'">
-                <span class="bar-value">\${{value | number:'1.0-0'}}</span>
+                <span class="bar-value">&#36;{{ value | number:'1.2-2' }}</span>
               </div>
               <span class="bar-label">{{data.labels[$index]}}</span>
             </div>
@@ -125,7 +125,7 @@ interface ChartData {
           <div class="donut-center">
             <div class="donut-total">
               <span class="total-label">Total</span>
-              <span class="total-value">\${{totalValue() | number}}</span>
+              <span class="total-value">&#36;{{ totalValue() | number }}</span>
             </div>
           </div>
         </div>

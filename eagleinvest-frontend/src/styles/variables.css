@@ -1,200 +1,206 @@
 /* EagleInvest - Color Palette & Variables */
+
+
 /* Basado en análisis de plataformas de inversión profesionales */
 
 :root {
-  /* Colores Primarios - Navy Oscuro (de la imagen) */
-  --primary-dark: #0A0E27;      /* Navy profundo casi negro */
-  --primary-blue: #1A1F4D;      /* Azul navy oscuro */
-  --primary-accent: #2D3561;    /* Azul navy medio */
-  
-  /* Colores de Acento - Cian Neón (águila de la imagen) */
-  --accent-gold: #00F0FF;       /* Cian neón brillante */
-  --accent-gold-light: #5FF4FF; /* Cian claro */
-  --accent-gold-dark: #00D4E5;  /* Cian oscuro */
-  
-  /* Colores Secundarios - Magenta/Rosa Neón */
-  --secondary-teal: #00F0FF;    /* Cian turquesa */
-  --secondary-purple: #C946FF;  /* Magenta/rosa neón */
-  --secondary-blue: #4D7CFF;    /* Azul eléctrico */
-  
-  /* Estados y Feedback */
-  --success: #00F0FF;           /* Cian neón éxito */
-  --success-light: #5FF4FF;
-  --warning: #C946FF;           /* Magenta advertencia */
-  --warning-light: #E07AFF;
-  --danger: #FF0080;            /* Rosa neón peligro */
-  --danger-light: #FF4DA6;
-  --info: #4D7CFF;              /* Azul eléctrico información */
-  --info-light: #7A9FFF;
-  
-  /* Grises y Neutros */
-  --gray-900: #0A0E27;
-  --gray-800: #13172E;
-  --gray-700: #1A1F4D;
-  --gray-600: #2D3561;
-  --gray-500: #4A5380;
-  --gray-400: #7581A8;
-  --gray-300: #A1A9C9;
-  --gray-200: #CDD2E5;
-  --gray-100: #E6E9F5;
-  --gray-50: #F2F4FA;
-  
-  /* Fondos */
-  --bg-primary: #0A0E27;
-  --bg-secondary: #13172E;
-  --bg-tertiary: #1A1F4D;
-  --bg-card: #1A1F4D;
-  --bg-card-hover: #2D3561;
-  --bg-overlay: rgba(10, 14, 39, 0.95);
-  
-  /* Texto */
-  --text-primary: #FFFFFF;
-  --text-secondary: #CDD2E5;
-  --text-tertiary: #A1A9C9;
-  --text-muted: #7581A8;
-  
-  /* Bordes */
-  --border-color: rgba(0, 240, 255, 0.2);
-  --border-color-light: rgba(0, 240, 255, 0.1);
-  --border-color-strong: rgba(0, 240, 255, 0.4);
-  
-  /* Sombras */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.6);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.7);
-  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.8);
-  --shadow-glow: 0 0 20px rgba(0, 240, 255, 0.5);
-  --shadow-glow-magenta: 0 0 20px rgba(201, 70, 255, 0.5);
-  
-  /* Gradientes */
-  --gradient-primary: linear-gradient(135deg, #0A0E27 0%, #1A1F4D 100%);
-  --gradient-accent: linear-gradient(135deg, #00F0FF 0%, #5FF4FF 100%);
-  --gradient-success: linear-gradient(135deg, #00F0FF 0%, #00D4E5 100%);
-  --gradient-premium: linear-gradient(135deg, #C946FF 0%, #4D7CFF 100%);
-  --gradient-overlay: linear-gradient(180deg, rgba(10, 14, 39, 0) 0%, rgba(10, 14, 39, 0.95) 100%);
-  --gradient-neon: linear-gradient(135deg, #00F0FF 0%, #C946FF 100%);
-  
-  /* Animaciones */
-  --transition-fast: 150ms ease-in-out;
-  --transition-base: 250ms ease-in-out;
-  --transition-slow: 350ms ease-in-out;
-  
-  /* Espaciado */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 3rem;
-  
-  /* Bordes redondeados */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
-  --radius-full: 9999px;
-  
-  /* Tamaños de fuente */
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.25rem;
-  --text-2xl: 1.5rem;
-  --text-3xl: 1.875rem;
-  --text-4xl: 2.25rem;
-  --text-5xl: 3rem;
+    /* Colores Primarios - Navy Oscuro (de la imagen) */
+    --primary-dark: #0A0E27;
+    /* Navy profundo casi negro */
+    --primary-blue: #1A1F4D;
+    /* Azul navy oscuro */
+    --primary-accent: #2D3561;
+    /* Azul navy medio */
+    /* Colores de Acento - Azul y Cian (sin morado / sin oro) */
+    --accent-gold: #4D7CFF;
+    /* Azul principal (mantiene nombre por compatibilidad) */
+    --accent-gold-light: #7A9FFF;
+    /* Azul claro */
+    --accent-gold-dark: #2E59E6;
+    /* Azul oscuro */
+    /* Colores Secundarios */
+    --secondary-teal: #00F0FF;
+    /* Cian */
+    --secondary-purple: #4D7CFF;
+    /* Compatibilidad (sin morado real) */
+    --secondary-blue: #4D7CFF;
+    /* Azul */
+    /* Estados y Feedback */
+    --success: #00F0FF;
+    /* Cian éxito */
+    --success-light: #5FF4FF;
+    --warning: #FF9F43;
+    /* Advertencia */
+    --warning-light: #FFC27A;
+    --danger: #FF6B6B;
+    /* Error */
+    --danger-light: #FF9B9B;
+    --info: #4D7CFF;
+    /* Azul eléctrico información */
+    --info-light: #7A9FFF;
+    /* Grises y Neutros */
+    --gray-900: #0A0E27;
+    --gray-800: #13172E;
+    --gray-700: #1A1F4D;
+    --gray-600: #2D3561;
+    --gray-500: #4A5380;
+    --gray-400: #7581A8;
+    --gray-300: #A1A9C9;
+    --gray-200: #CDD2E5;
+    --gray-100: #E6E9F5;
+    --gray-50: #F2F4FA;
+    /* Fondos */
+    --bg-primary: #0A0E27;
+    --bg-secondary: #13172E;
+    --bg-tertiary: #1A1F4D;
+    --bg-card: #1A1F4D;
+    --bg-card-hover: #2D3561;
+    --bg-overlay: rgba(10, 14, 39, 0.95);
+    /* Texto */
+    --text-primary: #FFFFFF;
+    --text-secondary: #CDD2E5;
+    --text-tertiary: #A1A9C9;
+    --text-muted: #7581A8;
+    /* Bordes */
+    --border-color: rgba(0, 240, 255, 0.2);
+    --border-color-light: rgba(0, 240, 255, 0.1);
+    --border-color-strong: rgba(0, 240, 255, 0.4);
+    /* Sombras */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.6);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.7);
+    --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.8);
+    --shadow-glow: 0 0 20px rgba(0, 240, 255, 0.5);
+    --shadow-glow-magenta: 0 0 20px rgba(77, 124, 255, 0.35);
+    /* Gradientes */
+    --gradient-primary: linear-gradient(135deg, #0A0E27 0%, #1A1F4D 100%);
+    --gradient-accent: linear-gradient(135deg, #4D7CFF 0%, #00F0FF 100%);
+    --gradient-success: linear-gradient(135deg, #00F0FF 0%, #00D4E5 100%);
+    --gradient-premium: linear-gradient(135deg, #4D7CFF 0%, #00F0FF 100%);
+    --gradient-overlay: linear-gradient(180deg, rgba(10, 14, 39, 0) 0%, rgba(10, 14, 39, 0.95) 100%);
+    --gradient-neon: linear-gradient(135deg, #4D7CFF 0%, #00F0FF 100%);
+    /* Animaciones */
+    --transition-fast: 150ms ease-in-out;
+    --transition-base: 250ms ease-in-out;
+    --transition-slow: 350ms ease-in-out;
+    /* Espaciado */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    /* Bordes redondeados */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-2xl: 1.5rem;
+    --radius-full: 9999px;
+    /* Tamaños de fuente */
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 1.875rem;
+    --text-4xl: 2.25rem;
+    --text-5xl: 3rem;
 }
+
 
 /* Tema Claro - Deshabilitado, solo tema oscuro */
+
 [data-theme="light"] {
-  /* Forzar tema oscuro incluso si se activa el modo claro */
-  --bg-primary: #0A0E27;
-  --bg-secondary: #13172E;
-  --bg-tertiary: #1A1F4D;
-  --bg-card: #1A1F4D;
-  --bg-card-hover: #2D3561;
-  --bg-overlay: rgba(10, 14, 39, 0.95);
-  
-  --text-primary: #FFFFFF;
-  --text-secondary: #CDD2E5;
-  --text-tertiary: #A1A9C9;
-  --text-muted: #7581A8;
-  
-  --border-color: rgba(0, 240, 255, 0.2);
-  --border-color-light: rgba(0, 240, 255, 0.1);
-  --border-color-strong: rgba(0, 240, 255, 0.4);
-  
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.6);
-  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.7);
-  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.8);
-  --shadow-glow: 0 0 20px rgba(0, 240, 255, 0.5);
-  --shadow-glow-magenta: 0 0 20px rgba(201, 70, 255, 0.5);
+    /* Forzar tema oscuro incluso si se activa el modo claro */
+    --bg-primary: #0A0E27;
+    --bg-secondary: #13172E;
+    --bg-tertiary: #1A1F4D;
+    --bg-card: #1A1F4D;
+    --bg-card-hover: #2D3561;
+    --bg-overlay: rgba(10, 14, 39, 0.95);
+    --text-primary: #FFFFFF;
+    --text-secondary: #CDD2E5;
+    --text-tertiary: #A1A9C9;
+    --text-muted: #7581A8;
+    --border-color: rgba(0, 240, 255, 0.2);
+    --border-color-light: rgba(0, 240, 255, 0.1);
+    --border-color-strong: rgba(0, 240, 255, 0.4);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.6);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.7);
+    --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.8);
+    --shadow-glow: 0 0 20px rgba(0, 240, 255, 0.5);
+    --shadow-glow-magenta: 0 0 20px rgba(0, 240, 255, 0.5);
 }
 
+
 /* Animaciones globales */
+
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 @keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.7;
-  }
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
 }
 
+
 /* Clases de utilidad */
+
 .fade-in {
-  animation: fadeIn var(--transition-base) ease-out;
+    animation: fadeIn var(--transition-base) ease-out;
 }
 
 .slide-in-right {
-  animation: slideInRight var(--transition-base) ease-out;
+    animation: slideInRight var(--transition-base) ease-out;
 }
 
 .transition-all {
-  transition: all var(--transition-base);
+    transition: all var(--transition-base);
 }
 
 .hover-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
 }
 
 .hover-glow:hover {
-  box-shadow: var(--shadow-glow);
+    box-shadow: var(--shadow-glow);
 }

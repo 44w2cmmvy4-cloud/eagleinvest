@@ -1,211 +1,155 @@
 <app-navbar></app-navbar>
 
 <div class="page-shell" style="background: linear-gradient(135deg, #0A0E27 0%, #13172E 50%, #0A0E27 100%); min-height: 100vh; padding: clamp(20px, 5vw, 60px); display: flex; justify-content: center;">
-  <div class="container-xl px-2 px-md-4" style="width: 100%; max-width: 1200px;">
-    <!-- Header Responsive -->
-    <div class="row mb-4 animate-fade-in">
-      <div class="col-12">
-        <h1 class="animate-slide-in-right" style="color: white; font-weight: 800; margin: 0 0 10px 0; font-size: clamp(1.5rem, 5vw, 2.5rem);">
-          📜 Historial de Transacciones
-        </h1>
-        <p style="color: #A1A9C9; margin: 0; font-size: clamp(0.9rem, 2vw, 1.1rem);">
-          Monitorea todas tus inversiones, retiros y movimientos de fondos
-        </p>
-      </div>
-    </div>
-
-    <!-- Stats Summary - Responsive Grid -->
-    <div class="row g-3 mb-4 stagger-children">
-      <div class="col-6 col-md-3">
-        <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 12px; padding: clamp(12px, 2.5vw, 20px); backdrop-filter: blur(10px);">
-          <div class="d-flex align-items-center justify-content-between mb-2">
-            <span style="color: #7581A8; font-size: clamp(0.75rem, 1.8vw, 0.9rem);">Total Invertido</span>
-            <i class="bi bi-arrow-up-circle" style="color: #00F0FF; font-size: clamp(1.2rem, 3vw, 1.5rem); opacity: 0.9;"></i>
-          </div>
-          <h4 class="counter-number" style="color: white; margin: 0; font-weight: 800; font-size: clamp(1rem, 3vw, 1.5rem);">${{ stats().total_invested }}</h4>
+    <div class="container-xl px-2 px-md-4" style="width: 100%; max-width: 1200px;">
+        <!-- Header Responsive -->
+        <div class="row mb-4 animate-fade-in">
+            <div class="col-12">
+                <h1 class="animate-slide-in-right" style="color: white; font-weight: 800; margin: 0 0 10px 0; font-size: clamp(1.5rem, 5vw, 2.5rem);">
+                    📜 Historial de Transacciones
+                </h1>
+                <p style="color: #A1A9C9; margin: 0; font-size: clamp(0.9rem, 2vw, 1.1rem);">
+                    Monitorea todas tus inversiones, retiros y movimientos de fondos
+                </p>
+            </div>
         </div>
-      </div>
 
-      <div class="col-6 col-md-3">
-        <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(201,70,255,0.2); border-radius: 12px; padding: clamp(12px, 2.5vw, 20px); backdrop-filter: blur(10px);">
-          <div class="d-flex align-items-center justify-content-between mb-2">
-            <span style="color: #7581A8; font-size: clamp(0.75rem, 1.8vw, 0.9rem);">Total Retirado</span>
-            <i class="bi bi-arrow-down-circle" style="color: #C946FF; font-size: clamp(1.2rem, 3vw, 1.5rem); opacity: 0.9;"></i>
-          </div>
-          <h4 class="counter-number" style="color: white; margin: 0; font-weight: 800; font-size: clamp(1rem, 3vw, 1.5rem);">${{ stats().total_withdrawn }}</h4>
+        <!-- Stats Summary - Responsive Grid -->
+        <div class="row g-3 mb-4 stagger-children">
+            <div class="col-6 col-md-3">
+                <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 12px; padding: clamp(12px, 2.5vw, 20px); backdrop-filter: blur(10px);">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span style="color: #7581A8; font-size: clamp(0.75rem, 1.8vw, 0.9rem);">Total Invertido</span>
+                        <i class="bi bi-arrow-up-circle" style="color: #00F0FF; font-size: clamp(1.2rem, 3vw, 1.5rem); opacity: 0.9;"></i>
+                    </div>
+                    <h4 class="counter-number" style="color: white; margin: 0; font-weight: 800; font-size: clamp(1rem, 3vw, 1.5rem);">${{ stats().total_invested | number:'1.2-2' }}</h4>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 12px; padding: clamp(12px, 2.5vw, 20px); backdrop-filter: blur(10px);">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span style="color: #7581A8; font-size: clamp(0.75rem, 1.8vw, 0.9rem);">Total Retirado</span>
+                        <i class="bi bi-arrow-down-circle" style="color: #4D7CFF; font-size: clamp(1.2rem, 3vw, 1.5rem); opacity: 0.9;"></i>
+                    </div>
+                    <h4 class="counter-number" style="color: white; margin: 0; font-weight: 800; font-size: clamp(1rem, 3vw, 1.5rem);">${{ stats().total_withdrawn | number:'1.2-2' }}</h4>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 12px; padding: clamp(12px, 2.5vw, 20px); backdrop-filter: blur(10px);">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span style="color: #7581A8; font-size: clamp(0.75rem, 1.8vw, 0.9rem);">Ganancias</span>
+                        <i class="bi bi-graph-up" style="color: #00F0FF; font-size: clamp(1.2rem, 3vw, 1.5rem); opacity: 0.9;"></i>
+                    </div>
+                    <h4 class="counter-number" style="color: white; margin: 0; font-weight: 800; font-size: clamp(1rem, 3vw, 1.5rem);">+${{ stats().total_profit | number:'1.2-2' }}</h4>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(255,159,67,0.2); border-radius: 12px; padding: clamp(12px, 2.5vw, 20px); backdrop-filter: blur(10px);">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span style="color: #7581A8; font-size: clamp(0.75rem, 1.8vw, 0.9rem);">Transacciones</span>
+                        <i class="bi bi-list-check" style="color: #FF9F43; font-size: clamp(1.2rem, 3vw, 1.5rem); opacity: 0.9;"></i>
+                    </div>
+                    <h4 class="counter-number" style="color: white; margin: 0; font-weight: 800; font-size: clamp(1rem, 3vw, 1.5rem);">{{ stats().total_transactions }}</h4>
+                </div>
+            </div>
         </div>
-      </div>
 
-      <div class="col-6 col-md-3">
-        <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(255,0,128,0.2); border-radius: 12px; padding: clamp(12px, 2.5vw, 20px); backdrop-filter: blur(10px);">
-          <div class="d-flex align-items-center justify-content-between mb-2">
-            <span style="color: #7581A8; font-size: clamp(0.75rem, 1.8vw, 0.9rem);">Ganancias</span>
-            <i class="bi bi-graph-up" style="color: #FF0080; font-size: clamp(1.2rem, 3vw, 1.5rem); opacity: 0.9;"></i>
-          </div>
-          <h4 class="counter-number" style="color: white; margin: 0; font-weight: 800; font-size: clamp(1rem, 3vw, 1.5rem);">+${{ stats().total_profit }}</h4>
-        </div>
-      </div>
-
-      <div class="col-6 col-md-3">
-        <div class="stat-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(255,159,67,0.2); border-radius: 12px; padding: clamp(12px, 2.5vw, 20px); backdrop-filter: blur(10px);">
-          <div class="d-flex align-items-center justify-content-between mb-2">
-            <span style="color: #7581A8; font-size: clamp(0.75rem, 1.8vw, 0.9rem);">Transacciones</span>
-            <i class="bi bi-list-check" style="color: #FF9F43; font-size: clamp(1.2rem, 3vw, 1.5rem); opacity: 0.9;"></i>
-          </div>
-          <h4 class="counter-number" style="color: white; margin: 0; font-weight: 800; font-size: clamp(1rem, 3vw, 1.5rem);">{{ stats().total_transactions }}</h4>
-        </div>
-      </div>
-    </div>
-
-    <!-- Filters - Responsive -->
-    <div class="gpu-accelerated animate-fade-in-up" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(12px, 2.5vw, 20px); backdrop-filter: blur(10px); margin-bottom: 20px;">
-      <div class="row g-2 g-md-3">
-        <div class="col-12 col-md-4">
-          <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: clamp(0.8rem, 1.8vw, 0.9rem); display: block;">Tipo</label>
-          <select [(ngModel)]="selectedType" (ngModelChange)="filterTransactions()" style="width: 100%; padding: 10px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 8px; color: white; font-size: clamp(0.85rem, 2vw, 0.95rem);">
+        <!-- Filters - Responsive -->
+        <div class="gpu-accelerated animate-fade-in-up" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(12px, 2.5vw, 20px); backdrop-filter: blur(10px); margin-bottom: 20px;">
+            <div class="row g-2 g-md-3">
+                <div class="col-12 col-md-4">
+                    <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: clamp(0.8rem, 1.8vw, 0.9rem); display: block;">Tipo</label>
+                    <select [(ngModel)]="selectedType" (ngModelChange)="filterTransactions()" style="width: 100%; padding: 10px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 8px; color: white; font-size: clamp(0.85rem, 2vw, 0.95rem);">
             <option value="all">Todas</option>
             <option value="investment">Inversiones</option>
             <option value="withdrawal">Retiros</option>
             <option value="profit">Ganancias</option>
           </select>
-        </div>
-        <div class="col-12 col-md-4">
-          <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: clamp(0.8rem, 1.8vw, 0.9rem); display: block;">Estado</label>
-          <select [(ngModel)]="selectedStatus" (ngModelChange)="filterTransactions()" style="width: 100%; padding: 10px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 8px; color: white; font-size: clamp(0.85rem, 2vw, 0.95rem);">
+                </div>
+                <div class="col-12 col-md-4">
+                    <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: clamp(0.8rem, 1.8vw, 0.9rem); display: block;">Estado</label>
+                    <select [(ngModel)]="selectedStatus" (ngModelChange)="filterTransactions()" style="width: 100%; padding: 10px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 8px; color: white; font-size: clamp(0.85rem, 2vw, 0.95rem);">
             <option value="all">Todos</option>
             <option value="completed">Completadas</option>
             <option value="pending">Pendientes</option>
             <option value="cancelled">Canceladas</option>
           </select>
-        </div>
-        <div class="col-12 col-md-4">
-          <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: clamp(0.8rem, 1.8vw, 0.9rem); display: block;">Buscar</label>
-          <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="filterTransactions()" placeholder="ID o monto..." style="width: 100%; padding: 10px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 8px; color: white; font-size: clamp(0.85rem, 2vw, 0.95rem);">
-        </div>
-      </div>
-    </div>
-
-    <!-- Transactions Table - Desktop Only -->
-    <div class="d-none d-lg-block animate-fade-in-up">
-      <div class="gpu-accelerated" style="background: linear-gradient(145deg, rgba(9,15,45,0.95), rgba(6,10,28,0.92)); border: 1px solid rgba(12,235,221,0.2); border-radius: 18px; backdrop-filter: blur(12px); overflow: hidden;">
-        <div style="display: flex; align-items: center; justify-content: space-between; padding: 24px 28px; border-bottom: 1px solid rgba(12,235,221,0.12); background: linear-gradient(90deg, rgba(19,32,70,0.9), rgba(8,13,33,0.9));">
-          <div>
-            <h3 style="color: white; margin: 0; font-weight: 800; font-size: 1.45rem;">💳 Transacciones Recientes</h3>
-            <p style="color: #4BD4FF; margin: 6px 0 0; font-size: 0.9rem;">Historial actualizado al minuto</p>
-          </div>
-          <button style="background: rgba(12,235,221,0.15); color: #0CEBDD; border: 1px solid rgba(12,235,221,0.4); padding: 10px 18px; border-radius: 999px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.75rem;">
-            Ver todas →
-          </button>
-        </div>
-        <div class="table-responsive">
-          <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
-            <colgroup>
-              <col style="width: 18%">
-              <col style="width: 14%">
-              <col style="width: 12%">
-              <col style="width: 14%">
-              <col style="width: 42%">
-            </colgroup>
-            <thead>
-              <tr style="background: rgba(13,20,49,0.8); border-bottom: 1px solid rgba(12,235,221,0.12); text-transform: uppercase; letter-spacing: 0.08em;">
-                <th style="padding: 18px 20px; text-align: left; color: #59E3FF; font-weight: 600; font-size: 0.85rem;">Fecha</th>
-                <th style="padding: 18px 12px; text-align: left; color: #59E3FF; font-weight: 600; font-size: 0.85rem;">Tipo</th>
-                <th style="padding: 18px 12px; text-align: right; color: #59E3FF; font-weight: 600; font-size: 0.85rem;">Monto</th>
-                <th style="padding: 18px 12px; text-align: center; color: #59E3FF; font-weight: 600; font-size: 0.85rem;">Estado</th>
-                <th style="padding: 18px 12px; text-align: left; color: #59E3FF; font-weight: 600; font-size: 0.85rem;">Descripción</th>
-              </tr>
-            </thead>
-            <tbody style="font-variant-numeric: tabular-nums;">
-              @for (transaction of filteredTransactions(); track transaction.id) {
-                <tr class="table-row-hover" style="border-bottom: 1px solid rgba(12,235,221,0.08);">
-                  <td style="padding: 20px; vertical-align: middle;">
-                    <div style="color: white; font-weight: 600;">{{ transaction.date | date: 'dd/MM/yy, h:mm a' }}</div>
-                    <div style="color: #4D5A84; font-size: 0.8rem;">ID #{{ transaction.id }}</div>
-                  </td>
-                  <td style="padding: 20px 12px; vertical-align: middle;">
-                    <span class="badge-animated"
-                          [style.background]="getTypeBadgeColor(transaction.type)"
-                          style="padding: 8px 16px; border-radius: 999px; font-weight: 700; font-size: 0.85rem; color: #C9EFFF; text-transform: uppercase;">
-                      {{ getTypeLabel(transaction.type) }}
-                    </span>
-                  </td>
-                  <td style="padding: 20px 12px; vertical-align: middle; text-align: right;">
-                    <div style="color: white; font-weight: 800; font-size: 1rem;">
-                      {{ transaction.type === 'investment' ? '-' : '+' }}${{ transaction.amount | number: '1.2-2' }}
-                    </div>
-                  </td>
-                  <td style="padding: 20px 12px; vertical-align: middle; text-align: center;">
-                    <span class="badge-animated"
-                          [style.background]="getStatusBadgeColor(transaction.status)"
-                          [style.color]="getStatusTextColor(transaction.status)"
-                          style="padding: 8px 16px; border-radius: 999px; font-weight: 700; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px; justify-content: center;">
-                      <span>{{ getStatusIcon(transaction.status) }}</span>
-                      {{ getStatusLabel(transaction.status) }}
-                    </span>
-                  </td>
-                  <td style="padding: 20px 12px; vertical-align: middle;">
-                    <div style="color: #B8C2EC; font-weight: 500;">{{ transaction.description }}</div>
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        </div>
-        <div style="height: 4px; background: linear-gradient(90deg, transparent, rgba(12,235,221,0.8), transparent);"></div>
-      </div>
-    </div>
-
-    <!-- Transactions Cards - Mobile Only -->
-    <div class="d-lg-none">
-      <div class="row g-3">
-        @for (transaction of filteredTransactions(); track transaction.id) {
-          <div class="col-12">
-            <div class="investment-card gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 12px; padding: 15px; backdrop-filter: blur(10px);">
-              <div class="d-flex justify-content-between align-items-start mb-3">
-                <div>
-                  <span style="color: #7581A8; font-size: 0.8rem; font-weight: 600;">ID: #{{ transaction.id }}</span>
-                  <h6 class="counter-number" style="color: white; margin: 5px 0 0 0; font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.3rem);">
-                    {{ transaction.type === 'investment' ? '-' : '+' }}${{ transaction.amount }}
-                  </h6>
                 </div>
-                <span class="badge-animated"
-                      [style.background]="getStatusBadgeColor(transaction.status)" 
-                      [style.color]="getStatusTextColor(transaction.status)"
-                      style="padding: 6px 12px; border-radius: 8px; font-weight: 600; font-size: 0.75rem;">
-                  {{ transaction.status }}
-                </span>
-              </div>
-
-              <div class="row g-2 mb-2">
-                <div class="col-6">
-                  <p style="color: #7581A8; margin: 0; font-size: 0.8rem;">Tipo</p>
-                  <span class="badge-animated"
-                        [style.background]="getTypeBadgeColor(transaction.type)" 
-                        style="padding: 4px 10px; border-radius: 6px; font-weight: 600; font-size: 0.75rem; display: inline-block; margin-top: 4px;">
-                    {{ transaction.type }}
-                  </span>
+                <div class="col-12 col-md-4">
+                    <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: clamp(0.8rem, 1.8vw, 0.9rem); display: block;">Buscar</label>
+                    <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="filterTransactions()" placeholder="ID o monto..." style="width: 100%; padding: 10px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 8px; color: white; font-size: clamp(0.85rem, 2vw, 0.95rem);">
                 </div>
-                <div class="col-6">
-                  <p style="color: #7581A8; margin: 0; font-size: 0.8rem;">Fecha</p>
-                  <p style="color: white; margin: 4px 0 0 0; font-weight: 600; font-size: 0.85rem;">{{ transaction.date }}</p>
-                </div>
-              </div>
-
-              <div class="stat-card" style="background: rgba(0,240,255,0.05); border-left: 2px solid #00F0FF; padding: 10px; border-radius: 6px; margin-top: 10px;">
-                <p style="color: #CDD2E5; margin: 0; font-size: 0.85rem;">{{ transaction.description }}</p>
-              </div>
             </div>
-          </div>
-        }
-      </div>
-    </div>
+        </div>
 
-    @if (filteredTransactions().length === 0) {
-      <div class="animate-fade-in gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: 60px 20px; text-align: center; backdrop-filter: blur(10px);">
-        <i class="bi bi-inbox icon-wrapper" style="font-size: clamp(3rem, 8vw, 5rem); color: #4A5578; margin-bottom: 20px; display: block;"></i>
-        <h4 style="color: white; margin: 0 0 10px 0; font-size: clamp(1.1rem, 3vw, 1.3rem);">No hay transacciones</h4>
-        <p style="color: #7581A8; margin: 0; font-size: clamp(0.9rem, 2vw, 1rem);">Intenta ajustar los filtros</p>
-      </div>
-    }
-  </div>
+        <!-- Lista de Transacciones (sin tablas) -->
+        <div class="animate-fade-in-up">
+            @if (filteredTransactions().length > 0) {
+            <!-- Lista Unificada de Cards -->
+            <div>
+                <div class="row g-3">
+                    @for (transaction of filteredTransactions(); track transaction.id) {
+                    <div class="col-12">
+                        <div class="investment-card gpu-accelerated" style="background: linear-gradient(145deg, rgba(13,17,46,0.9), rgba(9,12,33,0.85)); border: 1px solid rgba(0,240,255,0.25); border-radius: 16px; padding: 18px; backdrop-filter: blur(10px); position: relative; overflow: hidden;">
+                            <!-- Barra de color según tipo -->
+                            <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%;" [style.background]="transaction.type === 'investment' ? 'linear-gradient(180deg, #4D7CFF, #00F0FF)' : transaction.type === 'withdrawal' ? 'linear-gradient(180deg, #4D7CFF, #2E59E6)' : 'linear-gradient(180deg, #00F0FF, #0CEBDD)'"></div>
+
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="d-flex align-items-center gap-3" style="flex: 1;">
+                                    <div style="width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg, rgba(0,240,255,0.25), rgba(12,235,221,0.15)); display: flex; align-items: center; justify-content: center; border: 2px solid rgba(0,240,255,0.3);">
+                                        <i class="bi" [class.bi-arrow-up-circle]="transaction.type === 'investment'" [class.bi-arrow-down-circle]="transaction.type === 'withdrawal'" [class.bi-graph-up]="transaction.type === 'profit'" style="font-size: 1.5rem; color: #00F0FF;"></i>
+                                    </div>
+                                    <div>
+                                        <span class="badge-animated" [style.background]="getTypeBadgeColor(transaction.type)" style="padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 0.75rem; display: inline-block; margin-bottom: 6px; border: 1px solid rgba(255,255,255,0.1);">
+                                            {{ getTypeLabel(transaction.type) }}
+                                        </span>
+                                        <p style="color: #7581A8; margin: 0; font-size: 0.75rem; font-family: 'Courier New', monospace;">ID: #{{ transaction.id }}</p>
+                                    </div>
+                                </div>
+                                <span class="badge-animated" [style.background]="getStatusBadgeColor(transaction.status)" [style.color]="getStatusTextColor(transaction.status)" style="padding: 8px 14px; border-radius: 12px; font-weight: 700; font-size: 0.75rem; border: 1px solid currentColor; flex-shrink: 0;">
+                                    {{ getStatusLabel(transaction.status) }}
+                                </span>
+                            </div>
+
+                            <div style="background: rgba(0,240,255,0.06); border-left: 3px solid #00F0FF; padding: 14px; border-radius: 10px; margin-bottom: 14px;">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <span style="color: #7581A8; font-size: 0.85rem; font-weight: 600;">Monto</span>
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <span style="color: {{ transaction.type === 'investment' ? '#FF9F43' : '#00F0FF' }}; font-weight: 900; font-size: 1.1rem;">{{ transaction.type === 'investment' ? '-' : '+' }}</span>
+                                        <span class="counter-number" style="color: white; font-weight: 800; font-size: 1.4rem;">${{ transaction.amount | number: '1.2-2' }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row g-2 mb-3">
+                                <div class="col-12">
+                                    <p style="color: #7581A8; margin: 0 0 6px 0; font-size: 0.8rem; font-weight: 600;">Descripción</p>
+                                    <p style="color: #CDD2E5; margin: 0; font-size: 0.9rem; line-height: 1.5;">{{ transaction.description }}</p>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; align-items: center; gap: 6px; padding-top: 12px; border-top: 1px solid rgba(0,240,255,0.1);">
+                                <i class="bi bi-calendar3" style="color: #7581A8; font-size: 0.9rem;"></i>
+                                <span style="color: #A1A9C9; font-size: 0.85rem; font-weight: 500;">{{ transaction.date | date: 'dd MMM yyyy, h:mm a' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+            } @else {
+            <!-- Estado vacío -->
+            <div class="gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 20px; padding: 60px 20px; text-align: center; backdrop-filter: blur(10px);">
+                <div style="width: 100px; height: 100px; margin: 0 auto 24px; border-radius: 50%; background: linear-gradient(135deg, rgba(0,240,255,0.1), rgba(12,235,221,0.05)); display: flex; align-items: center; justify-content: center; border: 2px dashed rgba(0,240,255,0.3);">
+                    <i class="bi bi-inbox" style="font-size: 3rem; color: #4A5578;"></i>
+                </div>
+                <h4 style="color: white; margin: 0 0 12px 0; font-size: 1.4rem; font-weight: 700;">No hay transacciones</h4>
+                <p style="color: #7581A8; margin: 0; font-size: 1rem;">Ajusta los filtros o realiza tu primera inversión</p>
+            </div>
+            }
+        </div>
+    </div>
 </div>

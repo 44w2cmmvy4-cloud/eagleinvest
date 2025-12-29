@@ -1,148 +1,258 @@
 <app-navbar></app-navbar>
 
 <div style="background: linear-gradient(135deg, #0A0E27 0%, #13172E 50%, #0A0E27 100%); min-height: 100vh; padding: 20px;">
-  <div class="container-fluid">
-    <!-- Header Responsive -->
-    <div class="row mb-4 animate-fade-in">
-      <div class="col-12">
-        <h1 class="animate-slide-in-right" style="color: white; font-weight: 800; margin: 0 0 10px 0; font-size: clamp(1.5rem, 5vw, 2.5rem);">
-          ⚙️ Configuración de Cuenta
-        </h1>
-        <p style="color: #A1A9C9; margin: 0; font-size: clamp(0.9rem, 2vw, 1.1rem);">
-          Administra tu información personal y preferencias de seguridad
-        </p>
-      </div>
-    </div>
+    <div class="container-fluid">
+        <!-- Header Responsive -->
+        <div class="row mb-4 animate-fade-in">
+            <div class="col-12">
+                <h1 class="animate-slide-in-right" style="color: white; font-weight: 800; margin: 0 0 10px 0; font-size: clamp(1.5rem, 5vw, 2.5rem);">
+                    ⚙️ Configuración de Cuenta
+                </h1>
+                <p style="color: #A1A9C9; margin: 0; font-size: clamp(0.9rem, 2vw, 1.1rem);">
+                    Administra tu información personal y preferencias de seguridad
+                </p>
+            </div>
+        </div>
 
-    <div class="row g-3 g-md-4 stagger-children">
-      <!-- Personal Information -->
-      <div class="col-12 col-xl-8">
-        <div class="gpu-accelerated animate-fade-in-up" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(15px, 3vw, 25px); backdrop-filter: blur(10px); margin-bottom: 20px;">
-          <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-3 pb-3" style="border-bottom: 1px solid rgba(0,240,255,0.1);">
-            <h5 class="icon-glow" style="color: white; margin: 0 0 10px 0; font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.3rem);">👤 Información Personal</h5>
-            <button (click)="toggleEdit()" class="btn-bot-control" style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: clamp(0.85rem, 2vw, 0.95rem); white-space: nowrap;">
+        <div class="row g-3 g-md-4 stagger-children">
+            <!-- Personal Information -->
+            <div class="col-12 col-xl-8">
+                <div class="gpu-accelerated animate-fade-in-up" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(15px, 3vw, 25px); backdrop-filter: blur(10px); margin-bottom: 20px;">
+                    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-3 pb-3" style="border-bottom: 1px solid rgba(0,240,255,0.1);">
+                        <h5 class="icon-glow" style="color: white; margin: 0 0 10px 0; font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.3rem);">👤 Información Personal</h5>
+                        <button (click)="toggleEdit()" class="btn-bot-control" style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: clamp(0.85rem, 2vw, 0.95rem); white-space: nowrap;">
               <i class="bi bi-pencil me-1"></i>Editar Perfil
             </button>
-          </div>
+                    </div>
 
-          <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
-            <div class="row g-3">
-              <div class="col-12 col-md-6">
-                <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; display: block;">Nombre Completo</label>
-                <input type="text" formControlName="name" [readonly]="!isEditing" placeholder="Tu nombre completo"
-                       class="gpu-accelerated"
-                       style="width: 100%; padding: 14px 16px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: 1rem; transition: all 0.3s;">
-              </div>
-              <div class="col-12 col-md-6">
-                <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; display: block;">Email</label>
-                <input type="email" formControlName="email" [readonly]="!isEditing" placeholder="tu@email.com"
-                       class="gpu-accelerated"
-                       style="width: 100%; padding: 14px 16px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: 1rem; transition: all 0.3s;">
-              </div>
-              <div class="col-12 col-md-6">
-                <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; display: block;">Teléfono</label>
-                <input type="tel" formControlName="phone_number" [readonly]="!isEditing" placeholder="+1 (555) 123-4567"
-                       class="gpu-accelerated"
-                       style="width: 100%; padding: 14px 16px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: 1rem; transition: all 0.3s;">
-              </div>
-              <div class="col-12 col-md-6">
-                <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; display: block;">Dirección</label>
-                <input type="text" formControlName="address" [readonly]="!isEditing" placeholder="Tu dirección"
-                       class="gpu-accelerated"
-                       style="width: 100%; padding: 14px 16px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: 1rem; transition: all 0.3s;">
-              </div>
-              <div class="col-12 col-md-6">
-                <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; display: block;">Miembro Desde</label>
-                <input type="text" [value]="userProfile()?.member_since" readonly
-                       style="width: 100%; padding: 14px 16px; background: rgba(13,17,46,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 10px; color: #7581A8; font-size: 1rem;">
-              </div>
-            </div>
+                    <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6">
+                                <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; display: block;">Nombre Completo</label>
+                                <input type="text" formControlName="name" [readonly]="!isEditing" placeholder="Tu nombre completo" class="gpu-accelerated" style="width: 100%; padding: 14px 16px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: 1rem; transition: all 0.3s;">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; display: block;">Email</label>
+                                <input type="email" formControlName="email" [readonly]="!isEditing" placeholder="tu@email.com" class="gpu-accelerated" style="width: 100%; padding: 14px 16px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: 1rem; transition: all 0.3s;">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; display: block;">Teléfono</label>
+                                <input type="tel" formControlName="phone_number" [readonly]="!isEditing" placeholder="+1 (555) 123-4567" class="gpu-accelerated" style="width: 100%; padding: 14px 16px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: 1rem; transition: all 0.3s;">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; display: block;">Dirección</label>
+                                <input type="text" formControlName="address" [readonly]="!isEditing" placeholder="Tu dirección" class="gpu-accelerated" style="width: 100%; padding: 14px 16px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: 1rem; transition: all 0.3s;">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; display: block;">Miembro Desde</label>
+                                <input type="text" [value]="userProfile()?.member_since" readonly style="width: 100%; padding: 14px 16px; background: rgba(13,17,46,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 10px; color: #7581A8; font-size: 1rem;">
+                            </div>
+                        </div>
 
-            @if (isEditing) {
-              <div class="d-flex gap-2 flex-wrap mt-4 animate-slide-down">
-                <button type="submit" [disabled]="profileForm.invalid"
-                        class="btn-neon"
-                        style="flex: 1; min-width: 150px; padding: 12px 20px; background: linear-gradient(135deg, #00F0FF, #C946FF); color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: clamp(0.9rem, 2vw, 1rem);">
+                        @if (isEditing) {
+                        <div class="d-flex gap-2 flex-wrap mt-4 animate-slide-down">
+                            <button type="submit" [disabled]="profileForm.invalid" class="btn-neon" style="flex: 1; min-width: 150px; padding: 12px 20px; background: linear-gradient(135deg, #00F0FF, #4D7CFF); color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: clamp(0.9rem, 2vw, 1rem);">
                   <i class="bi bi-check-lg me-1"></i>Guardar Cambios
                 </button>
-                <button type="button" (click)="cancelEdit()"
-                        class="btn-bot-control"
-                        style="flex: 1; min-width: 150px; padding: 12px 20px; background: transparent; border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: clamp(0.9rem, 2vw, 1rem);">
+                            <button type="button" (click)="cancelEdit()" class="btn-bot-control" style="flex: 1; min-width: 150px; padding: 12px 20px; background: transparent; border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: clamp(0.9rem, 2vw, 1rem);">
                   <i class="bi bi-x-lg me-1"></i>Cancelar
                 </button>
-              </div>
-            }
-          </form>
-        </div>
+                        </div>
+                        }
+                    </form>
+                </div>
 
-        <!-- Security Settings -->
-        <div class="gpu-accelerated animate-fade-in-up" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(15px, 3vw, 25px); backdrop-filter: blur(10px);">
-          <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-3 pb-3" style="border-bottom: 1px solid rgba(0,240,255,0.1);">
-            <h5 class="icon-glow" style="color: white; margin: 0 0 10px 0; font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.3rem);">🔐 Configuración de Seguridad</h5>
-            <button class="btn-bot-control" style="background: rgba(255,159,67,0.1); border: 1px solid rgba(255,159,67,0.3); color: #FF9F43; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: clamp(0.85rem, 2vw, 0.95rem); white-space: nowrap;">
+                <!-- Security Settings -->
+                <div class="gpu-accelerated animate-fade-in-up" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(15px, 3vw, 25px); backdrop-filter: blur(10px);">
+                    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-3 pb-3" style="border-bottom: 1px solid rgba(0,240,255,0.1);">
+                        <h5 class="icon-glow" style="color: white; margin: 0 0 10px 0; font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.3rem);">🔐 Configuración de Seguridad</h5>
+                        <button class="btn-bot-control" style="background: rgba(255,159,67,0.1); border: 1px solid rgba(255,159,67,0.3); color: #FF9F43; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: clamp(0.85rem, 2vw, 0.95rem); white-space: nowrap;">
               <i class="bi bi-key me-1"></i>Cambiar Contraseña
             </button>
-          </div>
+                    </div>
 
-          <div class="stat-card gpu-accelerated" style="background: rgba(0,240,255,0.05); border-left: 3px solid #00F0FF; padding: 20px; border-radius: 10px; margin-bottom: 15px;">
-            <div class="d-flex align-items-center gap-3">
-              <i class="bi bi-shield-check" style="font-size: clamp(2rem, 5vw, 3rem); color: #00F0FF;"></i>
-              <div style="flex: 1;">
-                <h6 style="color: white; margin: 0 0 5px 0; font-weight: 700; font-size: clamp(0.95rem, 2.5vw, 1.1rem);">Seguridad de Cuenta Activa</h6>
-                <p style="color: #A1A9C9; margin: 0; font-size: clamp(0.85rem, 2vw, 0.95rem);">Tu cuenta está protegida con autenticación encriptada</p>
-              </div>
-              <span style="background: rgba(0,240,255,0.2); color: #00F0FF; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: clamp(0.75rem, 2vw, 0.85rem);">ACTIVO</span>
-            </div>
-          </div>
+                    <div class="stat-card gpu-accelerated" style="background: rgba(0,240,255,0.05); border-left: 3px solid #00F0FF; padding: 20px; border-radius: 10px; margin-bottom: 15px;">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="bi bi-shield-check" style="font-size: clamp(2rem, 5vw, 3rem); color: #00F0FF;"></i>
+                            <div style="flex: 1;">
+                                <h6 style="color: white; margin: 0 0 5px 0; font-weight: 700; font-size: clamp(0.95rem, 2.5vw, 1.1rem);">Seguridad de Cuenta Activa</h6>
+                                <p style="color: #A1A9C9; margin: 0; font-size: clamp(0.85rem, 2vw, 0.95rem);">Tu cuenta está protegida con autenticación encriptada</p>
+                            </div>
+                            <span style="background: rgba(0,240,255,0.2); color: #00F0FF; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: clamp(0.75rem, 2vw, 0.85rem);">ACTIVO</span>
+                        </div>
+                    </div>
 
-          <div class="text-center">
-            <button style="background: transparent; border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; padding: 12px 24px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: clamp(0.9rem, 2vw, 1rem);">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3" style="background: rgba(13,17,46,0.6); border: 1px solid rgba(0,240,255,0.15); border-radius: 10px; padding: 12px 16px;">
+                        <div>
+                            <p style="color: white; margin: 0; font-weight: 700;">Autenticación 2FA por Email</p>
+                            <small style="color: #A1A9C9;">Activa para solicitar código al iniciar sesión</small>
+                        </div>
+                        <div class="form-check form-switch" style="padding-left: 3rem;">
+                            <input class="form-check-input" type="checkbox" role="switch" id="twoFactorToggle" [checked]="profileForm.get('two_factor_enabled')?.value" (change)="onTwoFactorChange($event)" style="width: 3rem; height: 1.5rem;">
+                            <label class="form-check-label" for="twoFactorToggle" style="color: #CDD2E5; margin-left: 8px;">{{ profileForm.get('two_factor_enabled')?.value ? 'Activo' : 'Inactivo' }}</label>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button style="background: transparent; border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; padding: 12px 24px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: clamp(0.9rem, 2vw, 1rem);">
               <i class="bi bi-envelope me-2"></i>Enviar Email de Recuperación
             </button>
-          </div>
-        </div>
-      </div>
+                    </div>
+                </div>
 
-      <!-- Investment Overview Sidebar -->
-      <div class="col-12 col-xl-4">
-        <div class="gpu-accelerated animate-fade-in-up" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(15px, 3vw, 25px); backdrop-filter: blur(10px); position: sticky; top: 20px;">
-          <h5 class="animate-slide-in-right icon-glow" style="color: white; margin: 0 0 20px 0; font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.3rem);">📊 Resumen de Inversiones</h5>
+                <!-- Wallet USDT Section -->
+                <div class="gpu-accelerated animate-fade-in-up mt-4" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.25); border-radius: 15px; padding: clamp(15px, 3vw, 25px); backdrop-filter: blur(10px);">
+                    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center mb-3 pb-3" style="border-bottom: 1px solid rgba(0,240,255,0.12);">
+                        <div>
+                            <h5 class="icon-glow" style="color: white; margin: 0 0 5px 0; font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.3rem);">
+                                💰 Wallet USDT
+                            </h5>
+                            <p style="color: #A1A9C9; margin: 0; font-size: 0.85rem;">Configura tu dirección de retiro</p>
+                        </div>
+                        <button (click)="toggleWalletSection()" class="btn-bot-control mt-2 mt-sm-0" style="background: rgba(77,124,255,0.12); border: 1px solid rgba(77,124,255,0.28); color: #4D7CFF; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: clamp(0.85rem, 2vw, 0.95rem); white-space: nowrap;">
+              <i class="bi" [class.bi-chevron-down]="!showWalletSection()" [class.bi-chevron-up]="showWalletSection()" class="me-1"></i>
+              {{ showWalletSection() ? 'Ocultar' : 'Mostrar' }}
+            </button>
+                    </div>
 
-          <div class="row g-3 mb-4 stagger-children">
-            <div class="col-12">
-              <div class="stat-card gpu-accelerated" style="background: rgba(0,240,255,0.1); border-left: 3px solid #00F0FF; padding: 15px; border-radius: 10px;">
-                <p style="color: #7581A8; margin: 0 0 5px 0; font-size: clamp(0.8rem, 2vw, 0.9rem);">Inversiones Activas</p>
-                <h3 class="counter-number badge-glow" style="color: #00F0FF; margin: 0; font-weight: 800; font-size: clamp(1.8rem, 5vw, 2.5rem);">{{ investmentOverview()?.active_investments }}</h3>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="stat-card gpu-accelerated" style="background: rgba(201,70,255,0.1); border-left: 3px solid #C946FF; padding: 15px; border-radius: 10px;">
-                <p style="color: #7581A8; margin: 0 0 5px 0; font-size: clamp(0.8rem, 2vw, 0.9rem);">Valor Total del Portafolio</p>
-                <h3 class="counter-number badge-glow" style="color: #C946FF; margin: 0; font-weight: 800; font-size: clamp(1.5rem, 4vw, 2rem);">{{ investmentOverview()?.total_portfolio_value | currency }}</h3>
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="stat-card gpu-accelerated" style="background: rgba(255,0,128,0.1); border-left: 3px solid #FF0080; padding: 15px; border-radius: 10px;">
-                <p style="color: #7581A8; margin: 0 0 5px 0; font-size: clamp(0.8rem, 2vw, 0.9rem);">Retorno Promedio</p>
-                <h3 class="counter-number badge-glow" style="color: #FF0080; margin: 0; font-weight: 800; font-size: clamp(1.5rem, 4vw, 2rem);">+{{ investmentOverview()?.average_return }}%</h3>
-              </div>
-            </div>
-          </div>
+                    <!-- Info Alert -->
+                    <div class="alert alert-warning d-flex align-items-start gap-3 mb-3" style="background: rgba(255,193,7,0.1); border: 1px solid rgba(255,193,7,0.3); border-radius: 10px; padding: 15px;">
+                        <i class="bi bi-exclamation-triangle-fill" style="color: #FF9F43; font-size: 1.5rem;"></i>
+                        <div style="flex: 1;">
+                            <p style="color: white; margin: 0 0 5px 0; font-weight: 700; font-size: 0.95rem;">
+                                ⚠️ Importante
+                            </p>
+                            <p style="color: #A1A9C9; margin: 0; font-size: 0.85rem; line-height: 1.5;">
+                                Los cambios en la wallet requieren verificación por soporte. Recibirás un email de confirmación para validar la modificación.
+                            </p>
+                        </div>
+                    </div>
 
-          <h6 class="icon-glow" style="color: white; margin: 0 0 15px 0; font-weight: 700; font-size: clamp(0.95rem, 2.5vw, 1.1rem);">⚡ Acciones Rápidas</h6>
-          <div class="d-grid gap-2">
-            <button [routerLink]="['/dashboard']" class="btn-bot-control" style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; text-align: left; font-size: clamp(0.85rem, 2vw, 0.95rem);">
+                    @if (showWalletSection()) {
+                    <div class="animate-slide-down">
+                        <!-- Current Wallet Info -->
+                        @if (currentWallet()) {
+                        <div style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.2); border-radius: 12px; padding: 15px; margin-bottom: 20px;">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <p style="color: #7581A8; margin: 0; font-size: 0.85rem; font-weight: 600;">WALLET ACTUAL</p>
+                                <span class="badge" style="background: rgba(0,240,255,0.2); color: #00F0FF; padding: 6px 12px; border-radius: 6px; font-size: 0.75rem;">
+                      {{ currentWallet()?.network }}
+                    </span>
+                            </div>
+                            <p style="color: white; margin: 0; font-family: monospace; font-size: 0.9rem; word-break: break-all;">
+                                {{ currentWallet()?.address }}
+                            </p>
+                        </div>
+                        } @else {
+                        <div style="background: rgba(255,159,67,0.08); border: 1px solid rgba(255,159,67,0.22); border-radius: 12px; padding: 15px; margin-bottom: 20px; text-align: center;">
+                            <i class="bi bi-wallet2" style="color: #FF9F43; font-size: 2.5rem; margin-bottom: 10px; display: block;"></i>
+                            <p style="color: white; margin: 0 0 5px 0; font-weight: 600;">No hay wallet configurada</p>
+                            <p style="color: #A1A9C9; margin: 0; font-size: 0.85rem;">Configura tu wallet para poder realizar retiros</p>
+                        </div>
+                        }
+
+                        <!-- Wallet Form -->
+                        <form [formGroup]="walletForm" (ngSubmit)="requestWalletChange()">
+                            <div class="mb-3">
+                                <label style="color: #CDD2E5; margin-bottom: 12px; font-weight: 600; font-size: 0.95rem; display: block;">
+                                        <i class="bi bi-broadcast me-2" style="color: #00F0FF;"></i>Red de Blockchain
+                  </label>
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <button type="button" (click)="selectNetwork('TRC20')" [class.active]="walletForm.get('wallet_network')?.value === 'TRC20'" style="width: 100%; padding: 15px; background: {{ walletForm.get('wallet_network')?.value === 'TRC20' ? 'rgba(0,240,255,0.2)' : 'rgba(13,17,46,0.6)' }}; 
+                                     border: 2px solid {{ walletForm.get('wallet_network')?.value === 'TRC20' ? '#00F0FF' : 'rgba(0,240,255,0.2)' }}; 
+                                     border-radius: 12px; cursor: pointer; transition: all 0.3s;">
+                        <div class="d-flex align-items-center justify-content-center gap-2">
+                          <i class="bi bi-check-circle-fill" style="color: {{ walletForm.get('wallet_network')?.value === 'TRC20' ? '#00F0FF' : '#4A5578' }}; font-size: 1.2rem;"></i>
+                          <span style="color: white; font-weight: 700; font-size: 1rem;">TRC20</span>
+                        </div>
+                        <p style="color: #7581A8; margin: 5px 0 0 0; font-size: 0.75rem;">Tron Network</p>
+                      </button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button type="button" (click)="selectNetwork('BEP20')" [class.active]="walletForm.get('wallet_network')?.value === 'BEP20'" style="width: 100%; padding: 15px; background: {{ walletForm.get('wallet_network')?.value === 'BEP20' ? 'rgba(77,124,255,0.2)' : 'rgba(13,17,46,0.6)' }}; 
+                                                                         border: 2px solid {{ walletForm.get('wallet_network')?.value === 'BEP20' ? '#4D7CFF' : 'rgba(77,124,255,0.2)' }}; 
+                                     border-radius: 12px; cursor: pointer; transition: all 0.3s;">
+                        <div class="d-flex align-items-center justify-content-center gap-2">
+                                                    <i class="bi bi-check-circle-fill" style="color: {{ walletForm.get('wallet_network')?.value === 'BEP20' ? '#4D7CFF' : '#4A5578' }}; font-size: 1.2rem;"></i>
+                          <span style="color: white; font-weight: 700; font-size: 1rem;">BEP20</span>
+                        </div>
+                        <p style="color: #7581A8; margin: 5px 0 0 0; font-size: 0.75rem;">BSC Network</p>
+                      </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label style="color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: 0.95rem; display: block;">
+                    <i class="bi bi-wallet2 me-2" style="color: #00F0FF;"></i>Dirección de Wallet USDT
+                  </label>
+                                <input type="text" formControlName="wallet_address" placeholder="Ej: TQTezos8L6N7jh4n9kZdF5K8xP3m2..." [class.is-invalid]="walletForm.get('wallet_address')?.invalid && walletForm.get('wallet_address')?.touched" style="width: 100%; padding: 14px 16px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.25); border-radius: 10px; color: white; font-size: 0.95rem; font-family: monospace; transition: all 0.3s;">                                @if (walletForm.get('wallet_address')?.invalid && walletForm.get('wallet_address')?.touched) {
+                                <div class="invalid-feedback d-block" style="color: #FF6B6B; margin-top: 5px; font-size: 0.85rem;">
+                                    <i class="bi bi-exclamation-circle me-1"></i> La dirección debe tener al menos 34 caracteres
+                                </div>
+                                }
+                            </div>
+
+                            <button type="submit" [disabled]="walletForm.invalid || walletChangeRequested()" style="width: 100%; padding: 14px; background: {{ walletChangeRequested() ? 'rgba(0,240,255,0.3)' : 'linear-gradient(135deg, #00F0FF, #4D7CFF)' }}; 
+                               color: {{ walletChangeRequested() ? '#7581A8' : '#0A0E27' }}; border: none; border-radius: 12px; font-weight: 700; cursor: {{ walletChangeRequested() ? 'not-allowed' : 'pointer' }}; font-size: 1rem; transition: all 0.3s;">
+                  @if (walletChangeRequested()) {
+                    <span class="spinner-border spinner-border-sm me-2"></span>
+                    Procesando solicitud...
+                  } @else {
+                    <i class="bi bi-send me-2"></i>Solicitar Cambio de Wallet
+                  }
+                </button>
+
+                            <p style="color: #7581A8; margin: 15px 0 0 0; font-size: 0.8rem; text-align: center; line-height: 1.5;">
+                                <i class="bi bi-info-circle me-1"></i> Al solicitar el cambio, el equipo de soporte revisará y validará tu wallet. Recibirás un email de confirmación.
+                            </p>
+                        </form>
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Investment Overview Sidebar -->
+            <div class="col-12 col-xl-4">
+                <div class="gpu-accelerated animate-fade-in-up" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: clamp(15px, 3vw, 25px); backdrop-filter: blur(10px); position: sticky; top: 20px;">
+                    <h5 class="animate-slide-in-right icon-glow" style="color: white; margin: 0 0 20px 0; font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.3rem);">📊 Resumen de Inversiones</h5>
+
+                    <div class="row g-3 mb-4 stagger-children">
+                        <div class="col-12">
+                            <div class="stat-card gpu-accelerated" style="background: rgba(0,240,255,0.1); border-left: 3px solid #00F0FF; padding: 15px; border-radius: 10px;">
+                                <p style="color: #7581A8; margin: 0 0 5px 0; font-size: clamp(0.8rem, 2vw, 0.9rem);">Inversiones Activas</p>
+                                <h3 class="counter-number badge-glow" style="color: #00F0FF; margin: 0; font-weight: 800; font-size: clamp(1.8rem, 5vw, 2.5rem);">{{ investmentOverview()?.active_investments }}</h3>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="stat-card gpu-accelerated" style="background: rgba(77,124,255,0.1); border-left: 3px solid #4D7CFF; padding: 15px; border-radius: 10px;">
+                                <p style="color: #7581A8; margin: 0 0 5px 0; font-size: clamp(0.8rem, 2vw, 0.9rem);">Valor Total del Portafolio</p>
+                                <h3 class="counter-number badge-glow" style="color: #4D7CFF; margin: 0; font-weight: 800; font-size: clamp(1.5rem, 4vw, 2rem);">{{ investmentOverview()?.total_portfolio_value | currency }}</h3>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="stat-card gpu-accelerated" style="background: rgba(12,235,221,0.08); border-left: 3px solid #0CEBDD; padding: 15px; border-radius: 10px;">
+                                <p style="color: #7581A8; margin: 0 0 5px 0; font-size: clamp(0.8rem, 2vw, 0.9rem);">Retorno Promedio</p>
+                                <h3 class="counter-number badge-glow" style="color: #0CEBDD; margin: 0; font-weight: 800; font-size: clamp(1.5rem, 4vw, 2rem);">+{{ investmentOverview()?.average_return }}%</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h6 class="icon-glow" style="color: white; margin: 0 0 15px 0; font-weight: 700; font-size: clamp(0.95rem, 2.5vw, 1.1rem);">⚡ Acciones Rápidas</h6>
+                    <div class="d-grid gap-2">
+                        <button [routerLink]="['/dashboard']" class="btn-bot-control" style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; text-align: left; font-size: clamp(0.85rem, 2vw, 0.95rem);">
               <i class="bi bi-graph-up me-2"></i>Ver Dashboard
             </button>
-            <button [routerLink]="['/withdrawals']" class="btn-bot-control" style="background: rgba(201,70,255,0.1); border: 1px solid rgba(201,70,255,0.3); color: #C946FF; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; text-align: left; font-size: clamp(0.85rem, 2vw, 0.95rem);">
+                        <button [routerLink]="['/withdrawals']" class="btn-bot-control" style="background: rgba(77,124,255,0.12); border: 1px solid rgba(77,124,255,0.28); color: #4D7CFF; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; text-align: left; font-size: clamp(0.85rem, 2vw, 0.95rem);">
               <i class="bi bi-cash-coin me-2"></i>Realizar Retiro
             </button>
-            <button [routerLink]="['/transactions']" class="btn-bot-control" style="background: rgba(255,0,128,0.1); border: 1px solid rgba(255,0,128,0.3); color: #FF0080; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; text-align: left; font-size: clamp(0.85rem, 2vw, 0.95rem);">
+                        <button [routerLink]="['/transactions']" class="btn-bot-control" style="background: rgba(12,235,221,0.08); border: 1px solid rgba(12,235,221,0.2); color: #0CEBDD; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; text-align: left; font-size: clamp(0.85rem, 2vw, 0.95rem);">
               <i class="bi bi-list-check me-2"></i>Ver Transacciones
             </button>
-          </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>

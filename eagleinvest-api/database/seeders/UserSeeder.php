@@ -39,6 +39,33 @@ class UserSeeder extends Seeder
             'updated_at' => now()
         ]);
 
+        // Usuario Yovani Rubio
+        DB::table('users')->insert([
+            'id' => 2,
+            'name' => 'Yovani Rubio',
+            'email' => 'yovanirubiovargas@gmail.com',
+            'phone' => '+57 300 000 0000',
+            'country' => 'Colombia',
+            'language' => 'Español',
+            'email_verified_at' => now(),
+            'password' => Hash::make('123456'), // Contraseña por defecto
+            'referral_code' => 'YOVANI'.strtoupper(substr(md5(time()), 0, 6)),
+            'referred_by' => null,
+            'total_invested' => 0.00,
+            'total_earnings' => 0.00,
+            'earnings_balance' => 0.00,
+            'referral_balance' => 0.00,
+            'blocked_balance' => 0.00,
+            'total_withdrawn' => 0.00,
+            'active_investments' => 0,
+            'total_referrals' => 0,
+            'notifications_enabled' => true,
+            'two_factor_enabled' => true,
+            'phone_verified' => true,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
         // Algunos usuarios referidos para hacer más realista
         $referredUsers = [
             [
@@ -100,7 +127,7 @@ class UserSeeder extends Seeder
 
         foreach ($referredUsers as $index => $user) {
             DB::table('users')->insert([
-                'id' => $index + 2,
+                'id' => $index + 3,
                 'name' => $user['name'],
                 'email' => $user['email'],
                 'phone' => $user['phone'],

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { User } from '../models/api-models';
 
 /**
  * Interfaz para la respuesta de autenticación del servidor
@@ -23,19 +24,6 @@ export interface AuthResponse {
   temp_token?: string;
 }
 
-/**
- * Interfaz para el modelo de usuario
- * @interface User
- * @description Representa la estructura básica de un usuario en el sistema
- */
-export interface User {
-  /** ID único del usuario */
-  id: number;
-  /** Nombre completo del usuario */
-  name: string;
-  /** Correo electrónico del usuario */
-  email: string;
-}
 
 /**
  * Servicio de autenticación
@@ -71,6 +59,9 @@ export interface User {
 export class AuthService {
   /** URL base de la API del backend */
   private apiUrl = 'http://127.0.0.1:8000/api';
+
+  /** Token temporal cuando se requiere 2FA */
+  private tempToken: string | null = null;
   
   /** Subject que mantiene el estado del usuario actual */
   private currentUserSubject = new BehaviorSubject<User | null>(null);
@@ -91,6 +82,24 @@ export class AuthService {
    */
   constructor(private http: HttpClient) {
     this.checkAuthStatus();
+  }
+
+  /**
+   * Persiste token + usuario y actualiza el estado reactivo.
+   * Útil para flujos alternos (ej: register-by-invitation) donde el backend
+   * retorna {user, token} directamente.
+   */
+  setSession(user: any, token: string): void {
+    if (!user || !token) {
+      return;
+    }
+    localStorage.setItem('token', token);
+    if (user.id != null) {
+      localStorage.setItem('userId', String(user.id));
+    }
+    localStorage.setItem('userData', JSON.stringify(user));
+    this.currentUserSubject.next(user);
+    this.isAuthenticatedSubject.next(true);
   }
 
   /**
@@ -160,6 +169,10 @@ export class AuthService {
       password
     }).pipe(
       tap(response => {
+        if (response && response.requires_2fa) {
+          this.tempToken = response.temp_token || null;
+        }
+
         if (response && response.success && !response.requires_2fa) {
           localStorage.setItem('token', response.token || 'auth-token');
           localStorage.setItem('userId', response.user.id.toString());
@@ -203,6 +216,7 @@ export class AuthService {
           localStorage.setItem('userData', JSON.stringify(response.user));
           this.currentUserSubject.next(response.user);
           this.isAuthenticatedSubject.next(true);
+          this.tempToken = null;
         }
       })
     );
@@ -227,6 +241,11 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/auth/resend-2fa`, {
       temp_token: tempToken
     });
+  }
+
+  /** Obtiene el token temporal activo para flujos 2FA */
+  getTempToken(): string | null {
+    return this.tempToken;
   }
 
   /**
@@ -298,13 +317,41 @@ export class AuthService {
           this.isAuthenticatedSubject.next(true);
         } catch (e) {
           // Si no se puede parsear, usar datos mínimos
-          const demoUser = { id: parseInt(userId), name: 'Carlos Eduardo Vargas', email: 'demo@eagleinvest.com' };
+          const demoUser: User = { 
+            id: parseInt(userId), 
+            name: 'Carlos Eduardo Vargas', 
+            email: 'demo@eagleinvest.com',
+            wallet: 0,
+            total_invested: 0,
+            total_earnings: 0,
+            earnings_balance: 0,
+            referral_balance: 0,
+            blocked_balance: 0,
+            total_withdrawn: 0,
+            wallet_editable: false,
+            two_factor_enabled: false,
+            notifications_enabled: true
+          };
           this.currentUserSubject.next(demoUser);
           this.isAuthenticatedSubject.next(true);
         }
       } else {
         // Datos mínimos basados en el userId
-        const demoUser = { id: parseInt(userId), name: 'Carlos Eduardo Vargas', email: 'demo@eagleinvest.com' };
+        const demoUser: User = { 
+          id: parseInt(userId), 
+          name: 'Carlos Eduardo Vargas', 
+          email: 'demo@eagleinvest.com',
+          wallet: 0,
+          total_invested: 0,
+          total_earnings: 0,
+          earnings_balance: 0,
+          referral_balance: 0,
+          blocked_balance: 0,
+          total_withdrawn: 0,
+          wallet_editable: false,
+          two_factor_enabled: false,
+          notifications_enabled: true
+        };
         this.currentUserSubject.next(demoUser);
         this.isAuthenticatedSubject.next(true);
       }

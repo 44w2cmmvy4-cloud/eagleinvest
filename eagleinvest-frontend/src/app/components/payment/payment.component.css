@@ -1,148 +1,176 @@
 /* Payment specific animations */
+
 @keyframes cardFlip {
-  0% { transform: rotateY(0deg); }
-  50% { transform: rotateY(180deg); }
-  100% { transform: rotateY(0deg); }
+    0% {
+        transform: rotateY(0deg);
+    }
+    50% {
+        transform: rotateY(180deg);
+    }
+    100% {
+        transform: rotateY(0deg);
+    }
 }
 
 @keyframes processingPulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.1); opacity: 0.8; }
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
 }
 
 @keyframes successCheck {
-  0% { transform: scale(0) rotate(0deg); }
-  50% { transform: scale(1.2) rotate(180deg); }
-  100% { transform: scale(1) rotate(360deg); }
+    0% {
+        transform: scale(0) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.2) rotate(180deg);
+    }
+    100% {
+        transform: scale(1) rotate(360deg);
+    }
 }
 
 .payment-method-card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
 }
 
 .payment-method-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.1), transparent);
-  transition: left 0.5s;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.1), transparent);
+    transition: left 0.5s;
 }
 
 .payment-method-card:hover::before {
-  left: 100%;
+    left: 100%;
 }
 
 .payment-method-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 240, 255, 0.3);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 240, 255, 0.3);
 }
 
 .payment-method-card.selected {
-  border-color: #00F0FF !important;
-  background: rgba(0, 240, 255, 0.15) !important;
-  box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+    border-color: #00F0FF !important;
+    background: rgba(0, 240, 255, 0.15) !important;
+    box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
 }
 
 .card-preview {
-  perspective: 1000px;
+    perspective: 1000px;
 }
 
 .card-preview.flip .card-front {
-  animation: cardFlip 0.6s ease-in-out;
+    animation: cardFlip 0.6s ease-in-out;
 }
 
 .processing-spinner {
-  animation: processingPulse 1.5s ease-in-out infinite;
+    animation: processingPulse 1.5s ease-in-out infinite;
 }
 
 .success-icon {
-  animation: successCheck 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    animation: successCheck 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
+
 /* Plan cards */
+
 .plan-card {
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .plan-card::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(0, 240, 255, 0.1) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity 0.3s;
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 240, 255, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
 }
 
 .plan-card:hover::after {
-  opacity: 1;
+    opacity: 1;
 }
 
 .plan-card.selected {
-  border-color: #C946FF !important;
-  background: rgba(201, 70, 255, 0.1) !important;
-  transform: scale(1.02);
+    border-color: #00F0FF !important;
+    background: rgba(0, 240, 255, 0.12) !important;
+    transform: scale(1.02);
 }
 
+
 /* Amount slider */
+
 input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  background: rgba(0, 240, 255, 0.2);
-  border-radius: 10px;
-  outline: none;
-  height: 8px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: rgba(0, 240, 255, 0.2);
+    border-radius: 10px;
+    outline: none;
+    height: 8px;
 }
 
 input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  background: linear-gradient(135deg, #00F0FF, #C946FF);
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, #00F0FF, #4D7CFF);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
 }
 
 input[type="range"]::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  background: linear-gradient(135deg, #00F0FF, #C946FF);
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-  border: none;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, #00F0FF, #4D7CFF);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+    border: none;
 }
+
 
 /* Crypto address QR */
+
 .qr-placeholder {
-  background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(201, 70, 255, 0.1));
-  border: 2px dashed rgba(0, 240, 255, 0.3);
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(77, 124, 255, 0.1));
+    border: 2px dashed rgba(0, 240, 255, 0.3);
 }
 
+
 /* Security badge */
+
 .security-badge {
-  animation: float 3s ease-in-out infinite;
+    animation: float 3s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .payment-method-card,
-  .plan-card,
-  .processing-spinner,
-  .success-icon,
-  .security-badge {
-    animation: none !important;
-    transition: none !important;
-  }
+    .payment-method-card,
+    .plan-card,
+    .processing-spinner,
+    .success-icon,
+    .security-badge {
+        animation: none !important;
+        transition: none !important;
+    }
 }

@@ -1,237 +1,228 @@
 <app-navbar></app-navbar>
 
 <div class="market-container" style="background: linear-gradient(135deg, #0A0E27 0%, #13172E 50%, #0A0E27 100%); min-height: 100vh; padding: 20px;">
-  <div class="container-fluid">
-    <!-- AI Trading Bot Section -->
-    <div class="bot-premium-card gpu-accelerated animate-fade-in" style="background: linear-gradient(135deg, rgba(0,240,255,0.1), rgba(201,70,255,0.1)); border: 2px solid rgba(0,240,255,0.3); border-radius: 20px; padding: 30px; margin-bottom: 30px; position: relative; overflow: hidden;">
-      
-      <div class="row align-items-center" style="position: relative; z-index: 1;">
-        <div class="col-lg-8">
-          <div class="d-flex align-items-center mb-3 animate-slide-in-right">
-            <span class="icon-glow" style="font-size: 3rem; margin-right: 15px;">🤖</span>
-            <div>
-              <h2 style="color: white; font-weight: 800; margin: 0; font-size: clamp(1.5rem, 4vw, 2rem);">Eagle AI Trading Bot</h2>
-              <p style="color: #00F0FF; margin: 0; font-size: clamp(0.9rem, 2vw, 1.1rem);">
-                Bot de trading automático con Inteligencia Artificial - <span class="badge-glow" style="background: linear-gradient(135deg, #00F0FF, #C946FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;">Modo Demo Activo</span>
-              </p>
-            </div>
-          </div>
+    <div class="container-fluid">
+        <!-- AI Trading Bot Section -->
+        <div class="bot-premium-card gpu-accelerated animate-fade-in" style="background: linear-gradient(135deg, rgba(0,240,255,0.1), rgba(77,124,255,0.08)); border: 2px solid rgba(0,240,255,0.3); border-radius: 20px; padding: 30px; margin-bottom: 30px; position: relative; overflow: hidden;">
 
-          <div class="row g-3 mb-4 stagger-children">
-            <div class="col-6 col-md-3">
-              <div class="stat-card gpu-accelerated" style="background: rgba(13,17,46,0.6); padding: 15px; border-radius: 12px; border-left: 3px solid #00F0FF;">
-                <p style="color: #7581A8; margin: 0 0 5px 0; font-size: 0.85rem;">Operaciones Hoy</p>
-                <h3 class="counter-number" style="color: white; margin: 0; font-weight: 800; font-size: clamp(1.3rem, 3vw, 1.8rem);">{{botStats().tradesToday}}</h3>
-              </div>
-            </div>
-            <div class="col-6 col-md-3">
-              <div class="stat-card gpu-accelerated" style="background: rgba(13,17,46,0.6); padding: 15px; border-radius: 12px; border-left: 3px solid #00F0FF;">
-                <p style="color: #7581A8; margin: 0 0 5px 0; font-size: 0.85rem;">Tasa de Éxito</p>
-                <h3 class="counter-number badge-glow" style="color: #00F0FF; margin: 0; font-weight: 800; font-size: clamp(1.3rem, 3vw, 1.8rem);">{{botStats().successRate}}%</h3>
-              </div>
-            </div>
-            <div class="col-6 col-md-3">
-              <div class="stat-card gpu-accelerated" style="background: rgba(13,17,46,0.6); padding: 15px; border-radius: 12px; border-left: 3px solid #C946FF;">
-                <p style="color: #7581A8; margin: 0 0 5px 0; font-size: 0.85rem;">Ganancia Hoy</p>
-                <h3 class="counter-number" style="color: #C946FF; margin: 0; font-weight: 800; font-size: clamp(1.3rem, 3vw, 1.8rem);">\${{botStats().profitToday | number:'1.2-2'}}</h3>
-              </div>
-            </div>
-            <div class="col-6 col-md-3">
-              <div class="stat-card gpu-accelerated" style="background: rgba(13,17,46,0.6); padding: 15px; border-radius: 12px; border-left: 3px solid #00F0FF;">
-                <p style="color: #7581A8; margin: 0 0 5px 0; font-size: 0.85rem;">Balance Bot</p>
-                <h3 class="counter-number" style="color: white; margin: 0; font-weight: 800; font-size: clamp(1.3rem, 3vw, 1.8rem);">\${{botStats().balance | number:'1.2-2'}}</h3>
-              </div>
-            </div>
-          </div>
+            <div class="row align-items-center" style="position: relative; z-index: 1;">
+                <div class="col-lg-8">
+                    <div class="d-flex align-items-center mb-3 animate-slide-in-right">
+                        <span class="icon-glow" style="font-size: 3rem; margin-right: 15px;">🤖</span>
+                        <div>
+                            <h2 style="color: white; font-weight: 800; margin: 0; font-size: clamp(1.5rem, 4vw, 2rem);">Eagle AI Trading Bot</h2>
+                            <p style="color: #00F0FF; margin: 0; font-size: clamp(0.9rem, 2vw, 1.1rem);">
+                                Bot de trading automático con Inteligencia Artificial - <span class="badge-glow" style="background: linear-gradient(135deg, #00F0FF, #4D7CFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;">Modo Demo Activo</span>
+                            </p>
+                        </div>
+                    </div>
 
-          <div class="d-flex gap-3 flex-wrap">
-            <button (click)="toggleBot()" 
-                    class="btn-bot-control btn-neon"
-                    [style.background]="botActive() ? 'linear-gradient(135deg, #FF0080, #FF4500)' : 'linear-gradient(135deg, #00F0FF, #C946FF)'"
-                    style="border: none; color: #0A0E27; padding: 12px 30px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: clamp(0.9rem, 2vw, 1rem);">
+                    <div class="row g-3 mb-4 stagger-children">
+                        <div class="col-6 col-md-3">
+                            <div class="stat-card gpu-accelerated" style="background: rgba(13,17,46,0.6); padding: 15px; border-radius: 12px; border-left: 3px solid #00F0FF;">
+                                <p style="color: #7581A8; margin: 0 0 5px 0; font-size: 0.85rem;">Operaciones Hoy</p>
+                                <h3 class="counter-number" style="color: white; margin: 0; font-weight: 800; font-size: clamp(1.3rem, 3vw, 1.8rem);">{{botStats().tradesToday}}</h3>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="stat-card gpu-accelerated" style="background: rgba(13,17,46,0.6); padding: 15px; border-radius: 12px; border-left: 3px solid #00F0FF;">
+                                <p style="color: #7581A8; margin: 0 0 5px 0; font-size: 0.85rem;">Tasa de Éxito</p>
+                                <h3 class="counter-number badge-glow" style="color: #00F0FF; margin: 0; font-weight: 800; font-size: clamp(1.3rem, 3vw, 1.8rem);">{{botStats().successRate}}%</h3>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="stat-card gpu-accelerated" style="background: rgba(13,17,46,0.6); padding: 15px; border-radius: 12px; border-left: 3px solid #4D7CFF;">
+                                <p style="color: #7581A8; margin: 0 0 5px 0; font-size: 0.85rem;">Ganancia Hoy</p>
+                                <h3 class="counter-number" style="color: #4D7CFF; margin: 0; font-weight: 800; font-size: clamp(1.3rem, 3vw, 1.8rem);">${{ botStats().profitToday | number:'1.2-2' }}</h3>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="stat-card gpu-accelerated" style="background: rgba(13,17,46,0.6); padding: 15px; border-radius: 12px; border-left: 3px solid #00F0FF;">
+                                <p style="color: #7581A8; margin: 0 0 5px 0; font-size: 0.85rem;">Balance Bot</p>
+                                <h3 class="counter-number" style="color: white; margin: 0; font-weight: 800; font-size: clamp(1.3rem, 3vw, 1.8rem);">${{ botStats().balance | number:'1.2-2' }}</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3 flex-wrap">
+                        <button (click)="toggleBot()" class="btn-bot-control btn-neon" [style.background]="botActive() ? 'linear-gradient(135deg, #0CEBDD, #00F0FF)' : 'linear-gradient(135deg, #4D7CFF, #00F0FF)'" style="border: none; color: #0A0E27; padding: 12px 30px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: clamp(0.9rem, 2vw, 1rem);">
               {{ botActive() ? '⏸️ Pausar Bot' : '▶️ Activar Bot' }}
             </button>
-            <button (click)="showBotConfig.set(true)"
-                    class="btn-bot-control"
-                    style="background: transparent; border: 2px solid rgba(0,240,255,0.5); color: #00F0FF; padding: 12px 30px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: clamp(0.9rem, 2vw, 1rem); transition: all 0.3s;">
+                        <button (click)="showBotConfig.set(true)" class="btn-bot-control" style="background: transparent; border: 2px solid rgba(0,240,255,0.5); color: #00F0FF; padding: 12px 30px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: clamp(0.9rem, 2vw, 1rem); transition: all 0.3s;">
               ⚙️ Configuración
             </button>
-          </div>
-        </div>
+                    </div>
+                </div>
 
-        <div class="col-lg-4 mt-4 mt-lg-0">
-          <div class="animate-slide-down" style="background: rgba(13,17,46,0.8); padding: 20px; border-radius: 15px; border: 1px solid rgba(0,240,255,0.2); max-height: 300px; overflow-y: auto;">
-            <h5 style="color: white; font-weight: 700; margin-bottom: 15px; font-size: clamp(1rem, 2.5vw, 1.2rem);">📊 Operaciones Recientes</h5>
-            @for (trade of botTrades(); track trade.id) {
-              <div class="trade-flash" style="background: rgba(0,240,255,0.05); padding: 10px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid {{ trade.profit > 0 ? '#00F0FF' : '#FF0080' }};">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <span style="color: white; font-weight: 600; font-size: 0.9rem;">{{trade.pair}}</span>
-                    <span [style.color]="trade.type === 'BUY' ? '#00F0FF' : '#FF0080'" style="margin-left: 8px; font-size: 0.75rem; font-weight: 700;">{{trade.type}}</span>
-                  </div>
-                  <span class="counter-number" [style.color]="trade.profit > 0 ? '#00F0FF' : '#FF0080'" style="font-weight: 700; font-size: 0.9rem;">
-                    {{ trade.profit > 0 ? '+' : '' }}\${{trade.profit | number:'1.2-2'}}
+                <div class="col-lg-4 mt-4 mt-lg-0">
+                    <div class="animate-slide-down" style="background: rgba(13,17,46,0.8); padding: 20px; border-radius: 15px; border: 1px solid rgba(0,240,255,0.2); max-height: 300px; overflow-y: auto;">
+                        <h5 style="color: white; font-weight: 700; margin-bottom: 15px; font-size: clamp(1rem, 2.5vw, 1.2rem);">📊 Operaciones Recientes</h5>
+                        @for (trade of botTrades(); track trade.id) {
+                        <div class="trade-flash" style="background: rgba(0,240,255,0.05); padding: 10px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid {{ trade.profit > 0 ? '#00F0FF' : '#FF6B6B' }};">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span style="color: white; font-weight: 600; font-size: 0.9rem;">{{trade.pair}}</span>
+                                    <span [style.color]="trade.type === 'BUY' ? '#00F0FF' : '#FF6B6B'" style="margin-left: 8px; font-size: 0.75rem; font-weight: 700;">{{trade.type}}</span>
+                                </div>
+                                <span class="counter-number" [style.color]="trade.profit > 0 ? '#00F0FF' : '#FF6B6B'" style="font-weight: 700; font-size: 0.9rem;">
+                    {{ trade.profit > 0 ? '+' : '' }}${{ trade.profit | number:'1.2-2' }}
                   </span>
+                            </div>
+                            <div class="d-flex justify-content-between" style="font-size: 0.75rem; color: #7581A8; margin-top: 4px;">
+                                <span>{{trade.time}}</span>
+                                <span>${{ trade.amount | number:'1.2-2' }}</span>
+                            </div>
+                        </div>
+                        } @empty {
+                        <p style="color: #7581A8; text-align: center; padding: 20px; margin: 0;">El bot aún no ha realizado operaciones</p>
+                        }
+                    </div>
                 </div>
-                <div class="d-flex justify-content-between" style="font-size: 0.75rem; color: #7581A8; margin-top: 4px;">
-                  <span>{{trade.time}}</span>
-                  <span>\${{trade.amount | number:'1.2-2'}}</span>
-                </div>
-              </div>
-            } @empty {
-              <p style="color: #7581A8; text-align: center; padding: 20px; margin: 0;">El bot aún no ha realizado operaciones</p>
-            }
-          </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Crypto Prices Section -->
-    <div class="animate-fade-in-up gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: 25px; margin-bottom: 30px; backdrop-filter: blur(10px);">
-      <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
-        <h2 class="animate-slide-in-right" style="color: white; font-weight: 700; margin: 0; font-size: clamp(1.3rem, 3.5vw, 1.8rem);">💎 Criptomonedas en Tiempo Real</h2>
-        <button (click)="refreshData()" class="btn-neon" style="background: linear-gradient(135deg, #00F0FF, #C946FF); color: #0A0E27; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: clamp(0.85rem, 2vw, 1rem);">
+        <!-- Crypto Prices Section -->
+        <div class="animate-fade-in-up gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: 25px; margin-bottom: 30px; backdrop-filter: blur(10px);">
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+                <h2 class="animate-slide-in-right" style="color: white; font-weight: 700; margin: 0; font-size: clamp(1.3rem, 3.5vw, 1.8rem);">💎 Criptomonedas en Tiempo Real</h2>
+                <button (click)="refreshData()" class="btn-neon" style="background: linear-gradient(135deg, #00F0FF, #4D7CFF); color: #0A0E27; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: clamp(0.85rem, 2vw, 1rem);">
           🔄 Actualizar
         </button>
-      </div>
+            </div>
 
-      <div class="row g-3 stagger-children">
-        @for (crypto of cryptoPrices(); track crypto.id) {
-          <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
-            <div class="crypto-card gpu-accelerated"
-                 [style.border-color]="crypto.price_change_percentage_24h > 0 ? 'rgba(0,240,255,0.3)' : 'rgba(255,0,128,0.3)'"
-                 style="background: rgba(13,17,46,0.8); border: 1px solid; border-radius: 12px; padding: 15px; cursor: pointer; height: 100%;">
-              <div class="d-flex align-items-center justify-content-between mb-2">
-                <div class="d-flex align-items-center gap-2">
-                  <img [src]="crypto.image" [alt]="crypto.name" class="icon-wrapper" style="width: 35px; height: 35px; border-radius: 50%;">
-                  <div>
-                    <div style="color: white; font-weight: 700; font-size: 0.95rem;">{{crypto.name}}</div>
-                    <div style="color: #7581A8; font-size: 0.75rem; text-transform: uppercase;">{{crypto.symbol}}</div>
-                  </div>
-                </div>
-                <button (click)="createPriceAlert(crypto)" class="btn-bot-control" style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: 1rem;">
+            <div class="row g-3 stagger-children">
+                @for (crypto of cryptoPrices(); track crypto.id) {
+                <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                    <div class="crypto-card gpu-accelerated" [style.border-color]="crypto.price_change_percentage_24h > 0 ? 'rgba(0,240,255,0.3)' : 'rgba(255,0,128,0.3)'" style="background: rgba(13,17,46,0.8); border: 1px solid; border-radius: 12px; padding: 15px; cursor: pointer; height: 100%;">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <img [src]="crypto.image" [alt]="crypto.name" class="icon-wrapper" style="width: 35px; height: 35px; border-radius: 50%;">
+                                <div>
+                                    <div style="color: white; font-weight: 700; font-size: 0.95rem;">{{crypto.name}}</div>
+                                    <div style="color: #7581A8; font-size: 0.75rem; text-transform: uppercase;">{{crypto.symbol}}</div>
+                                </div>
+                            </div>
+                            <button (click)="createPriceAlert(crypto)" class="btn-bot-control" style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); color: #00F0FF; padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: 1rem;">
                   🔔
                 </button>
-              </div>
-              
-              <div class="counter-number" style="color: #00F0FF; font-size: 1.3rem; font-weight: 800; margin: 10px 0;">\${{crypto.current_price | number:'1.2-2'}}</div>
-              
-              <div [class]="crypto.price_change_percentage_24h > 0 ? 'price-up' : 'price-down'" 
-                   [style.color]="crypto.price_change_percentage_24h > 0 ? '#00F0FF' : '#FF0080'" 
-                   style="font-size: 0.9rem; font-weight: 700;">
-                {{ crypto.price_change_percentage_24h > 0 ? '▲' : '▼' }} {{crypto.price_change_percentage_24h | number:'1.2-2'}}%
-              </div>
-            </div>
-          </div>
-        }
-      </div>
-    </div>
+                        </div>
 
-    <!-- Market Indices -->
-    <div class="animate-fade-in-up gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: 25px; margin-bottom: 30px; backdrop-filter: blur(10px);">
-      <h2 class="animate-slide-in-right" style="color: white; font-weight: 700; margin-bottom: 20px; font-size: clamp(1.3rem, 3.5vw, 1.8rem);">📊 Índices del Mercado</h2>
-      <div class="row g-3 stagger-children">
-        @for (index of marketIndices(); track index.symbol) {
-          <div class="col-12 col-md-6 col-lg-3">
-            <div class="stat-card gpu-accelerated" style="background: rgba(13,17,46,0.6); border-left: 4px solid #00F0FF; border-radius: 10px; padding: 20px;">
-              <h5 style="color: #00F0FF; font-size: 0.9rem; margin: 0 0 10px 0; font-weight: 700; text-transform: uppercase;">{{index.name}}</h5>
-              <div class="counter-number" style="color: white; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; margin-bottom: 5px;">\${{index.price | number:'1.2-2'}}</div>
-              <div [class]="index.change > 0 ? 'price-up' : 'price-down'"
-                   [style.color]="index.change > 0 ? '#00F0FF' : '#FF0080'" 
-                   style="font-weight: 600; font-size: 0.95rem;">
-                {{ index.change > 0 ? '+' : '' }}{{index.change | number:'1.2-2'}} ({{index.change_percent | number:'1.2-2'}}%)
-              </div>
-            </div>
-          </div>
-        }
-      </div>
-    </div>
+                        <div class="counter-number" style="color: #00F0FF; font-size: 1.3rem; font-weight: 800; margin: 10px 0;">${{ crypto.current_price | number:'1.2-2' }}</div>
 
-    <!-- Financial News -->
-    <div class="animate-fade-in-up gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: 25px; backdrop-filter: blur(10px);">
-      <h2 class="animate-slide-in-right" style="color: white; font-weight: 700; margin-bottom: 20px; font-size: clamp(1.3rem, 3.5vw, 1.8rem);">📰 Noticias Financieras</h2>
-      <div class="row g-3">
-        @for (article of news(); track article.title) {
-          <div class="col-12">
-            <div class="investment-card gpu-accelerated" style="background: rgba(13,17,46,0.6); border: 1px solid rgba(0,240,255,0.15); border-radius: 12px; overflow: hidden; cursor: pointer;">
-              <div class="row g-0">
-                @if (article.imageUrl) {
-                  <div class="col-md-3">
-                    <img [src]="article.imageUrl" [alt]="article.title" style="width: 100%; height: 100%; min-height: 150px; object-fit: cover;">
-                  </div>
-                }
-                <div [class]="article.imageUrl ? 'col-md-9' : 'col-12'">
-                  <div style="padding: 20px;">
-                    <h4 style="color: white; font-size: clamp(1rem, 2.5vw, 1.2rem); margin: 0 0 10px 0; font-weight: 700;">{{article.title}}</h4>
-                    <p style="color: #A1A9C9; margin: 0 0 10px 0; font-size: clamp(0.85rem, 2vw, 0.95rem);">{{article.description}}</p>
-                    <div class="d-flex gap-3 flex-wrap" style="font-size: 0.8rem; color: #7581A8;">
-                      <span>📡 {{article.source}}</span>
-                      <span>📅 {{article.publishedAt | date:'short'}}</span>
+                        <div [class]="crypto.price_change_percentage_24h > 0 ? 'price-up' : 'price-down'" [style.color]="crypto.price_change_percentage_24h > 0 ? '#00F0FF' : '#FF6B6B'" style="font-size: 0.9rem; font-weight: 700;">
+                            {{ crypto.price_change_percentage_24h > 0 ? '▲' : '▼' }} {{crypto.price_change_percentage_24h | number:'1.2-2'}}%
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
+                }
             </div>
-          </div>
-        }
-      </div>
+        </div>
+
+        <!-- Market Indices -->
+        <div class="animate-fade-in-up gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: 25px; margin-bottom: 30px; backdrop-filter: blur(10px);">
+            <h2 class="animate-slide-in-right" style="color: white; font-weight: 700; margin-bottom: 20px; font-size: clamp(1.3rem, 3.5vw, 1.8rem);">📊 Índices del Mercado</h2>
+            <div class="row g-3 stagger-children">
+                @for (index of marketIndices(); track index.symbol) {
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="stat-card gpu-accelerated" style="background: rgba(13,17,46,0.6); border-left: 4px solid #00F0FF; border-radius: 10px; padding: 20px;">
+                        <h5 style="color: #00F0FF; font-size: 0.9rem; margin: 0 0 10px 0; font-weight: 700; text-transform: uppercase;">{{index.name}}</h5>
+                        <div class="counter-number" style="color: white; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; margin-bottom: 5px;">${{ index.price | number:'1.2-2' }}</div>
+                        <div [class]="index.change > 0 ? 'price-up' : 'price-down'" [style.color]="index.change > 0 ? '#00F0FF' : '#FF6B6B'" style="font-weight: 600; font-size: 0.95rem;">
+                            {{ index.change > 0 ? '+' : '' }}{{index.change | number:'1.2-2'}} ({{index.change_percent | number:'1.2-2'}}%)
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+
+        <!-- Financial News -->
+        <div class="animate-fade-in-up gpu-accelerated" style="background: rgba(26,31,77,0.5); border: 1px solid rgba(0,240,255,0.2); border-radius: 15px; padding: 25px; backdrop-filter: blur(10px);">
+            <h2 class="animate-slide-in-right" style="color: white; font-weight: 700; margin-bottom: 20px; font-size: clamp(1.3rem, 3.5vw, 1.8rem);">📰 Noticias Financieras</h2>
+            <div class="row g-3">
+                @for (article of news(); track article.title) {
+                <div class="col-12">
+                    <div class="investment-card gpu-accelerated" style="background: rgba(13,17,46,0.6); border: 1px solid rgba(0,240,255,0.15); border-radius: 12px; overflow: hidden; cursor: pointer;">
+                        <div class="row g-0">
+                            @if (article.imageUrl) {
+                            <div class="col-md-3">
+                                <img [src]="article.imageUrl" [alt]="article.title" style="width: 100%; height: 100%; min-height: 150px; object-fit: cover;">
+                            </div>
+                            }
+                            <div [class]="article.imageUrl ? 'col-md-9' : 'col-12'">
+                                <div style="padding: 20px;">
+                                    <h4 style="color: white; font-size: clamp(1rem, 2.5vw, 1.2rem); margin: 0 0 10px 0; font-weight: 700;">{{article.title}}</h4>
+                                    <p style="color: #A1A9C9; margin: 0 0 10px 0; font-size: clamp(0.85rem, 2vw, 0.95rem);">{{article.description}}</p>
+                                    <div class="d-flex gap-3 flex-wrap" style="font-size: 0.8rem; color: #7581A8;">
+                                        <span>📡 {{article.source}}</span>
+                                        <span>📅 {{article.publishedAt | date:'short'}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <!-- Price Alert Modal -->
 @if (showAlertModal()) {
-  <div class="animate-fade-in" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 20px; backdrop-filter: blur(5px);" (click)="showAlertModal.set(false)">
-    <div class="animate-scale-in gpu-accelerated" style="background: linear-gradient(135deg, #0D112E, #1A1F4D); border: 2px solid rgba(0,240,255,0.4); border-radius: 20px; padding: 30px; max-width: 450px; width: 100%; box-shadow: 0 0 40px rgba(0,240,255,0.4);" (click)="$event.stopPropagation()">
-      <h3 class="animate-slide-in-right icon-glow" style="color: white; margin: 0 0 15px 0; font-size: clamp(1.3rem, 3vw, 1.6rem); font-weight: 800;">🔔 Crear Alerta de Precio</h3>
-      
-      @if (selectedCrypto()) {
-        <div class="stat-card gpu-accelerated" style="background: rgba(0,240,255,0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 3px solid #00F0FF;">
-          <div class="d-flex align-items-center gap-2 mb-2">
-            <img [src]="selectedCrypto()!.image" class="icon-wrapper" style="width: 30px; height: 30px; border-radius: 50%;">
-            <div>
-              <div style="color: white; font-weight: 700;">{{selectedCrypto()!.name}}</div>
-              <div style="color: #7581A8; font-size: 0.85rem; text-transform: uppercase;">{{selectedCrypto()!.symbol}}</div>
-            </div>
-          </div>
-          <div class="counter-number badge-glow" style="color: #00F0FF; font-weight: 800; font-size: 1.3rem;">
-            Precio actual: \${{selectedCrypto()!.current_price | number:'1.2-2'}}
-          </div>
-        </div>
-      }
-      
-      <div style="margin-bottom: 20px;">
-        <label style="display: block; color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: 0.95rem;">Precio Objetivo</label>
-        <input type="number" [(ngModel)]="alertTargetPrice" placeholder="Ingresa el precio" 
-               class="gpu-accelerated"
-               style="width: 100%; padding: 12px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: 1rem; transition: all 0.3s;">
-      </div>
+<div class="animate-fade-in" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 20px; backdrop-filter: blur(5px);" (click)="showAlertModal.set(false)">
+    <div class="animate-scale-in gpu-accelerated" style="background: linear-gradient(135deg, #0D112E, #1A1F4D); border: 2px solid rgba(0,240,255,0.4); border-radius: 20px; padding: 30px; max-width: 450px; width: 100%; box-shadow: 0 0 40px rgba(0,240,255,0.4);"
+        (click)="$event.stopPropagation()">
+        <h3 class="animate-slide-in-right icon-glow" style="color: white; margin: 0 0 15px 0; font-size: clamp(1.3rem, 3vw, 1.6rem); font-weight: 800;">🔔 Crear Alerta de Precio</h3>
 
-      <div style="margin-bottom: 25px;">
-        <label style="display: block; color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: 0.95rem;">Condición</label>
-        <select [(ngModel)]="alertCondition"
-                class="gpu-accelerated"
-                style="width: 100%; padding: 12px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: 1rem; transition: all 0.3s;">
+        @if (selectedCrypto()) {
+        <div class="stat-card gpu-accelerated" style="background: rgba(0,240,255,0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 3px solid #00F0FF;">
+            <div class="d-flex align-items-center gap-2 mb-2">
+                <img [src]="selectedCrypto()!.image" class="icon-wrapper" style="width: 30px; height: 30px; border-radius: 50%;">
+                <div>
+                    <div style="color: white; font-weight: 700;">{{selectedCrypto()!.name}}</div>
+                    <div style="color: #7581A8; font-size: 0.85rem; text-transform: uppercase;">{{selectedCrypto()!.symbol}}</div>
+                </div>
+            </div>
+            <div class="counter-number badge-glow" style="color: #00F0FF; font-weight: 800; font-size: 1.3rem;">
+                Precio actual: ${{ selectedCrypto()!.current_price | number:'1.2-2' }}
+            </div>
+        </div>
+        }
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: 0.95rem;">Precio Objetivo</label>
+            <input type="number" [(ngModel)]="alertTargetPrice" placeholder="Ingresa el precio" class="gpu-accelerated" style="width: 100%; padding: 12px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: 1rem; transition: all 0.3s;">
+        </div>
+
+        <div style="margin-bottom: 25px;">
+            <label style="display: block; color: #CDD2E5; margin-bottom: 8px; font-weight: 600; font-size: 0.95rem;">Condición</label>
+            <select [(ngModel)]="alertCondition" class="gpu-accelerated" style="width: 100%; padding: 12px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: 1rem; transition: all 0.3s;">
           <option value="above">Por encima de</option>
           <option value="below">Por debajo de</option>
         </select>
-      </div>
+        </div>
 
-      <div class="d-flex gap-2">
-        <button (click)="showAlertModal.set(false)" class="btn-bot-control" style="flex: 1; padding: 12px; background: transparent; border: 2px solid rgba(0,240,255,0.3); color: #00F0FF; border-radius: 10px; font-weight: 700; cursor: pointer;">
+        <div class="d-flex gap-2">
+            <button (click)="showAlertModal.set(false)" class="btn-bot-control" style="flex: 1; padding: 12px; background: transparent; border: 2px solid rgba(0,240,255,0.3); color: #00F0FF; border-radius: 10px; font-weight: 700; cursor: pointer;">
           Cancelar
         </button>
-        <button (click)="confirmAlert()" class="btn-neon" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #00F0FF, #C946FF); color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; box-shadow: 0 5px 20px rgba(0,240,255,0.4);">
+            <button (click)="confirmAlert()" class="btn-neon" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #00F0FF, #4D7CFF); color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; box-shadow: 0 5px 20px rgba(0,240,255,0.4);">
           Crear Alerta
         </button>
-      </div>
+        </div>
     </div>
-  </div>
+</div>
 }
 
 <style>
-@keyframes pulse {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.6; }
-}
+    @keyframes pulse {
+        0%,
+        100% {
+            opacity: 0.3;
+        }
+        50% {
+            opacity: 0.6;
+        }
+    }
 </style>

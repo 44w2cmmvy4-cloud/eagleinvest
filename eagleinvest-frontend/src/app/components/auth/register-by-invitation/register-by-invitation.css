@@ -1,0 +1,40 @@
+.custom-input {
+    background: rgba(26, 31, 77, 0.5);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.custom-input:focus {
+    background: rgba(26, 31, 77, 0.7);
+    border-color: #00F0FF;
+    box-shadow: 0 0 0 0.2rem rgba(0, 240, 255, 0.25);
+    color: white;
+}
+
+.custom-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.dropdown-item:hover {
+    background: rgba(0, 240, 255, 0.1) !important;
+}
+
+.sponsor-badge {
+    animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%,
+    100% {
+        box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(0, 240, 255, 0.8);
+    }
+}
+
+.btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 240, 255, 0.3);
+}

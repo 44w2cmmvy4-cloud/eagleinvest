@@ -15,10 +15,8 @@ import { AuthService } from '../../../services/auth.service';
       <!-- Left Side - Branding -->
       <div class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center bg-gradient">
         <div class="text-center text-white">
-          <h1 class="display-3 fw-bold mb-4">
-            <i class="bi bi-graph-up-arrow text-warning me-3"></i>EagleInvest
-          </h1>
-          <p class="lead">Tu plataforma de inversiones de confianza</p>
+          <img src="/assets/logo/logo.png" alt="EagleInvest" class="mb-4" style="max-height: 80px; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.5));">
+          <p class="lead" style="color: var(--text-secondary)">Tu plataforma de inversiones de confianza</p>
           <div class="mt-5">
             <div class="row text-center">
               <div class="col-4">
@@ -39,11 +37,13 @@ import { AuthService } from '../../../services/auth.service';
       </div>
       
       <!-- Right Side - Login Form -->
-      <div class="col-lg-6 d-flex align-items-center justify-content-center bg-light">
+      <div class="col-lg-6 d-flex align-items-center justify-content-center" style="background: var(--bg-primary);">
         <div class="login-form w-100" style="max-width: 400px;">
           <div class="text-center mb-5">
-            <h2 class="fw-bold">Iniciar Sesión</h2>
-            <p class="text-muted">Accede a tu cuenta de EagleInvest</p>
+            <h2 class="fw-bold" style="color: var(--text-primary)">{{ requires2FA ? 'Verificación 2FA' : 'Iniciar Sesión' }}</h2>
+            <p class="text-muted" style="color: var(--text-secondary) !important">
+              {{ requires2FA ? 'Ingresa el código enviado a tu correo' : 'Accede a tu cuenta de EagleInvest' }}
+            </p>
           </div>
 
           @if (errorMessage) {
@@ -52,73 +52,119 @@ import { AuthService } from '../../../services/auth.service';
             </div>
           }
 
-          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            <div class="mb-3">
-              <label class="form-label">Email</label>
-              <input 
-                type="email" 
-                class="form-control form-control-lg"
-                formControlName="email"
-                [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
-                placeholder="tu@email.com">
-              @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
-                <div class="invalid-feedback">
-                  Email requerido y debe ser válido
-                </div>
-              }
+          @if (successMessage) {
+            <div class="alert alert-success" role="alert">
+              {{ successMessage }}
             </div>
+          }
 
-            <div class="mb-4">
-              <label class="form-label">Contraseña</label>
-              <input 
-                type="password" 
-                class="form-control form-control-lg"
-                formControlName="password"
-                [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
-                placeholder="Tu contraseña">
-              @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
-                <div class="invalid-feedback">
-                  Contraseña requerida
-                </div>
-              }
-            </div>
-
-            <div class="d-flex justify-content-between align-items-center mb-4">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="rememberMe">
-                <label class="form-check-label" for="rememberMe">
-                  Recordarme
-                </label>
+          @if (!requires2FA) {
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input 
+                  type="email" 
+                  class="form-control form-control-lg"
+                  formControlName="email"
+                  [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+                  placeholder="tu@email.com">
+                @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+                  <div class="invalid-feedback">
+                    Email requerido y debe ser válido
+                  </div>
+                }
               </div>
-              <a href="#" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
-            </div>
 
-            <button 
-              type="submit" 
-              class="btn btn-warning btn-lg w-100 mb-3"
-              [disabled]="loginForm.invalid || isLoading">
-              @if (isLoading) {
-                <span class="spinner-border spinner-border-sm me-2"></span>
-              }
-              Iniciar Sesión
-            </button>
+              <div class="mb-4">
+                <label class="form-label">Contraseña</label>
+                <input 
+                  type="password" 
+                  class="form-control form-control-lg"
+                  formControlName="password"
+                  [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+                  placeholder="Tu contraseña">
+                @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+                  <div class="invalid-feedback">
+                    Contraseña requerida
+                  </div>
+                }
+              </div>
 
-            <div class="text-center">
-              <p class="text-muted">
-                ¿No tienes cuenta? 
-                <a [routerLink]="['/register']" class="text-decoration-none fw-bold">Regístrate aquí</a>
-              </p>
-            </div>
-          </form>
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="rememberMe">
+                  <label class="form-check-label" for="rememberMe">
+                    Recordarme
+                  </label>
+                </div>
+                <a href="#" class="text-decoration-none" style="color: var(--accent-gold)">¿Olvidaste tu contraseña?</a>
+              </div>
 
-          <!-- Demo Credentials -->
-          <div class="mt-4 p-3 bg-info bg-opacity-10 rounded">
-            <h6 class="fw-bold text-info mb-2">
-              <i class="bi bi-info-circle me-2"></i>Credenciales de Prueba
-            </h6>
-            <p class="small mb-1"><strong>Email:</strong> demo@eagleinvest.com</p>
-            <p class="small mb-0"><strong>Contraseña:</strong> 123456</p>
-          </div>
+              <button 
+                type="submit" 
+                class="btn btn-warning btn-lg w-100 mb-3"
+                [disabled]="loginForm.invalid || isLoading">
+                @if (isLoading) {
+                  <span class="spinner-border spinner-border-sm me-2"></span>
+                }
+                Iniciar Sesión
+              </button>
+
+              <div class="text-center">
+                <p class="text-muted" style="color: var(--text-secondary) !important">
+                  Bienvenido a EagleInvest
+                </p>
+              </div>
+            </form>
+          } @else {
+            <form [formGroup]="codeForm" (ngSubmit)="onVerifyCode()">
+              <div class="mb-4">
+                <label class="form-label">Código de 6 dígitos</label>
+                <input
+                  type="text"
+                  class="form-control form-control-lg text-center"
+                  maxlength="6"
+                  formControlName="code"
+                  [class.is-invalid]="codeForm.get('code')?.invalid && codeForm.get('code')?.touched"
+                  placeholder="123456">
+                @if (codeForm.get('code')?.invalid && codeForm.get('code')?.touched) {
+                  <div class="invalid-feedback">
+                    Ingresa el código enviado a tu correo
+                  </div>
+                }
+              </div>
+
+              <button 
+                type="submit" 
+                class="btn btn-warning btn-lg w-100 mb-3"
+                [disabled]="codeForm.invalid || isVerifying">
+                @if (isVerifying) {
+                  <span class="spinner-border spinner-border-sm me-2"></span>
+                  Verificando...
+                } @else {
+                  Verificar Código
+                }
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-outline-secondary w-100"
+                (click)="onResendCode()"
+                [disabled]="resendLoading">
+                @if (resendLoading) {
+                  <span class="spinner-border spinner-border-sm me-2"></span>Reenviando...
+                } @else {
+                  Reenviar Código
+                }
+              </button>
+
+              <div class="text-center mt-3">
+                <p class="text-muted" style="color: var(--text-secondary) !important">Revisa tu correo para el código de verificación</p>
+              </div>
+            </form>
+          }
+
+          <!-- Demo Credentials Removed -->
 
           <div class="text-center mt-4">
             <button [routerLink]="['/']" class="btn btn-outline-secondary">
@@ -135,8 +181,14 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  codeForm: FormGroup;
   isLoading = false;
-  errorMessage = '';
+  isVerifying = false;
+  resendLoading = false;
+  errorMessage: string = '';
+  successMessage: string = '';
+  requires2FA = false;
+  tempToken: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -144,8 +196,12 @@ export class LoginComponent {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: ['demo@eagleinvest.com', [Validators.required, Validators.email]],
-      password: ['123456', [Validators.required]]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
+    });
+
+    this.codeForm = this.fb.group({
+      code: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]]
     });
   }
 
@@ -156,10 +212,13 @@ export class LoginComponent {
       
       const { email, password } = this.loginForm.value;
       
-      // Usar el servicio de autenticación real
       this.authService.login(email, password).subscribe({
         next: (response) => {
-          if (response.success) {
+          if (response.requires_2fa) {
+            this.requires2FA = true;
+            this.tempToken = response.temp_token || this.authService.getTempToken();
+            this.errorMessage = '';
+          } else if (response.success) {
             this.router.navigate(['/dashboard']);
           } else {
             this.errorMessage = response.message || 'Error al iniciar sesión';
@@ -172,5 +231,58 @@ export class LoginComponent {
         }
       });
     }
+  }
+
+  onVerifyCode() {
+    if (!this.tempToken) {
+      this.errorMessage = 'Token temporal no encontrado. Inicia sesión nuevamente.';
+      this.requires2FA = false;
+      return;
+    }
+
+    if (this.codeForm.invalid) {
+      this.codeForm.markAllAsTouched();
+      return;
+    }
+
+    this.isVerifying = true;
+    this.errorMessage = '';
+
+    const code = this.codeForm.value.code;
+    this.authService.verify2FA(this.tempToken, code).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.errorMessage = response.message || 'Código inválido';
+        }
+        this.isVerifying = false;
+      },
+      error: (error) => {
+        this.errorMessage = error.error?.error || error.error?.message || 'Código inválido o expirado';
+        this.isVerifying = false;
+      }
+    });
+  }
+
+  onResendCode() {
+    if (!this.tempToken) {
+      this.errorMessage = 'Token temporal no encontrado. Inicia sesión nuevamente.';
+      this.requires2FA = false;
+      return;
+    }  this.successMessage = 'Código reenviado exitosamente. Revisa tu correo.';
+        setTimeout(() => this.successMessage = '', 5000);
+      
+
+    this.resendLoading = true;
+    this.authService.resend2FA(this.tempToken).subscribe({
+      next: () => {
+        this.resendLoading = false;
+      },
+      error: () => {
+        this.errorMessage = 'No se pudo reenviar el código. Intenta de nuevo.';
+        this.resendLoading = false;
+      }
+    });
   }
 }

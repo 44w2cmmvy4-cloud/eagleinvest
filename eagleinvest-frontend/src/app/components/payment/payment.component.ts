@@ -2,6 +2,9 @@ import { Component, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavbarComponent } from '../shared/navbar/navbar.component';
+import { InvestmentService } from '../../services/investment.service';
+import { Router } from '@angular/router';
+import { InvestmentPlan } from '../../models/api-models';
 
 interface PaymentMethod {
   id: string;
@@ -11,16 +14,6 @@ interface PaymentMethod {
   fee: number;
   processingTime: string;
   enabled: boolean;
-}
-
-interface InvestmentPlan {
-  id: number;
-  name: string;
-  min_amount: number;
-  max_amount: number;
-  daily_return: number;
-  duration_days: number;
-  description: string;
 }
 
 @Component({
@@ -66,7 +59,7 @@ export class PaymentComponent {
       icon: 'bi-bank',
       description: 'Transferencia directa',
       fee: 0,
-      processingTime: '1-3 días hábiles',
+      processingTime: '1-3 minutos (Sim)',
       enabled: true
     },
     {
@@ -86,37 +79,73 @@ export class PaymentComponent {
       id: 1,
       name: 'Plan Básico',
       min_amount: 100,
-      max_amount: 999,
-      daily_return: 1.2,
+      max_amount: 1000,
+      daily_return_rate: 1.2,
       duration_days: 30,
-      description: 'Ideal para comenzar'
+      withdrawal_interval_days: 10,
+      minimum_withdrawal_amount: 10,
+      is_active: true,
+      features: ['Retorno diario garantizado', 'Capital protegido', 'Soporte 24/7', 'Retiro instantáneo'],
+      recommended: false,
+      accent: '#00F0FF',
+      tagline: 'Perfecto para principiantes. Inversión segura.',
+      risk_level: 'Bajo',
+      liquidity: '24h',
+      roi_display: '36% Total'
     },
     {
       id: 2,
-      name: 'Plan Estándar',
+      name: 'Plan Intermedio',
       min_amount: 1000,
-      max_amount: 4999,
-      daily_return: 1.8,
-      duration_days: 60,
-      description: 'Mejor rendimiento'
+      max_amount: 5000,
+      daily_return_rate: 1.8,
+      duration_days: 45,
+      withdrawal_interval_days: 10,
+      minimum_withdrawal_amount: 50,
+      is_active: true,
+      features: ['Retorno diario del 1.8%', 'Bonus de bienvenida', 'Asesor personal', 'Análisis de mercado'],
+      recommended: true,
+      accent: '#D4AF37',
+      tagline: 'Mayor rentabilidad para inversores con experiencia.',
+      risk_level: 'Medio',
+      liquidity: '48h',
+      roi_display: '81% Total'
     },
     {
       id: 3,
       name: 'Plan Premium',
       min_amount: 5000,
-      max_amount: 19999,
-      daily_return: 2.5,
-      duration_days: 90,
-      description: 'Máximo retorno'
+      max_amount: 25000,
+      daily_return_rate: 2.5,
+      duration_days: 60,
+      withdrawal_interval_days: 15,
+      minimum_withdrawal_amount: 100,
+      is_active: true,
+      features: ['Retorno diario del 2.5%', 'Acceso VIP', 'Estrategias exclusivas', 'Retiros prioritarios'],
+      recommended: false,
+      accent: '#9D00FF',
+      tagline: 'Para inversores que buscan máxima rentabilidad.',
+      risk_level: 'Alto',
+      liquidity: '72h',
+      roi_display: '150% Total'
     },
     {
       id: 4,
-      name: 'Plan VIP',
-      min_amount: 20000,
-      max_amount: 1000000,
-      daily_return: 3.2,
-      duration_days: 120,
-      description: 'Exclusivo y premium'
+      name: 'Plan Elite',
+      min_amount: 25000,
+      max_amount: 100000,
+      daily_return_rate: 3.2,
+      duration_days: 90,
+      withdrawal_interval_days: 30,
+      minimum_withdrawal_amount: 500,
+      is_active: true,
+      features: ['Retorno diario del 3.2%', 'Cuenta gerenciada', 'Acceso a mercados exclusivos', 'Gestor dedicado'],
+      recommended: false,
+      accent: '#FF0000',
+      tagline: 'El plan más exclusivo para grandes inversores.',
+      risk_level: 'Muy Alto',
+      liquidity: 'Instantánea',
+      roi_display: '288% Total'
     }
   ]);
 
@@ -135,7 +164,11 @@ export class PaymentComponent {
   isProcessing = signal<boolean>(false);
   paymentSuccess = signal<boolean>(false);
   
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private investmentService: InvestmentService,
+    private router: Router
+  ) {
     // Card Form
     this.cardForm = this.fb.group({
       cardNumber: ['', [Validators.required, Validators.pattern(/^\d{16}$/)]],
@@ -180,7 +213,7 @@ export class PaymentComponent {
     const plan = this.selectedPlan();
     const amt = this.amount();
     if (!plan || !amt) return 0;
-    return amt * (plan.daily_return / 100) * plan.duration_days;
+    return amt * (plan.daily_return_rate / 100) * plan.duration_days;
   });
 
   totalReturn = computed(() => {
@@ -241,19 +274,28 @@ export class PaymentComponent {
 
     this.isProcessing.set(true);
 
-    // Simulate payment processing
-    setTimeout(() => {
-      this.isProcessing.set(false);
-      this.paymentSuccess.set(true);
-      
-      // Reset after 3 seconds
-      setTimeout(() => {
-        this.showPaymentModal.set(false);
-        this.paymentSuccess.set(false);
-        // Redirect to dashboard
-        window.location.href = '/dashboard';
-      }, 3000);
-    }, 2000);
+    // Call Backend API
+    this.investmentService.createInvestment({
+      amount: this.amount()
+    }).subscribe({
+      next: (response) => {
+        this.isProcessing.set(false);
+        this.paymentSuccess.set(true);
+        
+        // Reset after 3 seconds
+        setTimeout(() => {
+          this.showPaymentModal.set(false);
+          this.paymentSuccess.set(false);
+          // Redirect to dashboard
+          this.router.navigate(['/dashboard']);
+        }, 3000);
+      },
+      error: (error) => {
+        this.isProcessing.set(false);
+        console.error('Investment error:', error);
+        alert(error.error?.error || 'Error al procesar la inversión. Inténtalo de nuevo.');
+      }
+    });
   }
 
   closeModal() {
