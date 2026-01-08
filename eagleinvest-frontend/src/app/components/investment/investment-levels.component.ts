@@ -76,9 +76,9 @@ import { NavbarComponent } from '../shared/navbar/navbar.component';
 
               <!-- Action Button -->
               <button 
-                style="width: 100%; padding: 12px; background: {{ getLevelColor(level.level) }}; color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.95rem; transition: all 0.3s ease;"
-                (mouseenter)="$event.currentTarget.style.transform = 'scale(1.05)'"
-                (mouseleave)="$event.currentTarget.style.transform = 'scale(1)'"
+                style="width: 100%; padding: 12px; background: {{ getLevelColor(level.level) }}; color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.95rem; transition: all 0.3s ease; transform: scale(1);"
+                (mouseenter)="($any($event.target)).style.transform = 'scale(1.05)'"
+                (mouseleave)="($any($event.target)).style.transform = 'scale(1)'"
               >
                 Invertir en {{ level.name }}
               </button>
