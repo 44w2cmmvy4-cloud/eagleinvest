@@ -5,168 +5,236 @@ import { Router } from '@angular/router';
 import { InvestmentService, InvestmentPlanType, InvestmentLevel } from '../../services/investment.service';
 import { NotificationService } from '../../services/notification.service';
 import { AuthService } from '../../services/auth.service';
-import { NavbarComponent } from '../shared/navbar/navbar.component';
 
 @Component({
   selector: 'app-investment-flow',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavbarComponent],
+  imports: [CommonModule, FormsModule],
   template: `
-    <app-navbar></app-navbar>
-    
-    <div class="investment-container" style="background: linear-gradient(135deg, #0A0E27 0%, #13172E 50%, #0A0E27 100%); min-height: 100vh; padding: 40px 20px;">
-      <div class="container-fluid">
-        <!-- Paso 1: Validar Monto -->
-        @if (!investmentCreated()) {
-          <div class="investment-card" style="background: linear-gradient(135deg, rgba(0,240,255,0.1), rgba(77,124,255,0.08)); border: 2px solid rgba(0,240,255,0.3); border-radius: 20px; padding: 40px; max-width: 600px; margin: 0 auto;">
-            <h2 style="color: white; margin-bottom: 30px; text-align: center; font-weight: 800;">💰 Crear Inversión</h2>
+    <div class="min-h-screen" style="background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);">
+      
+      <div class="container mx-auto px-4 py-12 max-w-4xl">
+        
+        <!-- Header -->
+        <div class="text-center mb-12">
+          <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 mb-6 shadow-lg shadow-cyan-500/50">
+            <span class="text-4xl">💰</span>
+          </div>
+          <h1 class="text-4xl font-bold text-white mb-2">Crear Inversión</h1>
+          <p class="text-slate-400 text-lg">Inicia tu camino hacia la rentabilidad</p>
+        </div>
+
+        <!-- Loading State -->
+        <div *ngIf="false" class="flex items-center justify-center min-h-[60vh]">
+          <div class="text-center">
+            <div class="inline-block animate-spin rounded-full h-16 w-16 border-4 border-cyan-500 border-t-transparent"></div>
+            <p class="text-white text-lg mt-4 font-medium">Cargando...</p>
+          </div>
+        </div>
+
+        <!-- Step 1: Amount -->
+        <div *ngIf="!investmentCreated()" class="animate-fadeIn">
+          <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-10 shadow-2xl border border-slate-700">
             
-            <div style="margin-bottom: 25px;">
-              <label style="display: block; color: #CDD2E5; margin-bottom: 10px; font-weight: 600; font-size: 1rem;">Monto a Invertir</label>
-              <div style="display: flex; gap: 10px;">
-                <span style="color: #00F0FF; font-weight: 700; font-size: 1.3rem;">$</span>
-                <input 
-                  type="number" 
-                  [(ngModel)]="investmentAmount"
-                  (ngModelChange)="onAmountChange()"
-                  placeholder="Ingresa el monto"
-                  style="flex: 1; padding: 15px; background: rgba(13,17,46,0.8); border: 1px solid rgba(0,240,255,0.3); border-radius: 10px; color: white; font-size: 1.1rem;">
-              </div>
-              @if (investmentAmount > 0) {
-                <p style="color: #7581A8; font-size: 0.9rem; margin-top: 8px;">
-                  Mínimo: $10 | Máximo: Ilimitado
-                </p>
-              }
+            <div class="text-center mb-10">
+              <h2 class="text-3xl font-bold text-white mb-2">Paso 1: Ingresa tu Monto</h2>
+              <p class="text-slate-400">Elige cuánto quieres invertir</p>
             </div>
 
-            <!-- Plan Sugerido -->
-            @if (suggestedPlan()) {
-              <div style="background: rgba(0,240,255,0.1); padding: 20px; border-radius: 12px; border-left: 3px solid #00F0FF; margin-bottom: 25px;">
-                <h4 style="color: #00F0FF; margin: 0 0 10px 0; font-weight: 700;">Plan Sugerido</h4>
-                <div style="color: white; font-weight: 600; font-size: 1.1rem; margin-bottom: 8px;">
-                  {{ formatPlanName(suggestedPlan()!) }}
+            <!-- Amount Input -->
+            <div class="mb-8">
+              <label class="block text-white text-lg font-semibold mb-4">Monto a Invertir</label>
+              <div class="relative">
+                <div class="absolute left-6 top-1/2 -translate-y-1/2 text-4xl text-cyan-400 font-bold">\$</div>
+                <input type="number"
+                       [(ngModel)]="investmentAmount"
+                       (ngModelChange)="onAmountChange()"
+                       class="w-full pl-20 pr-6 py-5 bg-slate-900 border-2 border-slate-600 rounded-xl text-white text-3xl font-bold focus:border-cyan-500 focus:outline-none transition-colors"
+                       placeholder="0.00"
+                       step="0.01"
+                       min="10">
+              </div>
+              <p class="text-slate-400 text-sm mt-3">Mínimo: \$10 | Sin límite máximo</p>
+            </div>
+
+            <!-- Suggested Plan -->
+            <div *ngIf="suggestedPlan()" class="p-6 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30 rounded-2xl mb-8">
+              <h4 class="text-cyan-400 font-bold text-lg mb-3 flex items-center">
+                <span class="mr-2">✨</span> Plan Recomendado
+              </h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <p class="text-slate-400 text-sm mb-1">Plan</p>
+                  <p class="text-white font-bold text-xl">{{ formatPlanName(suggestedPlan()!) }}</p>
                 </div>
-                <p style="color: #A1A9C9; margin: 0; font-size: 0.95rem;">
-                  {{ getPlanDescription(suggestedPlan()!) }}
-                </p>
-                <div style="color: #4D7CFF; font-weight: 700; margin-top: 10px;">
-                  Nivel: {{ suggestedLevel() }}
+                <div>
+                  <p class="text-slate-400 text-sm mb-1">Nivel</p>
+                  <p class="text-cyan-400 font-bold text-xl">{{ suggestedLevel() }}</p>
                 </div>
               </div>
-            }
+              <p class="text-slate-300 text-sm mt-3">{{ getPlanDescription(suggestedPlan()!) }}</p>
+            </div>
 
-            <!-- Validación -->
-            @if (validationError()) {
-              <div style="background: rgba(255,61,0,0.1); padding: 15px; border-radius: 10px; border-left: 3px solid #FF3D00; margin-bottom: 25px;">
-                <p style="color: #FF6B6B; margin: 0; font-weight: 600;">⚠️ {{ validationError() }}</p>
+            <!-- Validation Error -->
+            <div *ngIf="validationError()" class="p-4 bg-red-500/10 border border-red-500/30 rounded-xl mb-8">
+              <div class="flex items-center space-x-3">
+                <svg class="w-6 h-6 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <p class="text-red-400 font-medium">{{ validationError() }}</p>
               </div>
-            }
+            </div>
 
-            <!-- Botones -->
-            <div style="display: flex; gap: 15px;">
-              <button 
-                (click)="cancelInvestment()"
-                style="flex: 1; padding: 15px; background: transparent; border: 2px solid rgba(0,240,255,0.3); color: #00F0FF; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 1rem;">
+            <!-- Buttons -->
+            <div class="flex gap-4">
+              <button (click)="cancelInvestment()"
+                      class="flex-1 px-6 py-4 bg-slate-700 text-white rounded-xl font-semibold hover:bg-slate-600 transition-colors">
                 Cancelar
               </button>
-              <button 
-                (click)="proceedWithInvestment()"
-                [disabled]="!isValidAmount()"
-                style="flex: 1; padding: 15px; background: linear-gradient(135deg, #00F0FF, #4D7CFF); color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 1rem; opacity: {{ isValidAmount() ? 1 : 0.5 }};"
-              >
-                Proceder → {{ investmentAmount > 0 ? (investmentAmount | currency) : 'Ingresar Monto' }}
+              <button (click)="proceedWithInvestment()"
+                      [disabled]="!isValidAmount()"
+                      class="flex-1 px-6 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300">
+                Continuar →
               </button>
             </div>
           </div>
-        }
+        </div>
 
-        <!-- Paso 2: Confirmación -->
-        @if (investmentCreated() && !investmentConfirmed()) {
-          <div class="investment-card" style="background: linear-gradient(135deg, rgba(0,240,255,0.1), rgba(77,124,255,0.08)); border: 2px solid rgba(0,240,255,0.3); border-radius: 20px; padding: 40px; max-width: 600px; margin: 0 auto;">
-            <h2 style="color: white; margin-bottom: 30px; text-align: center; font-weight: 800;">✓ Confirmar Inversión</h2>
+        <!-- Step 2: Confirmation -->
+        <div *ngIf="investmentCreated() && !investmentConfirmed()" class="animate-fadeIn">
+          <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-10 shadow-2xl border border-slate-700">
             
-            <div style="background: rgba(0,240,255,0.1); padding: 25px; border-radius: 15px; border: 1px solid rgba(0,240,255,0.2); margin-bottom: 30px;">
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="text-center mb-10">
+              <h2 class="text-3xl font-bold text-white mb-2">Paso 2: Confirma tu Inversión</h2>
+              <p class="text-slate-400">Revisa los detalles antes de confirmar</p>
+            </div>
+
+            <!-- Summary Card -->
+            <div class="p-8 bg-slate-900/50 rounded-2xl border border-slate-600 mb-8">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                  <p style="color: #7581A8; font-size: 0.9rem; margin: 0 0 8px 0;">Monto</p>
-                  <p style="color: #00F0FF; font-size: 1.5rem; font-weight: 800; margin: 0;">$ {{ investmentAmount | number:'1.2-2' }}</p>
+                  <p class="text-slate-400 text-sm mb-2">Monto a Invertir</p>
+                  <p class="text-4xl font-bold text-white">\${{ investmentAmount | number:'1.2-2' }}</p>
                 </div>
                 <div>
-                  <p style="color: #7581A8; font-size: 0.9rem; margin: 0 0 8px 0;">Plan</p>
-                  <p style="color: white; font-size: 1.2rem; font-weight: 700; margin: 0;">{{ formatPlanName(suggestedPlan()!) }}</p>
+                  <p class="text-slate-400 text-sm mb-2">Plan Asignado</p>
+                  <p class="text-3xl font-bold text-cyan-400">{{ formatPlanName(suggestedPlan()!) }}</p>
                 </div>
                 <div>
-                  <p style="color: #7581A8; font-size: 0.9rem; margin: 0 0 8px 0;">Nivel</p>
-                  <p style="color: #4D7CFF; font-size: 1.2rem; font-weight: 700; margin: 0;">{{ suggestedLevel() }}</p>
+                  <p class="text-slate-400 text-sm mb-2">Nivel</p>
+                  <p class="text-3xl font-bold text-white">{{ suggestedLevel() }}</p>
                 </div>
                 <div>
-                  <p style="color: #7581A8; font-size: 0.9rem; margin: 0 0 8px 0;">Retorno Mensual</p>
-                  <p style="color: #00F0FF; font-size: 1.2rem; font-weight: 700; margin: 0;">{{ getMonthlyReturn() }}%</p>
+                  <p class="text-slate-400 text-sm mb-2">Retorno Mensual</p>
+                  <p class="text-3xl font-bold text-green-400">{{ getMonthlyReturn() }}%</p>
                 </div>
               </div>
             </div>
 
-            <!-- Términos -->
-            <div style="background: rgba(13,17,46,0.6); padding: 15px; border-radius: 10px; margin-bottom: 25px; border-left: 3px solid #4D7CFF;">
-              <label style="display: flex; align-items: flex-start; gap: 10px; color: #CDD2E5; cursor: pointer; margin: 0;">
-                <input 
-                  type="checkbox" 
-                  [(ngModel)]="acceptTerms"
-                  style="margin-top: 3px; cursor: pointer;">
-                <span>Acepto los términos y condiciones de inversión. La inversión será registrada con fecha de hoy y tendrá un período de ratificación según el plan seleccionado.</span>
+            <!-- Terms Checkbox -->
+            <div class="p-6 bg-slate-900/30 rounded-xl border border-slate-700 mb-8">
+              <label class="flex items-start space-x-4 cursor-pointer">
+                <input type="checkbox"
+                       [(ngModel)]="acceptTerms"
+                       class="mt-1 w-5 h-5 rounded border-slate-500 text-cyan-500 focus:ring-cyan-500">
+                <div>
+                  <p class="text-white font-medium mb-1">Aceptar Términos y Condiciones</p>
+                  <p class="text-slate-400 text-sm">
+                    Acepto los términos de inversión. Mi inversión será registrada con fecha de hoy y tendrá un período de ratificación según el plan seleccionado.
+                  </p>
+                </div>
               </label>
             </div>
 
-            <!-- Botones -->
-            <div style="display: flex; gap: 15px;">
-              <button 
-                (click)="goBackToAmount()"
-                style="flex: 1; padding: 15px; background: transparent; border: 2px solid rgba(0,240,255,0.3); color: #00F0FF; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 1rem;">
+            <!-- Info Box -->
+            <div class="p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-xl mb-8">
+              <div class="flex items-start space-x-3">
+                <svg class="w-6 h-6 text-yellow-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <p class="text-yellow-400 text-sm">
+                  Tu inversión comenzará a generar retornos inmediatamente según el plan seleccionado.
+                </p>
+              </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex gap-4">
+              <button (click)="goBackToAmount()"
+                      class="flex-1 px-6 py-4 bg-slate-700 text-white rounded-xl font-semibold hover:bg-slate-600 transition-colors">
                 ← Atrás
               </button>
-              <button 
-                (click)="confirmInvestment()"
-                [disabled]="!acceptTerms"
-                style="flex: 1; padding: 15px; background: linear-gradient(135deg, #00F0FF, #4D7CFF); color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 1rem; opacity: {{ acceptTerms ? 1 : 0.5 }};"
-              >
+              <button (click)="confirmInvestment()"
+                      [disabled]="!acceptTerms"
+                      class="flex-1 px-6 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300">
                 Confirmar Inversión ✓
               </button>
             </div>
           </div>
-        }
+        </div>
 
-        <!-- Paso 3: Éxito -->
-        @if (investmentCreated() && investmentConfirmed()) {
-          <div class="investment-card" style="background: linear-gradient(135deg, rgba(0,240,255,0.1), rgba(77,124,255,0.08)); border: 2px solid rgba(0,240,255,0.3); border-radius: 20px; padding: 40px; max-width: 600px; margin: 0 auto; text-align: center;">
-            <div style="font-size: 4rem; margin-bottom: 20px;">✅</div>
-            <h2 style="color: white; margin-bottom: 15px; font-weight: 800;">¡Inversión Registrada!</h2>
-            <p style="color: #A1A9C9; font-size: 1.1rem; margin-bottom: 30px;">Tu inversión ha sido registrada exitosamente en nuestra base de datos.</p>
+        <!-- Step 3: Success -->
+        <div *ngIf="investmentCreated() && investmentConfirmed()" class="animate-fadeIn">
+          <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-10 shadow-2xl border border-slate-700 text-center">
             
-            <div style="background: rgba(0,240,255,0.1); padding: 20px; border-radius: 12px; border-left: 3px solid #00F0FF; margin-bottom: 30px; text-align: left;">
-              <p style="color: #7581A8; margin: 0 0 8px 0; font-size: 0.9rem;">📅 Fecha de Inicio</p>
-              <p style="color: white; margin: 0 0 20px 0; font-weight: 600; font-size: 1.1rem;">{{ currentDate }}</p>
-              
-              <p style="color: #7581A8; margin: 0 0 8px 0; font-size: 0.9rem;">⏳ Período de Ratificación</p>
-              <p style="color: white; margin: 0; font-weight: 600; font-size: 1.1rem;">{{ getRatificationDays() }} días según tu plan</p>
+            <div class="w-24 h-24 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center mx-auto mb-6 shadow-lg shadow-green-500/50">
+              <span class="text-6xl">🎉</span>
+            </div>
+            
+            <h2 class="text-4xl font-bold text-white mb-3">¡Inversión Registrada!</h2>
+            <p class="text-slate-400 text-lg mb-8">Tu inversión ha sido procesada exitosamente</p>
+            
+            <div class="inline-block p-8 bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/30 rounded-2xl mb-10">
+              <p class="text-slate-400 text-sm mb-2">Monto Invertido</p>
+              <p class="text-5xl font-bold text-green-400 mb-4">\${{ investmentAmount | number:'1.2-2' }}</p>
+              <p class="text-slate-400 text-sm">
+                Fecha de inicio: <span class="text-white font-semibold">{{ currentDate }}</span>
+              </p>
+              <p class="text-slate-400 text-sm">
+                Período de ratificación: <span class="text-white font-semibold">{{ getRatificationDays() }} días</span>
+              </p>
             </div>
 
-            <button 
-              (click)="goToDashboard()"
-              style="width: 100%; padding: 15px; background: linear-gradient(135deg, #00F0FF, #4D7CFF); color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 1rem;">
-              Ir al Dashboard →
-            </button>
+            <div class="flex gap-4">
+              <button (click)="goToDashboard()"
+                      class="flex-1 px-6 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold text-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300">
+                Ir al Dashboard →
+              </button>
+            </div>
           </div>
-        }
+        </div>
+
       </div>
     </div>
   `,
   styles: [`
-    .investment-container {
-      min-height: 100vh;
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .animate-fadeIn {
+      animation: fadeIn 0.4s ease-out;
     }
 
-    .investment-card {
-      box-shadow: 0 0 30px rgba(0, 240, 255, 0.1);
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    
+    .animate-spin {
+      animation: spin 1s linear infinite;
+    }
+
+    input[type="checkbox"] {
+      accent-color: #06b6d4;
     }
   `]
 })
@@ -199,93 +267,85 @@ export class InvestmentFlowComponent implements OnInit {
       return;
     }
 
-    const result = this.investmentService.validateAndClassifyInvestment(this.investmentAmount);
-    
-    if (!result.valid) {
-      this.validationError.set(result.error || 'Monto inválido');
-      this.suggestedPlan.set(null);
-      this.suggestedLevel.set(null);
-    } else {
-      this.suggestedPlan.set(result.plan || null);
-      this.suggestedLevel.set(result.level || null);
+    if (this.investmentAmount < 10) {
+      this.validationError.set('El monto mínimo de inversión es \$10');
+      return;
+    }
+
+    const plan = this.investmentService.determinePlanType(this.investmentAmount);
+    if (plan) {
+      this.suggestedPlan.set(plan);
+      this.suggestedLevel.set(this.investmentService.determineLevelFromAmount(this.investmentAmount));
     }
   }
 
   isValidAmount(): boolean {
-    return this.investmentAmount >= 10 && this.suggestedPlan() !== null;
+    return this.investmentAmount >= 10 && this.validationError() === '';
   }
 
   proceedWithInvestment() {
-    if (!this.isValidAmount()) return;
-    this.investmentCreated.set(true);
+    if (this.isValidAmount()) {
+      this.investmentCreated.set(true);
+    }
   }
 
   goBackToAmount() {
     this.investmentCreated.set(false);
-    this.acceptTerms = false;
   }
 
   confirmInvestment() {
-    if (!this.acceptTerms || !this.suggestedPlan()) return;
-
-    const userId = String(this.authService.getCurrentUser()?.id || '');
-    
-    this.investmentService.createDetailedInvestment(userId, this.investmentAmount).subscribe({
-      next: (response) => {
-        this.investmentConfirmed.set(true);
-        this.notificationService.show('¡Inversión registrada exitosamente!', 'success', 3000);
-      },
-      error: (error) => {
-        this.notificationService.show('Error al crear la inversión', 'error', 3000);
-        console.error(error);
-      }
-    });
-  }
-
-  goToDashboard() {
-    this.router.navigate(['/dashboard']);
+    if (this.acceptTerms && this.investmentCreated()) {
+      this.investmentConfirmed.set(true);
+    }
   }
 
   cancelInvestment() {
     this.router.navigate(['/dashboard']);
   }
 
+  goToDashboard() {
+    this.router.navigate(['/dashboard']);
+  }
+
   formatPlanName(plan: InvestmentPlanType): string {
     const names: Record<InvestmentPlanType, string> = {
-      MICRO_IMPACTO: '🔷 Micro Impacto',
-      RAPIDO_SOCIAL: '🟦 Rápido Social',
-      ESTANQUE_SOLIDARIO: '🔶 Estanque Solidario',
-      PREMIUM_HUMANITARIO: '💎 Premium Humanitario'
+      'BASIC': 'Plan Básico',
+      'INTERMEDIATE': 'Plan Intermedio',
+      'PREMIUM': 'Plan Premium',
+      'ELITE': 'Plan Elite'
     };
-    return names[plan];
+    return names[plan] || plan;
   }
 
   getPlanDescription(plan: InvestmentPlanType): string {
     const descriptions: Record<InvestmentPlanType, string> = {
-      MICRO_IMPACTO: 'Plan de bajo monto con ganancias micro ($10-$99)',
-      RAPIDO_SOCIAL: 'Plan social con retorno rápido ($100-$999)',
-      ESTANQUE_SOLIDARIO: 'Plan solidario con ganancia equilibrada ($1,000-$4,999)',
-      PREMIUM_HUMANITARIO: 'Plan premium con máximas ganancias ($5,000+)'
+      'BASIC': 'Perfecto para principiantes. Retorno diario del 1.2% durante 30 días.',
+      'INTERMEDIATE': 'Para inversores con experiencia. Retorno diario del 1.8% durante 45 días.',
+      'PREMIUM': 'Máxima rentabilidad. Retorno diario del 2.5% durante 60 días.',
+      'ELITE': 'Nivel VIP. Retorno personalizado según el monto invertido.'
     };
-    return descriptions[plan];
+    return descriptions[plan] || '';
   }
 
-  getMonthlyReturn(): string {
-    if (!this.suggestedPlan()) return '0';
-    const plan = this.investmentService.getPlanDetails(this.suggestedPlan()!);
-    return plan.monthlyRentability.toString();
+  getMonthlyReturn(): number {
+    const plan = this.suggestedPlan();
+    const returns: Record<InvestmentPlanType, number> = {
+      'BASIC': 36,
+      'INTERMEDIATE': 54,
+      'PREMIUM': 75,
+      'ELITE': 100
+    };
+    return plan ? returns[plan] : 0;
   }
 
   getRatificationDays(): number {
-    if (!this.suggestedPlan()) return 0;
-    
-    const daysMap: Record<InvestmentPlanType, number> = {
-      MICRO_IMPACTO: 15,
-      RAPIDO_SOCIAL: 10,
-      ESTANQUE_SOLIDARIO: 30,
-      PREMIUM_HUMANITARIO: 35
+    const plan = this.suggestedPlan();
+    const days: Record<InvestmentPlanType, number> = {
+      'BASIC': 30,
+      'INTERMEDIATE': 45,
+      'PREMIUM': 60,
+      'ELITE': 90
     };
-    
-    return daysMap[this.suggestedPlan()!];
+    return plan ? days[plan] : 0;
   }
 }
