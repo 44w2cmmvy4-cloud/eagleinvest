@@ -251,7 +251,7 @@ export class CommissionHistoryComponent implements OnInit {
   }
 
   loadCommissions() {
-    const userId = this.authService.getCurrentUser()?.id || '';
+    const userId = String(this.authService.getCurrentUser()?.id || '');
     
     this.unilevelService.getCommissionHistory(userId).subscribe({
       next: (data: any) => {

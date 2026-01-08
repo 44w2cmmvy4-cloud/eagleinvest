@@ -374,7 +374,7 @@ export class WithdrawalHistoryComponent implements OnInit {
     this.filteredWithdrawals.set(this.withdrawals());
   }
 
-  viewDetails(withdrawal: WithdrawalRequest) {
+  viewDetails(withdrawal: WithdrawalData) {
     this.selectedWithdrawal.set(withdrawal);
     this.showDetailsModal.set(true);
   }
@@ -384,8 +384,8 @@ export class WithdrawalHistoryComponent implements OnInit {
     this.selectedWithdrawal.set(null);
   }
 
-  formatDate(dateStr: string): string {
-    const date = new Date(dateStr);
+  formatDate(dateStr: string | Date): string {
+    const date = typeof dateStr === 'string' ? new Date(dateStr) : dateStr;
     return new Intl.DateTimeFormat('es-ES', {
       year: 'numeric',
       month: 'short',

@@ -61,7 +61,7 @@ import { NavbarComponent } from '../shared/navbar/navbar.component';
                   </li>
                   <li style="display: flex; align-items: center; gap: 8px; color: white; font-size: 0.95rem;">
                     <span style="color: {{ getLevelColor(level.level) }}; font-weight: 700;">✓</span>
-                    Top: ${{ level.topAmount?.toFixed?.(0) || level.topAmount }}
+                    Top: ${{ getTopAmount(level.topAmount) }}
                   </li>
                   <li style="display: flex; align-items: center; gap: 8px; color: white; font-size: 0.95rem;">
                     <span style="color: {{ getLevelColor(level.level) }}; font-weight: 700;">✓</span>
@@ -190,6 +190,10 @@ export class InvestmentLevelsComponent implements OnInit {
       PLATINO: 'linear-gradient(135deg, rgba(77,124,255,0.15), rgba(77,124,255,0.05))'
     };
     return gradients[level];
+  }
+
+  getTopAmount(amount: number): string {
+    return amount.toFixed(0);
   }
 
   readonly Infinity = Infinity;

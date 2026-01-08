@@ -335,11 +335,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
         const currentYear = now.getFullYear();
         
         const monthlyEarned = commissions
-          .filter(c => {
+          .filter((c: any) => {
             const date = new Date(c.date);
             return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
           })
-          .reduce((sum, c: any) => sum + c.amount, 0);
+          .reduce((sum: number, c: any) => sum + c.amount, 0);
         
         const totalEarned = commissions.reduce((sum: number, c: any) => sum + c.amount, 0);
         

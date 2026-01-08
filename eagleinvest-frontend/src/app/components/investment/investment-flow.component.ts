@@ -228,7 +228,7 @@ export class InvestmentFlowComponent implements OnInit {
   confirmInvestment() {
     if (!this.acceptTerms || !this.suggestedPlan()) return;
 
-    const userId = this.authService.getCurrentUser()?.id || '';
+    const userId = String(this.authService.getCurrentUser()?.id || '');
     
     this.investmentService.createDetailedInvestment(userId, this.investmentAmount).subscribe({
       next: (response) => {
