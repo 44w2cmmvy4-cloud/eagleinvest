@@ -1,7 +1,7 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InvestmentService, InvestmentLevel, LevelBenefits } from '../../../services/investment.service';
-import { AuthService } from '../../../services/auth.service';
+import { InvestmentService, InvestmentLevel, LevelBenefits } from '../../services/investment.service';
+import { AuthService } from '../../services/auth.service';
 import { NavbarComponent } from '../shared/navbar/navbar.component';
 
 @Component({
@@ -61,7 +61,7 @@ import { NavbarComponent } from '../shared/navbar/navbar.component';
                   </li>
                   <li style="display: flex; align-items: center; gap: 8px; color: white; font-size: 0.95rem;">
                     <span style="color: {{ getLevelColor(level.level) }}; font-weight: 700;">✓</span>
-                    Top: ${{ level.topAmount | number:'1.0-0' }}
+                    Top: ${{ level.topAmount?.toFixed?.(0) || level.topAmount }}
                   </li>
                   <li style="display: flex; align-items: center; gap: 8px; color: white; font-size: 0.95rem;">
                     <span style="color: {{ getLevelColor(level.level) }}; font-weight: 700;">✓</span>

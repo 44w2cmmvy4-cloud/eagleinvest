@@ -2,9 +2,9 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { InvestmentService, InvestmentPlanType, InvestmentLevel } from '../../../services/investment.service';
-import { NotificationService } from '../../../services/notification.service';
-import { AuthService } from '../../../services/auth.service';
+import { InvestmentService, InvestmentPlanType, InvestmentLevel } from '../../services/investment.service';
+import { NotificationService } from '../../services/notification.service';
+import { AuthService } from '../../services/auth.service';
 import { NavbarComponent } from '../shared/navbar/navbar.component';
 
 @Component({

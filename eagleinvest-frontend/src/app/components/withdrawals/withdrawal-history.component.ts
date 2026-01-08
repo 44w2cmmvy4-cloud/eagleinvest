@@ -309,28 +309,28 @@ export class WithdrawalHistoryComponent implements OnInit {
   }
 
   loadWithdrawals() {
-    const userId = this.authService.getCurrentUser()?.id || 0;
+    const userId = this.authService.getCurrentUser()?.id || '';
     
     this.withdrawalService.getUserWithdrawals(userId).subscribe({
-      next: (data) => {
+      next: (data: any) => {
         this.withdrawals.set(data);
         this.filteredWithdrawals.set(data);
         this.calculateStats();
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error cargando retiros:', err);
       }
     });
   }
 
   loadBalance() {
-    const userId = this.authService.getCurrentUser()?.id || 0;
+    const userId = this.authService.getCurrentUser()?.id || '';
     
-    this.withdrawalService.getAvailableBalance(userId).subscribe({
-      next: (balance) => {
-        this.availableBalance.set(balance);
+    this.withdrawalService.getAvailableBalances(userId).subscribe({
+      next: (balance: any) => {
+        this.availableBalance.set(balance.finBalance || 0);
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error cargando balance:', err);
       }
     });

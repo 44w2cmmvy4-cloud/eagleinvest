@@ -124,7 +124,7 @@ export class RegistrationService {
    * Based on diagram: "Solicitar Verificación 2FA"
    */
   request2FA(email: string): Observable<{ success: boolean; message: string }> {
-    return this.http.post(`${this.apiUrl}/request-2fa`, { email });
+    return this.http.post<{ success: boolean; message: string }>(`${this.apiUrl}/request-2fa`, { email });
   }
 
   /**
@@ -132,7 +132,7 @@ export class RegistrationService {
    * Based on diagram: "¿2FA Correcto?"
    */
   verify2FA(email: string, code: string): Observable<{ success: boolean; token: string }> {
-    return this.http.post(`${this.apiUrl}/verify-2fa`, { email, code });
+    return this.http.post<{ success: boolean; token: string }>(`${this.apiUrl}/verify-2fa`, { email, code });
   }
 
   /**
@@ -140,7 +140,7 @@ export class RegistrationService {
    * Based on diagram: "Vincular a Red Unilevel del Patrocinador"
    */
   linkToNetwork(userId: string, sponsorId: string): Observable<{ success: boolean; networkId: string }> {
-    return this.http.post(`${this.apiUrl}/link-network`, {
+    return this.http.post<{ success: boolean; networkId: string }>(`${this.apiUrl}/link-network`, {
       userId,
       sponsorId
     });
@@ -179,7 +179,7 @@ export class RegistrationService {
    * Based on diagram: "Fin: Acceso al Dashboard"
    */
   completeRegistration(userId: string): Observable<{ success: boolean }> {
-    return this.http.post(`${this.apiUrl}/registration/complete`, { userId });
+    return this.http.post<{ success: boolean }>(`${this.apiUrl}/registration/complete`, { userId });
   }
 
   // Helper methods

@@ -251,16 +251,16 @@ export class CommissionHistoryComponent implements OnInit {
   }
 
   loadCommissions() {
-    const userId = this.authService.getCurrentUser()?.id || 0;
+    const userId = this.authService.getCurrentUser()?.id || '';
     
-    this.unilevelService.getUserCommissions(userId).subscribe({
-      next: (data) => {
+    this.unilevelService.getCommissionHistory(userId).subscribe({
+      next: (data: any) => {
         this.commissions.set(data);
         this.filteredCommissions.set(data);
         this.calculateStats();
         this.calculateMonthlyTotals();
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error cargando comisiones:', err);
       }
     });

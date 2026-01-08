@@ -338,13 +338,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
             const date = new Date(c.date);
             return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
           })
-          .reduce((sum, c) => sum + c.amount, 0);
+          .reduce((sum, c: any) => sum + c.amount, 0);
         
-        const totalEarned = commissions.reduce((sum, c) => sum + c.amount, 0);
+        const totalEarned = commissions.reduce((sum: number, c: any) => sum + c.amount, 0);
         
         const pendingCommissions = commissions
-          .filter(c => c.status === 'pending')
-          .reduce((sum, c) => sum + c.amount, 0);
+          .filter((c: any) => c.status === 'pending')
+          .reduce((sum: number, c: any) => sum + c.amount, 0);
         
         this.commissionStats.set({
           monthlyEarned,
@@ -352,7 +352,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           pendingCommissions
         });
       },
-      error: (err) => console.error('Error cargando comisiones:', err)
+      error: (err: any) => console.error('Error cargando comisiones:', err)
     });
   }
 }

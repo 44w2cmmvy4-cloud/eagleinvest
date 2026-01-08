@@ -447,21 +447,4 @@ export class WithdrawalService {
     }
     return this.http.get<WithdrawalData[]>(url);
   }
-
-  getUserWithdrawals(): Observable<Withdrawal[]> {
-    return this.http.get<Withdrawal[]>(this.apiUrl);
-  }
-
-  // Admin methods
-  getPendingWithdrawals(): Observable<Withdrawal[]> {
-    return this.http.get<Withdrawal[]>(`${this.apiUrl}/pending/all`);
-  }
-
-  approveWithdrawal(id: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${id}/approve`, {});
-  }
-
-  completeWithdrawal(id: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${id}/complete`, {});
-  }
 }

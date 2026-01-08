@@ -141,7 +141,7 @@ export class WalletService {
    * Verify 2FA for wallet change
    */
   verify2FA(ticketId: string, code: string): Observable<{ success: boolean; message: string }> {
-    return this.http.post(`${this.apiUrl}/wallet/support/${ticketId}/verify-2fa`, { code });
+    return this.http.post<{ success: boolean; message: string }>(`${this.apiUrl}/wallet/support/${ticketId}/verify-2fa`, { code });
   }
 
   /**
@@ -162,6 +162,6 @@ export class WalletService {
    * Send confirmation email after wallet change
    */
   sendConfirmationEmail(userId: string, newWallet: string): Observable<{ success: boolean }> {
-    return this.http.post(`${this.apiUrl}/wallet/send-confirmation`, { userId, newWallet });
+    return this.http.post<{ success: boolean }>(`${this.apiUrl}/wallet/send-confirmation`, { userId, newWallet });
   }
 }
