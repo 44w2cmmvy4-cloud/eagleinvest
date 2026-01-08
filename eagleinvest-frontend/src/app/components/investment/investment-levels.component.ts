@@ -42,11 +42,11 @@ import { NavbarComponent } from '../shared/navbar/navbar.component';
               <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
                 <p style="color: #7581A8; font-size: 0.85rem; margin: 0 0 8px 0;">Rango de Inversión</p>
                 <p style="color: white; font-weight: 700; font-size: 1.2rem; margin: 0;">
-                  $ {{ level.minAmount | number:'1.0-0' }} - 
+                  \$ {{ level.minAmount | number:'1.0-0' }} - 
                   @if (level.maxAmount === Infinity) {
                     Ilimitado
                   } @else {
-                    $ {{ level.maxAmount | number:'1.0-0' }}
+                    \$ {{ level.maxAmount | number:'1.0-0' }}
                   }
                 </p>
               </div>
@@ -61,7 +61,7 @@ import { NavbarComponent } from '../shared/navbar/navbar.component';
                   </li>
                   <li style="display: flex; align-items: center; gap: 8px; color: white; font-size: 0.95rem;">
                     <span style="color: {{ getLevelColor(level.level) }}; font-weight: 700;">✓</span>
-                    Top: ${{ getTopAmount(level.topAmount) }}
+                    Top: \${{ getTopAmount(level.topAmount) }}
                   </li>
                   <li style="display: flex; align-items: center; gap: 8px; color: white; font-size: 0.95rem;">
                     <span style="color: {{ getLevelColor(level.level) }}; font-weight: 700;">✓</span>
