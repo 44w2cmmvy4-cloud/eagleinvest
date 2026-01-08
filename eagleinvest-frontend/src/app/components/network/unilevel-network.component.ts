@@ -12,6 +12,17 @@ import { AuthService } from '../../services/auth.service';
     <div class="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 py-12 px-4">
       <div class="max-w-7xl mx-auto">
         
+        <!-- Loading State -->
+        <div *ngIf="isLoading()" class="flex items-center justify-center min-h-[60vh]">
+          <div class="text-center">
+            <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
+            <p class="text-white text-xl font-semibold">Cargando tu red...</p>
+          </div>
+        </div>
+        
+        <!-- Content -->
+        <div *ngIf="!isLoading()">
+        
         <!-- Header -->
         <div class="text-center mb-8">
           <h1 class="text-4xl font-bold text-white mb-2">🌐 Mi Red Unilevel</h1>
@@ -201,11 +212,15 @@ import { AuthService } from '../../services/auth.service';
           </div>
         </div>
 
+        </div>
+        <!-- End Content -->
+
       </div>
     </div>
   `
 })
 export class UnilevelNetworkComponent implements OnInit {
+  isLoading = signal(true);
   userLevel = signal<UnilevelLevel>('PLATA');
   totalInvested = signal(450);
   networkCount = signal(24);
@@ -231,11 +246,16 @@ export class UnilevelNetworkComponent implements OnInit {
   loadUserData() {
     const user = this.authService.getCurrentUser();
     if (user) {
-      // Simulate API call
-      this.userLevel.set('PLATA');
-      this.totalInvested.set(450);
-      this.networkCount.set(24);
-      this.monthlyEarnings.set(185.50);
+      // Simulate API call with delay
+      setTimeout(() => {
+        this.userLevel.set('PLATA');
+        this.totalInvested.set(450);
+        this.networkCount.set(24);
+        this.monthlyEarnings.set(185.50);
+        this.isLoading.set(false);
+      }, 500);
+    } else {
+      this.isLoading.set(false);
     }
   }
 

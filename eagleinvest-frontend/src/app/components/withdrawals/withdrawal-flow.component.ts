@@ -24,6 +24,17 @@ import { AuthService } from '../../services/auth.service';
           <p class="text-gray-300">Retira tus ganancias de forma segura</p>
         </div>
 
+        <!-- Loading State -->
+        <div *ngIf="isLoading()" class="flex items-center justify-center min-h-[40vh]">
+          <div class="text-center">
+            <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
+            <p class="text-white text-xl font-semibold">Verificando información...</p>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div *ngIf="!isLoading()">
+
         <!-- Step Indicator -->
         <div class="flex justify-between mb-8">
           <div class="flex-1" *ngFor="let step of steps; let i = index">
@@ -40,13 +51,13 @@ import { AuthService } from '../../services/auth.service';
                    *ngIf="i < steps.length - 1">
               </div>
             </div>
-            <p class="text-xs text-gray-400 mt-2">{{ step }}</p>
+            <p class="text-xs text-white mt-2">{{ step }}</p>
           </div>
         </div>
 
         <!-- Step 1: Check Wallet -->
         <div *ngIf="currentStep() === 1" class="bg-white rounded-lg shadow-xl p-8">
-          <h2 class="text-2xl font-bold mb-6">Verificar Wallet</h2>
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Verificar Wallet</h2>
           
           <div *ngIf="!hasWallet()" class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
             <div class="flex">
@@ -93,7 +104,7 @@ import { AuthService } from '../../services/auth.service';
 
         <!-- Step 2: Select Balance & Amount -->
         <div *ngIf="currentStep() === 2" class="bg-white rounded-lg shadow-xl p-8">
-          <h2 class="text-2xl font-bold mb-6">Seleccionar Origen y Monto</h2>
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Seleccionar Origen y Monto</h2>
 
           <!-- Balance Source -->
           <div class="mb-6">
@@ -186,7 +197,7 @@ import { AuthService } from '../../services/auth.service';
 
         <!-- Step 3: Confirm -->
         <div *ngIf="currentStep() === 3" class="bg-white rounded-lg shadow-xl p-8">
-          <h2 class="text-2xl font-bold mb-6">Confirmar Retiro</h2>
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Confirmar Retiro</h2>
 
           <div class="bg-gray-50 rounded-lg p-6 mb-6">
             <h3 class="font-semibold text-lg mb-4">Resumen de Retiro</h3>
@@ -282,6 +293,9 @@ import { AuthService } from '../../services/auth.service';
           </div>
         </div>
 
+        </div>
+        <!-- End Content -->
+
       </div>
     </div>
   `,
@@ -294,6 +308,7 @@ import { AuthService } from '../../services/auth.service';
   `]
 })
 export class WithdrawalFlowComponent implements OnInit {
+  isLoading = signal(true);
   currentStep = signal(1);
   steps = ['Verificar Wallet', 'Monto', 'Confirmar', 'Completado'];
   
@@ -335,10 +350,13 @@ export class WithdrawalFlowComponent implements OnInit {
   }
 
   loadUserWallet() {
-    // Simulate API call
-    this.hasWallet.set(true);
-    this.walletAddress.set('0x742d35Cc6634C0532925a3b844Bc9e7595f91f3');
-    this.walletNetwork.set('BSC');
+    // Simulate API call with delay
+    setTimeout(() => {
+      this.hasWallet.set(true);
+      this.walletAddress.set('0x742d35Cc6634C0532925a3b844Bc9e7595f91f3');
+      this.walletNetwork.set('BSC');
+      this.isLoading.set(false);
+    }, 500);
   }
 
   loadBalances() {
