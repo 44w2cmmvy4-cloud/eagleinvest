@@ -13,6 +13,10 @@ use App\Http\Controllers\WalletController;
 use App\Http\Controllers\WithdrawalController;
 use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\SupportTicketController;
+use App\Http\Controllers\Api\WithdrawalController as ApiWithdrawalController;
+use App\Http\Controllers\Api\NetworkController;
+use App\Http\Controllers\Api\CommissionController;
+use App\Http\Controllers\Api\Admin\AdminWithdrawalController;
 
 // Rutas públicas de autenticación
 Route::post('/auth/register', [AuthController::class, 'register'])->middleware('throttle:60,1');
@@ -87,6 +91,46 @@ Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function () {
     Route::prefix('referrals')->group(function () {
         Route::get('/code', [ReferralController::class, 'getReferralCode']);
         Route::get('/network', [ReferralController::class, 'getNetwork']);
+    });
+
+    // ========== NUEVOS ENDPOINTS - SISTEMA COMPLETO ==========
+
+    // Retiros mejorados
+    Route::prefix('withdrawals/v2')->group(function () {
+        Route::get('/balance/{userId}', [ApiWithdrawalController::class, 'getAvailableBalance']);
+        Route::post('/validate', [ApiWithdrawalController::class, 'validateWithdrawal']);
+        Route::post('/create', [ApiWithdrawalController::class, 'createWithdrawal'])->middleware('throttle:5,60');
+        Route::get('/user/{userId}', [ApiWithdrawalController::class, 'getUserWithdrawals']);
+        Route::get('/{id}', [ApiWithdrawalController::class, 'getWithdrawalDetail']);
+        Route::post('/{id}/cancel', [ApiWithdrawalController::class, 'cancelWithdrawal']);
+    });
+
+    // Red Unilevel
+    Route::prefix('network')->group(function () {
+        Route::get('/level/{userId}', [NetworkController::class, 'getUserLevel']);
+        Route::get('/tree/{userId}', [NetworkController::class, 'getUserNetwork']);
+        Route::get('/referrals/{userId}', [NetworkController::class, 'getDirectReferrals']);
+        Route::get('/stats/{userId}', [NetworkController::class, 'getNetworkStats']);
+    });
+
+    // Comisiones
+    Route::prefix('commissions')->group(function () {
+        Route::get('/user/{userId}', [CommissionController::class, 'getUserCommissions']);
+        Route::get('/monthly/{userId}', [CommissionController::class, 'getMonthlyCommissions']);
+        Route::post('/distribute', [CommissionController::class, 'distributeCommissions']);
+        Route::post('/{id}/mark-paid', [CommissionController::class, 'markCommissionAsPaid']);
+        Route::post('/calculate', [CommissionController::class, 'calculateCommission']);
+    });
+
+    // Admin - Gestión de Retiros
+    Route::prefix('admin/withdrawals')->middleware('admin')->group(function () {
+        Route::get('/pending', [AdminWithdrawalController::class, 'getPendingWithdrawals']);
+        Route::get('/all', [AdminWithdrawalController::class, 'getAllWithdrawals']);
+        Route::post('/{id}/approve', [AdminWithdrawalController::class, 'approveWithdrawal']);
+        Route::post('/{id}/reject', [AdminWithdrawalController::class, 'rejectWithdrawal']);
+        Route::post('/{id}/process', [AdminWithdrawalController::class, 'processWithdrawal']);
+        Route::post('/{id}/complete', [AdminWithdrawalController::class, 'completeWithdrawal']);
+        Route::get('/stats', [AdminWithdrawalController::class, 'getWithdrawalStats']);
     });
 });
 
