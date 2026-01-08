@@ -2,12 +2,10 @@ import { Component, OnInit, inject, signal, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MarketDataService, CryptoPrice, NewsArticle } from '../../services/market-data.service';
-import { PriceAlertService } from '../../services/price-alert.service';
+import { TradingBotService } from '../../services/trading-bot.service';
 import { NotificationService } from '../../services/notification.service';
 import { NavbarComponent } from '../shared/navbar/navbar.component';
 import { AuthService } from '../../services/auth.service';
-import { TradingBotService } from '../../services/trading-bot.service';
 
 @Component({
   selector: 'app-market-overview',
@@ -17,24 +15,13 @@ import { TradingBotService } from '../../services/trading-bot.service';
   styleUrls: ['./market-overview.component.css', './market-animations.css']
 })
 export class MarketOverviewComponent implements OnInit, OnDestroy {
-  cryptoPrices = signal<CryptoPrice[]>([]);
-  marketIndices = signal<any[]>([]);
-  news = signal<NewsArticle[]>([]);
-  priceAlerts = signal<any[]>([]);
-  
-  showAlertModal = signal(false);
   showBotConfig = signal(false);
-  selectedCrypto = signal<CryptoPrice | null>(null);
-  alertTargetPrice = 0;
-  alertCondition: 'above' | 'below' = 'above';
 
   // Bot signals
   botActive = signal(false);
   botStats = signal({ tradesToday: 0, successRate: 0, profitToday: 0, balance: 5000 });
   botTrades = signal<any[]>([]);
 
-  private marketDataService = inject(MarketDataService);
-  private priceAlertService = inject(PriceAlertService);
   private notificationService = inject(NotificationService);
   private router = inject(Router);
   private authService = inject(AuthService);
@@ -46,8 +33,6 @@ export class MarketOverviewComponent implements OnInit, OnDestroy {
       return;
     }
     
-    this.loadMarketData();
-    this.loadAlerts();
     this.syncBotData();
   }
 
@@ -72,56 +57,8 @@ export class MarketOverviewComponent implements OnInit, OnDestroy {
     this.syncBotData();
   }
 
-  loadMarketData() {
-    this.marketDataService.fetchCryptoPrices().subscribe(prices => {
-      this.cryptoPrices.set(prices);
-    });
-
-    this.marketDataService.getMarketIndices().subscribe(indices => {
-      this.marketIndices.set(indices);
-    });
-
-    this.marketDataService.getNewsStream().subscribe(articles => {
-      this.news.set(articles);
-    });
-  }
-
-  loadAlerts() {
-    this.priceAlertService.getAllAlerts().subscribe(alerts => {
-      this.priceAlerts.set(alerts);
-    });
-  }
-
   refreshData() {
-    this.notificationService.show('Actualizando datos de mercado...', 'info', 2000);
-    this.loadMarketData();
+    this.notificationService.show('Actualizando estado del bot...', 'info', 2000);
     this.syncBotData();
-  }
-
-  createPriceAlert(crypto: CryptoPrice) {
-    this.selectedCrypto.set(crypto);
-    this.alertTargetPrice = crypto.current_price;
-    this.showAlertModal.set(true);
-  }
-
-  confirmAlert() {
-    const crypto = this.selectedCrypto();
-    if (!crypto || !this.alertTargetPrice) return;
-
-    this.priceAlertService.createAlert(
-      crypto.symbol,
-      this.alertTargetPrice,
-      this.alertCondition
-    );
-
-    this.showAlertModal.set(false);
-    this.loadAlerts();
-    this.notificationService.show('Alerta creada exitosamente', 'success', 3000);
-  }
-
-  deleteAlert(alertId: string) {
-    this.priceAlertService.deleteAlert(alertId);
-    this.loadAlerts();
-    this.notificationService.show('Alerta eliminada', 'info', 2000);
   }
 }

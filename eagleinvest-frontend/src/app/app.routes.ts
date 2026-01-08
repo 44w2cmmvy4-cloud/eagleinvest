@@ -50,6 +50,16 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   { 
+    path: 'invest', 
+    loadComponent: () => import('./components/investment/investment-flow.component').then(m => m.InvestmentFlowComponent),
+    canActivate: [AuthGuard]
+  },
+  { 
+    path: 'investment-levels', 
+    loadComponent: () => import('./components/investment/investment-levels.component').then(m => m.InvestmentLevelsComponent),
+    canActivate: [AuthGuard]
+  },
+  { 
     path: '**', 
     redirectTo: '' 
   }

@@ -328,7 +328,7 @@ export class NavbarComponent implements OnDestroy {
   isCollapsed = true;
   showUserMenu = false;
   userName = '';
-  brandLogo = '/assets/logo/logo.png';
+  brandLogo = '/assets/logo/eagle-logo.svg';
   private routerSubscription?: Subscription;
 
   ngOnInit() {
