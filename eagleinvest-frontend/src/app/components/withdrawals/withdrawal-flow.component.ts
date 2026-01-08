@@ -15,291 +15,354 @@ import { AuthService } from '../../services/auth.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   template: `
-    <div class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-12 px-4">
-      <div class="max-w-4xl mx-auto">
+    <div class="min-h-screen" style="background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);">
+      
+      <!-- Loading State -->
+      <div *ngIf="isLoading()" class="flex items-center justify-center min-h-screen">
+        <div class="text-center">
+          <div class="inline-block animate-spin rounded-full h-16 w-16 border-4 border-cyan-500 border-t-transparent"></div>
+          <p class="text-white text-lg mt-4 font-medium">Verificando información...</p>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div *ngIf="!isLoading()" class="container mx-auto px-4 py-8 max-w-5xl">
         
         <!-- Header -->
-        <div class="text-center mb-8">
-          <h1 class="text-4xl font-bold text-white mb-2">💰 Solicitar Retiro</h1>
-          <p class="text-gray-300">Retira tus ganancias de forma segura</p>
-        </div>
-
-        <!-- Loading State -->
-        <div *ngIf="isLoading()" class="flex items-center justify-center min-h-[40vh]">
-          <div class="text-center">
-            <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
-            <p class="text-white text-xl font-semibold">Verificando información...</p>
+        <div class="text-center mb-10">
+          <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 mb-4 shadow-lg shadow-cyan-500/50">
+            <span class="text-4xl">💰</span>
           </div>
+          <h1 class="text-4xl font-bold text-white mb-2">Solicitar Retiro</h1>
+          <p class="text-slate-400 text-lg">Retira tus ganancias de forma rápida y segura</p>
         </div>
 
-        <!-- Content -->
-        <div *ngIf="!isLoading()">
-
-        <!-- Step Indicator -->
-        <div class="flex justify-between mb-8">
-          <div class="flex-1" *ngFor="let step of steps; let i = index">
-            <div class="flex items-center">
-              <div 
-                class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold"
-                [class.bg-purple-600]="currentStep() >= i + 1"
-                [class.bg-gray-600]="currentStep() < i + 1">
-                {{ i + 1 }}
+        <!-- Progress Steps -->
+        <div class="mb-12">
+          <div class="flex items-center justify-between max-w-3xl mx-auto">
+            <div *ngFor="let step of steps; let i = index" class="flex-1 flex flex-col items-center relative">
+              <!-- Step Circle -->
+              <div class="relative z-10">
+                <div 
+                  class="w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg transition-all duration-300 shadow-lg"
+                  [class]="currentStep() > i + 1 ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white' : 
+                           currentStep() === i + 1 ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white ring-4 ring-cyan-400/30' : 
+                           'bg-slate-700 text-slate-400'">
+                  <span *ngIf="currentStep() > i + 1">✓</span>
+                  <span *ngIf="currentStep() <= i + 1">{{ i + 1 }}</span>
+                </div>
               </div>
-              <div class="flex-1 h-1 mx-2" 
-                   [class.bg-purple-600]="currentStep() > i + 1"
-                   [class.bg-gray-600]="currentStep() <= i + 1"
-                   *ngIf="i < steps.length - 1">
+              <!-- Step Label -->
+              <p class="text-sm mt-3 font-medium" 
+                 [class]="currentStep() >= i + 1 ? 'text-white' : 'text-slate-500'">
+                {{ step }}
+              </p>
+              <!-- Connector Line -->
+              <div *ngIf="i < steps.length - 1" 
+                   class="absolute top-6 left-1/2 w-full h-0.5 -z-10 transition-all duration-300"
+                   [class]="currentStep() > i + 1 ? 'bg-gradient-to-r from-green-500 to-emerald-500' : 'bg-slate-700'">
               </div>
             </div>
-            <p class="text-xs text-white mt-2">{{ step }}</p>
           </div>
         </div>
 
-        <!-- Step 1: Check Wallet -->
-        <div *ngIf="currentStep() === 1" class="bg-white rounded-lg shadow-xl p-8">
-          <h2 class="text-2xl font-bold text-gray-900 mb-6">Verificar Wallet</h2>
-          
-          <div *ngIf="!hasWallet()" class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
-            <div class="flex">
-              <div class="flex-shrink-0">
-                <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"/>
+        <!-- Step 1: Verify Wallet -->
+        <div *ngIf="currentStep() === 1" class="animate-fadeIn">
+          <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-slate-700">
+            
+            <div *ngIf="!hasWallet()" class="text-center py-12">
+              <div class="w-20 h-20 rounded-full bg-red-500/20 flex items-center justify-center mx-auto mb-6">
+                <svg class="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                 </svg>
               </div>
-              <div class="ml-3">
-                <h3 class="text-sm font-medium text-red-800">No tienes una wallet configurada</h3>
-                <p class="mt-2 text-sm text-red-700">
-                  Por favor, configura tu wallet en Perfil > Datos de Pago antes de realizar retiros.
-                </p>
-                <button (click)="goToProfile()" class="mt-3 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
-                  Ir a Configuración
+              <h3 class="text-2xl font-bold text-white mb-3">Wallet No Configurada</h3>
+              <p class="text-slate-400 mb-8 max-w-md mx-auto">
+                Necesitas configurar tu billetera antes de realizar retiros. Ve a tu perfil y agrega tus datos de pago.
+              </p>
+              <button (click)="goToProfile()" 
+                      class="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300">
+                Configurar Wallet
+              </button>
+            </div>
+
+            <div *ngIf="hasWallet()" class="space-y-6">
+              <div class="flex items-start space-x-4 p-6 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-xl border border-green-500/20">
+                <div class="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                </div>
+                <div class="flex-1">
+                  <h4 class="text-lg font-semibold text-white mb-2">Wallet Verificada</h4>
+                  <div class="space-y-2 text-sm">
+                    <div class="flex items-center space-x-2">
+                      <span class="text-slate-400">Red:</span>
+                      <span class="px-3 py-1 bg-slate-700 rounded-full text-cyan-400 font-medium">{{ walletNetwork() }}</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <span class="text-slate-400">Dirección:</span>
+                      <code class="px-3 py-1 bg-slate-900 rounded text-slate-300 font-mono text-xs">{{ walletAddress() }}</code>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div class="p-4 bg-slate-700/30 rounded-xl border border-slate-600">
+                  <p class="text-slate-400 text-sm mb-1">Saldo Disponible (Fin)</p>
+                  <p class="text-2xl font-bold text-white">\${{ finBalance() | number:'1.2-2' }}</p>
+                </div>
+                <div class="p-4 bg-slate-700/30 rounded-xl border border-slate-600">
+                  <p class="text-slate-400 text-sm mb-1">Saldo Plan</p>
+                  <p class="text-2xl font-bold text-white">\${{ planBalance() | number:'1.2-2' }}</p>
+                </div>
+              </div>
+
+              <button (click)="nextStep()"
+                      class="w-full px-6 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold text-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300">
+                Continuar →
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Amount -->
+        <div *ngIf="currentStep() === 2" class="animate-fadeIn">
+          <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-slate-700">
+            
+            <!-- Source Selection -->
+            <div class="mb-8">
+              <label class="block text-white text-lg font-semibold mb-4">Origen del Retiro</label>
+              <div class="grid grid-cols-2 gap-4">
+                <button (click)="selectSource('FIN_BALANCE')"
+                        class="p-6 rounded-xl border-2 transition-all duration-300 text-left"
+                        [class]="withdrawalData.source === 'FIN_BALANCE' ? 
+                                 'border-cyan-500 bg-cyan-500/10 shadow-lg shadow-cyan-500/20' : 
+                                 'border-slate-600 bg-slate-700/30 hover:border-slate-500'">
+                  <div class="text-sm font-medium mb-2" 
+                       [class]="withdrawalData.source === 'FIN_BALANCE' ? 'text-cyan-400' : 'text-slate-400'">
+                    Saldo de Fin
+                  </div>
+                  <div class="text-3xl font-bold text-white">\${{ finBalance() }}</div>
+                </button>
+                
+                <button (click)="selectSource('PLAN_BALANCE')"
+                        class="p-6 rounded-xl border-2 transition-all duration-300 text-left"
+                        [class]="withdrawalData.source === 'PLAN_BALANCE' ? 
+                                 'border-cyan-500 bg-cyan-500/10 shadow-lg shadow-cyan-500/20' : 
+                                 'border-slate-600 bg-slate-700/30 hover:border-slate-500'">
+                  <div class="text-sm font-medium mb-2"
+                       [class]="withdrawalData.source === 'PLAN_BALANCE' ? 'text-cyan-400' : 'text-slate-400'">
+                    Plan Específico
+                  </div>
+                  <div class="text-3xl font-bold text-white">\${{ planBalance() }}</div>
                 </button>
               </div>
             </div>
-          </div>
 
-          <div *ngIf="hasWallet()" class="bg-green-50 border-l-4 border-green-500 p-4 mb-6">
-            <div class="flex">
-              <div class="flex-shrink-0">
-                <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/>
+            <!-- Amount Input -->
+            <div class="mb-8">
+              <label class="block text-white text-lg font-semibold mb-4">Monto a Retirar</label>
+              <div class="relative">
+                <div class="absolute left-6 top-1/2 -translate-y-1/2 text-3xl text-cyan-400 font-bold">\$</div>
+                <input type="number" 
+                       [(ngModel)]="withdrawalData.amount"
+                       (input)="validateWithdrawal()"
+                       class="w-full pl-16 pr-6 py-5 bg-slate-900 border-2 border-slate-600 rounded-xl text-white text-3xl font-bold focus:border-cyan-500 focus:outline-none transition-colors"
+                       placeholder="0.00"
+                       step="0.01">
+              </div>
+              <p class="text-slate-400 text-sm mt-3">
+                Disponible: <span class="text-white font-semibold">\${{ withdrawalData.source === 'FIN_BALANCE' ? finBalance() : planBalance() | number:'1.2-2' }}</span>
+              </p>
+            </div>
+
+            <!-- Validation Messages -->
+            <div *ngIf="validationResult() && !validationResult()!.isValid" 
+                 class="p-4 bg-red-500/10 border border-red-500/30 rounded-xl mb-6">
+              <div class="flex items-center space-x-3">
+                <svg class="w-6 h-6 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
-              </div>
-              <div class="ml-3">
-                <h3 class="text-sm font-medium text-green-800">✅ Wallet configurada</h3>
-                <p class="text-sm text-green-700 mt-1">
-                  <strong>Dirección:</strong> {{ walletAddress() }}
-                </p>
+                <p class="text-red-400 font-medium">{{ validationResult()!.reason }}</p>
               </div>
             </div>
-          </div>
 
-          <button 
-            *ngIf="hasWallet()"
-            (click)="nextStep()"
-            class="w-full px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-semibold">
-            Continuar
-          </button>
-        </div>
+            <div *ngIf="validationResult() && validationResult()!.isValid" 
+                 class="p-6 bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/30 rounded-xl mb-6">
+              <div class="flex items-start space-x-3 mb-4">
+                <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <div class="flex-1">
+                  <p class="text-green-400 font-semibold mb-3">Retiro válido</p>
+                  <div class="space-y-2 text-sm">
+                    <div class="flex justify-between">
+                      <span class="text-slate-400">Monto solicitado:</span>
+                      <span class="text-white font-semibold">\${{ withdrawalData.amount | number:'1.2-2' }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-slate-400">Comisión ({{ feeCalculation()?.description }}):</span>
+                      <span class="text-red-400 font-semibold">-\${{ feeCalculation()?.fee.toFixed(2) }}</span>
+                    </div>
+                    <div class="border-t border-slate-600 pt-2 mt-2">
+                      <div class="flex justify-between items-center">
+                        <span class="text-white font-semibold text-lg">Recibirás:</span>
+                        <span class="text-cyan-400 font-bold text-2xl">\${{ feeCalculation()?.finalAmount.toFixed(2) }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        <!-- Step 2: Select Balance & Amount -->
-        <div *ngIf="currentStep() === 2" class="bg-white rounded-lg shadow-xl p-8">
-          <h2 class="text-2xl font-bold text-gray-900 mb-6">Seleccionar Origen y Monto</h2>
-
-          <!-- Balance Source -->
-          <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Origen del Retiro</label>
-            <div class="grid grid-cols-2 gap-4">
-              <button 
-                (click)="selectSource('FIN_BALANCE')"
-                [class.bg-purple-600]="withdrawalData.source === 'FIN_BALANCE'"
-                [class.text-white]="withdrawalData.source === 'FIN_BALANCE'"
-                [class.bg-gray-100]="withdrawalData.source !== 'FIN_BALANCE'"
-                class="p-4 rounded-lg border-2 border-purple-600 hover:bg-purple-50">
-                <div class="text-lg font-bold">Saldo de Fin</div>
-                <div class="text-2xl font-bold mt-2">\${{ finBalance() }}</div>
+            <div class="flex gap-4">
+              <button (click)="previousStep()"
+                      class="flex-1 px-6 py-4 bg-slate-700 text-white rounded-xl font-semibold hover:bg-slate-600 transition-colors">
+                ← Atrás
               </button>
-              
-              <button 
-                (click)="selectSource('PLAN_BALANCE')"
-                [class.bg-purple-600]="withdrawalData.source === 'PLAN_BALANCE'"
-                [class.text-white]="withdrawalData.source === 'PLAN_BALANCE'"
-                [class.bg-gray-100]="withdrawalData.source !== 'PLAN_BALANCE'"
-                class="p-4 rounded-lg border-2 border-purple-600 hover:bg-purple-50">
-                <div class="text-lg font-bold">Plan Específico</div>
-                <div class="text-2xl font-bold mt-2">\${{ planBalance() }}</div>
+              <button (click)="nextStep()"
+                      [disabled]="!validationResult()?.isValid"
+                      class="flex-1 px-6 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300">
+                Continuar →
               </button>
             </div>
-          </div>
-
-          <!-- Amount Input -->
-          <div class="mb-6">
-            <label class="block text-sm font-medium text-gray-700 mb-2">Monto a Retirar</label>
-            <div class="relative">
-              <span class="absolute left-3 top-3 text-gray-500 text-lg">\$</span>
-              <input
-                type="number"
-                [(ngModel)]="withdrawalData.amount"
-                (input)="validateWithdrawal()"
-                class="w-full pl-8 pr-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-600 focus:outline-none text-lg"
-                placeholder="0.00"
-                min="0"
-                step="0.01">
-            </div>
-            <p class="text-sm text-gray-500 mt-2">
-              Disponible: <strong>\${{ withdrawalData.source === 'FIN_BALANCE' ? finBalance() : planBalance() }}</strong>
-            </p>
-          </div>
-
-          <!-- Plan Classification -->
-          <div *ngIf="planType()" class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
-            <h4 class="font-semibold text-blue-900 mb-2">Plan Detectado: {{ planType() }}</h4>
-            <div class="grid grid-cols-2 gap-2 text-sm text-blue-800">
-              <div>⏱️ Días transcurridos: <strong>{{ daysPassed() }}</strong></div>
-              <div>💵 Mínimo: <strong>\${{ planRules()?.minimumAmount }}</strong></div>
-              <div>📅 Días requeridos: <strong>{{ planRules()?.minimumDays }}</strong></div>
-              <div>💸 Fee: <strong>{{ planRules()?.feePercentage }}%</strong></div>
-            </div>
-          </div>
-
-          <!-- Validation Messages -->
-          <div *ngIf="validationResult() && !validationResult()!.isValid" 
-               class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
-            <p class="text-red-800 font-semibold">❌ {{ validationResult()!.reason }}</p>
-          </div>
-
-          <div *ngIf="validationResult() && validationResult()!.isValid" 
-               class="bg-green-50 border-l-4 border-green-500 p-4 mb-6">
-            <p class="text-green-800 font-semibold">✅ Retiro válido</p>
-            <div class="mt-2 text-sm text-green-700">
-              <div>💰 Monto solicitado: <strong>\${{ withdrawalData.amount }}</strong></div>
-              <div>💸 Fee ({{ feeCalculation()?.description }}): <strong>\${{ feeCalculation()?.fee.toFixed(2) }}</strong></div>
-              <div class="text-lg font-bold mt-2">🎯 Recibirás: <strong>\${{ feeCalculation()?.finalAmount.toFixed(2) }}</strong></div>
-            </div>
-          </div>
-
-          <div class="flex gap-4">
-            <button 
-              (click)="previousStep()"
-              class="flex-1 px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 font-semibold">
-              Atrás
-            </button>
-            <button 
-              (click)="nextStep()"
-              [disabled]="!validationResult()?.isValid"
-              [class.opacity-50]="!validationResult()?.isValid"
-              [class.cursor-not-allowed]="!validationResult()?.isValid"
-              class="flex-1 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-semibold">
-              Continuar
-            </button>
           </div>
         </div>
 
         <!-- Step 3: Confirm -->
-        <div *ngIf="currentStep() === 3" class="bg-white rounded-lg shadow-xl p-8">
-          <h2 class="text-2xl font-bold text-gray-900 mb-6">Confirmar Retiro</h2>
-
-          <div class="bg-gray-50 rounded-lg p-6 mb-6">
-            <h3 class="font-semibold text-lg mb-4">Resumen de Retiro</h3>
+        <div *ngIf="currentStep() === 3" class="animate-fadeIn">
+          <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-slate-700">
             
-            <div class="space-y-3 text-gray-700">
-              <div class="flex justify-between">
-                <span>Origen:</span>
-                <strong>{{ withdrawalData.source === 'FIN_BALANCE' ? 'Saldo de Fin' : 'Plan Específico' }}</strong>
+            <div class="text-center mb-8">
+              <div class="w-20 h-20 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-cyan-500/50">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
               </div>
-              <div class="flex justify-between">
-                <span>Plan:</span>
-                <strong>{{ planType() }}</strong>
+              <h2 class="text-3xl font-bold text-white mb-2">Confirmar Retiro</h2>
+              <p class="text-slate-400">Revisa los detalles antes de confirmar</p>
+            </div>
+
+            <div class="space-y-6 mb-8">
+              <div class="p-6 bg-slate-900/50 rounded-xl">
+                <div class="space-y-4">
+                  <div class="flex justify-between items-center">
+                    <span class="text-slate-400">Origen:</span>
+                    <span class="text-white font-semibold">{{ withdrawalData.source === 'FIN_BALANCE' ? 'Saldo de Fin' : 'Plan Específico' }}</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-slate-400">Plan:</span>
+                    <span class="px-3 py-1 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full text-cyan-400 font-semibold">{{ planType() }}</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-slate-400">Monto solicitado:</span>
+                    <span class="text-white font-semibold text-xl">\${{ withdrawalData.amount | number:'1.2-2' }}</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-slate-400">Comisión:</span>
+                    <span class="text-red-400 font-semibold">-\${{ feeCalculation()?.fee.toFixed(2) }}</span>
+                  </div>
+                  <div class="border-t border-slate-700 pt-4">
+                    <div class="flex justify-between items-center">
+                      <span class="text-white font-bold text-lg">Total a recibir:</span>
+                      <span class="text-cyan-400 font-bold text-3xl">\${{ feeCalculation()?.finalAmount.toFixed(2) }}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="flex justify-between">
-                <span>Monto solicitado:</span>
-                <strong>\${{ withdrawalData.amount }}</strong>
+
+              <div class="p-6 bg-slate-900/50 rounded-xl">
+                <h4 class="text-white font-semibold mb-3">Detalles de Destino</h4>
+                <div class="space-y-2 text-sm">
+                  <div class="flex items-center space-x-2">
+                    <span class="text-slate-400">Red:</span>
+                    <span class="px-3 py-1 bg-slate-700 rounded-full text-cyan-400 font-medium">{{ walletNetwork() }}</span>
+                  </div>
+                  <div>
+                    <span class="text-slate-400">Wallet:</span>
+                    <code class="block mt-1 px-3 py-2 bg-slate-800 rounded text-slate-300 font-mono text-xs break-all">{{ walletAddress() }}</code>
+                  </div>
+                </div>
               </div>
-              <div class="flex justify-between text-red-600">
-                <span>Fee ({{ feeCalculation()?.description }}):</span>
-                <strong>-\${{ feeCalculation()?.fee.toFixed(2) }}</strong>
-              </div>
-              <hr>
-              <div class="flex justify-between text-xl font-bold text-purple-600">
-                <span>Total a recibir:</span>
-                <strong>\${{ feeCalculation()?.finalAmount.toFixed(2) }}</strong>
-              </div>
-              <hr>
-              <div class="flex justify-between text-sm">
-                <span>Wallet destino:</span>
-                <strong class="truncate ml-2">{{ walletAddress() }}</strong>
-              </div>
-              <div class="flex justify-between text-sm">
-                <span>Red:</span>
-                <strong>{{ walletNetwork() }}</strong>
+
+              <div class="p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-xl">
+                <div class="flex items-start space-x-3">
+                  <svg class="w-6 h-6 text-yellow-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                  <p class="text-yellow-400 text-sm">
+                    <strong>Tiempo de procesamiento:</strong> Los retiros se procesan en un plazo máximo de 48 horas. Recibirás una notificación cuando sea completado.
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-6">
-            <p class="text-sm text-yellow-800">
-              ⏳ <strong>Importante:</strong> Los retiros se procesan en un plazo de <strong>48 horas</strong>. 
-              Recibirás una notificación cuando tu retiro sea aprobado y procesado.
-            </p>
-          </div>
-
-          <div class="flex gap-4">
-            <button 
-              (click)="previousStep()"
-              class="flex-1 px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 font-semibold">
-              Atrás
-            </button>
-            <button 
-              (click)="submitWithdrawal()"
-              [disabled]="isSubmitting()"
-              class="flex-1 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-semibold">
-              {{ isSubmitting() ? 'Procesando...' : '✅ Confirmar Retiro' }}
-            </button>
+            <div class="flex gap-4">
+              <button (click)="previousStep()"
+                      class="flex-1 px-6 py-4 bg-slate-700 text-white rounded-xl font-semibold hover:bg-slate-600 transition-colors">
+                ← Atrás
+              </button>
+              <button (click)="submitWithdrawal()"
+                      [disabled]="isSubmitting()"
+                      class="flex-1 px-6 py-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-xl font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-green-500/50 transition-all duration-300">
+                <span *ngIf="!isSubmitting()">✓ Confirmar Retiro</span>
+                <span *ngIf="isSubmitting()">Procesando...</span>
+              </button>
+            </div>
           </div>
         </div>
 
         <!-- Step 4: Success -->
-        <div *ngIf="currentStep() === 4" class="bg-white rounded-lg shadow-xl p-8 text-center">
-          <div class="text-6xl mb-4">🎉</div>
-          <h2 class="text-3xl font-bold text-green-600 mb-4">¡Retiro Solicitado!</h2>
-          
-          <div class="bg-green-50 rounded-lg p-6 mb-6">
-            <p class="text-lg text-gray-700 mb-4">
-              Tu solicitud de retiro ha sido registrada exitosamente.
-            </p>
-            <div class="text-4xl font-bold text-green-600 mb-2">
-              \${{ feeCalculation()?.finalAmount.toFixed(2) }}
+        <div *ngIf="currentStep() === 4" class="animate-fadeIn">
+          <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-12 shadow-xl border border-slate-700 text-center">
+            
+            <div class="w-24 h-24 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center mx-auto mb-6 shadow-lg shadow-green-500/50">
+              <span class="text-5xl">🎉</span>
             </div>
-            <p class="text-sm text-gray-600">Se transferirán a tu wallet</p>
-          </div>
+            
+            <h2 class="text-4xl font-bold text-white mb-3">¡Retiro Solicitado!</h2>
+            <p class="text-slate-400 text-lg mb-8">Tu solicitud ha sido registrada exitosamente</p>
+            
+            <div class="inline-block p-8 bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/30 rounded-2xl mb-8">
+              <p class="text-slate-400 text-sm mb-2">Recibirás en tu wallet</p>
+              <p class="text-5xl font-bold text-green-400 mb-2">\${{ feeCalculation()?.finalAmount.toFixed(2) }}</p>
+              <p class="text-slate-400 text-sm">Procesamiento: máximo 48 horas</p>
+            </div>
 
-          <div class="bg-blue-50 rounded-lg p-4 mb-6">
-            <p class="text-sm text-blue-800">
-              📧 Recibirás una confirmación por email cuando el retiro sea procesado (máximo 48h)
-            </p>
-          </div>
-
-          <div class="flex gap-4">
-            <button 
-              (click)="viewWithdrawals()"
-              class="flex-1 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-semibold">
-              Ver Mis Retiros
-            </button>
-            <button 
-              (click)="goToDashboard()"
-              class="flex-1 px-6 py-3 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 font-semibold">
-              Ir al Dashboard
-            </button>
+            <div class="flex gap-4 max-w-md mx-auto">
+              <button (click)="viewWithdrawals()"
+                      class="flex-1 px-6 py-3 bg-slate-700 text-white rounded-xl font-semibold hover:bg-slate-600 transition-colors">
+                Ver Historial
+              </button>
+              <button (click)="goToDashboard()"
+                      class="flex-1 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300">
+                Ir al Dashboard
+              </button>
+            </div>
           </div>
         </div>
-
-        </div>
-        <!-- End Content -->
 
       </div>
     </div>
   `,
   styles: [`
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .animate-fadeIn {
+      animation: fadeIn 0.3s ease-out;
+    }
+
     input[type="number"]::-webkit-inner-spin-button,
     input[type="number"]::-webkit-outer-spin-button {
       -webkit-appearance: none;
@@ -310,7 +373,7 @@ import { AuthService } from '../../services/auth.service';
 export class WithdrawalFlowComponent implements OnInit {
   isLoading = signal(true);
   currentStep = signal(1);
-  steps = ['Verificar Wallet', 'Monto', 'Confirmar', 'Completado'];
+  steps = ['Wallet', 'Monto', 'Confirmar', 'Listo'];
   
   hasWallet = signal(true);
   walletAddress = signal('0x742d...91f3');
@@ -340,7 +403,6 @@ export class WithdrawalFlowComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Load user data
     const user = this.authService.getCurrentUser();
     if (user) {
       this.withdrawalData.userId = user.id.toString();
@@ -350,17 +412,15 @@ export class WithdrawalFlowComponent implements OnInit {
   }
 
   loadUserWallet() {
-    // Simulate API call with delay
     setTimeout(() => {
       this.hasWallet.set(true);
       this.walletAddress.set('0x742d35Cc6634C0532925a3b844Bc9e7595f91f3');
       this.walletNetwork.set('BSC');
       this.isLoading.set(false);
-    }, 500);
+    }, 800);
   }
 
   loadBalances() {
-    // Simulate API call
     this.finBalance.set(1250.50);
     this.planBalance.set(890.75);
   }
@@ -410,7 +470,6 @@ export class WithdrawalFlowComponent implements OnInit {
 
   submitWithdrawal() {
     this.isSubmitting.set(true);
-
     this.withdrawalData.walletAddress = this.walletAddress();
     this.withdrawalData.walletNetwork = this.walletNetwork();
     this.withdrawalData.planType = this.planType()!;
