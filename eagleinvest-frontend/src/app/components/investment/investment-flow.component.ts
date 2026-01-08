@@ -74,7 +74,7 @@ import { NavbarComponent } from '../shared/navbar/navbar.component';
                 [disabled]="!isValidAmount()"
                 style="flex: 1; padding: 15px; background: linear-gradient(135deg, #00F0FF, #4D7CFF); color: #0A0E27; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 1rem; opacity: {{ isValidAmount() ? 1 : 0.5 }};"
               >
-                Proceder → {{ investmentAmount > 0 ? investmentAmount | currency : 'Ingresar Monto' }}
+                Proceder → {{ investmentAmount > 0 ? (investmentAmount | currency) : 'Ingresar Monto' }}
               </button>
             </div>
           </div>
@@ -144,7 +144,7 @@ import { NavbarComponent } from '../shared/navbar/navbar.component';
             
             <div style="background: rgba(0,240,255,0.1); padding: 20px; border-radius: 12px; border-left: 3px solid #00F0FF; margin-bottom: 30px; text-align: left;">
               <p style="color: #7581A8; margin: 0 0 8px 0; font-size: 0.9rem;">📅 Fecha de Inicio</p>
-              <p style="color: white; margin: 0 0 20px 0; font-weight: 600; font-size: 1.1rem;">{{ new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' }) }}</p>
+              <p style="color: white; margin: 0 0 20px 0; font-weight: 600; font-size: 1.1rem;">{{ currentDate }}</p>
               
               <p style="color: #7581A8; margin: 0 0 8px 0; font-size: 0.9rem;">⏳ Período de Ratificación</p>
               <p style="color: white; margin: 0; font-weight: 600; font-size: 1.1rem;">{{ getRatificationDays() }} días según tu plan</p>
@@ -183,6 +183,7 @@ export class InvestmentFlowComponent implements OnInit {
   suggestedPlan = signal<InvestmentPlanType | null>(null);
   suggestedLevel = signal<InvestmentLevel | null>(null);
   validationError = signal('');
+  currentDate = new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
 
   ngOnInit() {
     if (!this.authService.isAuthenticated()) {

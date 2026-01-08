@@ -1,7 +1,7 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { WithdrawalService, WithdrawalRequest } from '../../services/withdrawal.service';
+import { WithdrawalService, WithdrawalData } from '../../services/withdrawal.service';
 import { AuthService } from '../../services/auth.service';
 import { RouterModule } from '@angular/router';
 
@@ -130,19 +130,19 @@ import { RouterModule } from '@angular/router';
                       #{{ withdrawal.id }}
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-300">
-                      {{ formatDate(withdrawal.created_at) }}
+                      {{ formatDate(withdrawal.requestDate) }}
                     </td>
                     <td class="px-6 py-4 text-sm font-semibold text-white">
-                      \${{ withdrawal.amount.toFixed(2) }}
+                      \${{ withdrawal.requestedAmount.toFixed(2) }}
                     </td>
                     <td class="px-6 py-4 text-sm text-red-400">
                       -\${{ withdrawal.fee.toFixed(2) }}
                     </td>
                     <td class="px-6 py-4 text-sm font-bold text-green-400">
-                      \${{ (withdrawal.amount - withdrawal.fee).toFixed(2) }}
+                      \${{ (withdrawal.requestedAmount - withdrawal.fee).toFixed(2) }}
                     </td>
                     <td class="px-6 py-4 text-sm text-gray-300">
-                      {{ withdrawal.withdrawal_method }}
+                      {{ withdrawal.walletNetwork }}
                     </td>
                     <td class="px-6 py-4">
                       <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
@@ -202,7 +202,7 @@ import { RouterModule } from '@angular/router';
                     </div>
                     <div>
                       <label class="text-gray-400 text-sm">Fecha de Solicitud</label>
-                      <p class="text-white font-medium">{{ formatDate(selectedWithdrawal()!.created_at) }}</p>
+                      <p class="text-white font-medium">{{ formatDate(selectedWithdrawal()!.requestDate) }}</p>
                     </div>
                   </div>
 
@@ -210,7 +210,7 @@ import { RouterModule } from '@angular/router';
                     <div class="grid grid-cols-2 gap-4">
                       <div>
                         <label class="text-gray-400 text-sm">Monto Solicitado</label>
-                        <p class="text-white font-bold text-xl">\${{ selectedWithdrawal()!.amount.toFixed(2) }}</p>
+                        <p class="text-white font-bold text-xl">\${{ selectedWithdrawal()!.requestedAmount.toFixed(2) }}</p>
                       </div>
                       <div>
                         <label class="text-gray-400 text-sm">Comisión</label>
@@ -219,7 +219,7 @@ import { RouterModule } from '@angular/router';
                     </div>
                     <div class="mt-4 bg-green-900/20 border border-green-500/30 rounded-lg p-4">
                       <label class="text-green-400 text-sm">Total a Recibir</label>
-                      <p class="text-green-400 font-bold text-2xl">\${{ (selectedWithdrawal()!.amount - selectedWithdrawal()!.fee).toFixed(2) }}</p>
+                      <p class="text-green-400 font-bold text-2xl">\${{ (selectedWithdrawal()!.requestedAmount - selectedWithdrawal()!.fee).toFixed(2) }}</p>
                     </div>
                   </div>
 
@@ -227,7 +227,7 @@ import { RouterModule } from '@angular/router';
                     <div class="grid grid-cols-2 gap-4">
                       <div>
                         <label class="text-gray-400 text-sm">Método de Retiro</label>
-                        <p class="text-white font-medium">{{ selectedWithdrawal()!.withdrawal_method }}</p>
+                        <p class="text-white font-medium">{{ selectedWithdrawal()!.walletNetwork }}</p>
                       </div>
                       <div>
                         <label class="text-gray-400 text-sm">Estado</label>
@@ -239,29 +239,20 @@ import { RouterModule } from '@angular/router';
                     </div>
                   </div>
 
-                  @if (selectedWithdrawal()!.wallet_address) {
+                  @if (selectedWithdrawal()!.walletAddress) {
                     <div class="border-t border-white/10 pt-4">
                       <label class="text-gray-400 text-sm">Dirección de Wallet</label>
                       <p class="text-white font-mono text-sm bg-white/5 p-3 rounded-lg break-all">
-                        {{ selectedWithdrawal()!.wallet_address }}
+                        {{ selectedWithdrawal()!.walletAddress }}
                       </p>
                     </div>
                   }
 
-                  @if (selectedWithdrawal()!.admin_notes) {
+                  @if (selectedWithdrawal()!.adminNotes) {
                     <div class="border-t border-white/10 pt-4">
                       <label class="text-gray-400 text-sm">Notas del Administrador</label>
                       <p class="text-white bg-blue-900/20 border border-blue-500/30 p-3 rounded-lg">
-                        {{ selectedWithdrawal()!.admin_notes }}
-                      </p>
-                    </div>
-                  }
-
-                  @if (selectedWithdrawal()!.transaction_hash) {
-                    <div class="border-t border-white/10 pt-4">
-                      <label class="text-gray-400 text-sm">Hash de Transacción</label>
-                      <p class="text-green-400 font-mono text-sm bg-white/5 p-3 rounded-lg break-all">
-                        {{ selectedWithdrawal()!.transaction_hash }}
+                        {{ selectedWithdrawal()!.adminNotes }}
                       </p>
                     </div>
                   }
@@ -290,8 +281,8 @@ export class WithdrawalHistoryComponent implements OnInit {
   private withdrawalService = inject(WithdrawalService);
   private authService = inject(AuthService);
 
-  withdrawals = signal<WithdrawalRequest[]>([]);
-  filteredWithdrawals = signal<WithdrawalRequest[]>([]);
+  withdrawals = signal<WithdrawalData[]>([]);
+  filteredWithdrawals = signal<WithdrawalData[]>([]);
   
   availableBalance = signal(0);
   pendingCount = signal(0);
@@ -301,7 +292,7 @@ export class WithdrawalHistoryComponent implements OnInit {
   selectedPeriod = 'all';
 
   showDetailsModal = signal(false);
-  selectedWithdrawal = signal<WithdrawalRequest | null>(null);
+  selectedWithdrawal = signal<WithdrawalData | null>(null);
 
   ngOnInit() {
     this.loadWithdrawals();
@@ -309,7 +300,7 @@ export class WithdrawalHistoryComponent implements OnInit {
   }
 
   loadWithdrawals() {
-    const userId = this.authService.getCurrentUser()?.id || '';
+    const userId = String(this.authService.getCurrentUser()?.id || '');
     
     this.withdrawalService.getUserWithdrawals(userId).subscribe({
       next: (data: any) => {
@@ -324,7 +315,7 @@ export class WithdrawalHistoryComponent implements OnInit {
   }
 
   loadBalance() {
-    const userId = this.authService.getCurrentUser()?.id || '';
+    const userId = String(this.authService.getCurrentUser()?.id || '');
     
     this.withdrawalService.getAvailableBalances(userId).subscribe({
       next: (balance: any) => {
@@ -339,12 +330,12 @@ export class WithdrawalHistoryComponent implements OnInit {
   calculateStats() {
     const withdrawals = this.withdrawals();
     
-    const pending = withdrawals.filter(w => w.status === 'pending').length;
+    const pending = withdrawals.filter(w => w.status === 'PENDING').length;
     this.pendingCount.set(pending);
 
     const total = withdrawals
-      .filter(w => w.status === 'completed')
-      .reduce((sum, w) => sum + w.amount - w.fee, 0);
+      .filter(w => w.status === 'COMPLETED')
+      .reduce((sum: number, w: any) => sum + w.requestedAmount - w.fee, 0);
     this.totalWithdrawn.set(total);
   }
 
@@ -358,7 +349,7 @@ export class WithdrawalHistoryComponent implements OnInit {
     if (this.selectedPeriod !== 'all') {
       const now = new Date();
       filtered = filtered.filter(w => {
-        const date = new Date(w.created_at);
+        const date = new Date(w.requestDate);
         switch (this.selectedPeriod) {
           case 'week':
             const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);

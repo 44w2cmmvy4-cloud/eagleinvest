@@ -275,44 +275,45 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
   
   loadNetworkStats() {
-    this.unilevelService.getUserLevel().subscribe({
-      next: (levelInfo) => {
-        const totalRefs = this.unilevelService.getTotalNetworkCount();
-        const activeRefs = this.unilevelService.getActiveReferralsCount();
+    const userId = String(this.authService.getCurrentUser()?.id || '');
+    this.unilevelService.getUserLevelInfo(userId).subscribe({
+      next: (levelInfo: any) => {
+        const totalRefs = 0; // TODO: obtener de API
+        const activeRefs = 0; // TODO: obtener de API
         
         this.networkStats.set({
           totalReferrals: totalRefs,
           activeReferrals: activeRefs,
-          level: levelInfo.currentLevel.name,
+          level: levelInfo.currentLevel?.name || 'BRONCE',
           nextLevel: levelInfo.nextLevel?.name || 'Máximo',
-          progressToNext: levelInfo.progressToNext
+          progressToNext: levelInfo.progressToNext || 0
         });
       },
-      error: (err) => console.error('Error cargando estadísticas de red:', err)
+      error: (err: any) => console.error('Error cargando estadísticas de red:', err)
     });
   }
   
   loadWithdrawalStats() {
-    const userId = this.authService.getCurrentUser()?.id || 0;
+    const userId = String(this.authService.getCurrentUser()?.id || '');
     
     // Balance disponible
-    this.withdrawalService.getAvailableBalance(userId).subscribe({
-      next: (balance) => {
+    this.withdrawalService.getAvailableBalances(userId).subscribe({
+      next: (balance: any) => {
         this.withdrawalStats.update(stats => ({
           ...stats,
-          availableBalance: balance
+          availableBalance: balance?.finBalance || 0
         }));
       },
-      error: (err) => console.error('Error cargando balance:', err)
+      error: (err: any) => console.error('Error cargando balance:', err)
     });
     
     // Retiros pendientes
     this.withdrawalService.getUserWithdrawals(userId).subscribe({
-      next: (withdrawals) => {
-        const pending = withdrawals.filter(w => w.status === 'pending').length;
+      next: (withdrawals: any[]) => {
+        const pending = withdrawals.filter((w: any) => w.status === 'PENDING').length;
         const total = withdrawals
-          .filter(w => w.status === 'completed')
-          .reduce((sum, w) => sum + w.amount, 0);
+          .filter((w: any) => w.status === 'COMPLETED')
+          .reduce((sum: number, w: any) => sum + (w.requestedAmount || 0), 0);
         
         this.withdrawalStats.update(stats => ({
           ...stats,
@@ -320,15 +321,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
           totalWithdrawn: total
         }));
       },
-      error: (err) => console.error('Error cargando retiros:', err)
+      error: (err: any) => console.error('Error cargando retiros:', err)
     });
   }
   
   loadCommissionStats() {
-    const userId = this.authService.getCurrentUser()?.id || 0;
+    const userId = String(this.authService.getCurrentUser()?.id || '');
     
-    this.unilevelService.getUserCommissions(userId).subscribe({
-      next: (commissions) => {
+    this.unilevelService.getCommissionHistory(userId).subscribe({
+      next: (commissions: any) => {
         const now = new Date();
         const currentMonth = now.getMonth();
         const currentYear = now.getFullYear();
