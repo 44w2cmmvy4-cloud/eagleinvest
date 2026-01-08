@@ -35,23 +35,23 @@ import { Subscription } from 'rxjs';
               </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/payment']" routerLinkActive="active" (click)="handleNavClick()">
-                <i class="bi bi-credit-card me-2"></i>Invertir
+                <a class="nav-link" [routerLink]="['/invest']" routerLinkActive="active" (click)="handleNavClick()">
+                <i class="bi bi-wallet2 me-2"></i>Invertir
               </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/withdrawals']" routerLinkActive="active" (click)="handleNavClick()">
+                <a class="nav-link" [routerLink]="['/withdrawal-flow']" routerLinkActive="active" (click)="handleNavClick()">
                 <i class="bi bi-cash-coin me-2"></i>Retiros
+              </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/network']" routerLinkActive="active" (click)="handleNavClick()">
+                <i class="bi bi-diagram-3 me-2"></i>Red
               </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" [routerLink]="['/transactions']" routerLinkActive="active" (click)="handleNavClick()">
                 <i class="bi bi-list-check me-2"></i>Transacciones
-              </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/referrals']" routerLinkActive="active" (click)="handleNavClick()">
-                <i class="bi bi-people me-2"></i>Referidos
               </a>
             </li>
             <li class="nav-item">

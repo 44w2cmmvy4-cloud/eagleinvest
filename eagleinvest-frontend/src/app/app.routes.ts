@@ -60,6 +60,26 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   { 
+    path: 'withdrawal-flow', 
+    loadComponent: () => import('./components/withdrawals/withdrawal-flow.component').then(m => m.WithdrawalFlowComponent),
+    canActivate: [AuthGuard]
+  },
+  { 
+    path: 'network', 
+    loadComponent: () => import('./components/network/unilevel-network.component').then(m => m.UnilevelNetworkComponent),
+    canActivate: [AuthGuard]
+  },
+  { 
+    path: 'commissions', 
+    loadComponent: () => import('./components/network/unilevel-network.component').then(m => m.UnilevelNetworkComponent),
+    canActivate: [AuthGuard]
+  },
+  { 
+    path: 'admin/withdrawals', 
+    loadComponent: () => import('./components/admin/admin-withdrawals.component').then(m => m.AdminWithdrawalsComponent),
+    canActivate: [AuthGuard]
+  },
+  { 
     path: '**', 
     redirectTo: '' 
   }
