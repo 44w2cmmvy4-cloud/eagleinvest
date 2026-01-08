@@ -168,29 +168,175 @@ export class InvestmentService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Validate investment amount and return appropriate plan
-   * Based on diagram: "¿El Monto es Válido?"
+   * STEP 1: Validate if amount is valid
+   * Based on diagram: "¿El Monto es Válido?" -> Monto Correcto
    */
-  validateAndClassifyInvestment(amount: number): { valid: boolean; plan?: InvestmentPlanType; level?: InvestmentLevel; error?: string } {
+  validateAmount(amount: number): { valid: boolean; error?: string } {
     if (amount < 10) {
-      return { valid: false, error: 'Monto mínimo es $10' };
+      return {
+        valid: false,
+        error: 'El monto mínimo es $10'
+      };
     }
+    return { valid: true };
+  }
 
-    let selectedPlan: InvestmentPlanType = 'MICRO_IMPACTO';
-    
+  /**
+   * STEP 2: Show error if amount is less than $10
+   * Based on diagram: "Error: El monto mínimo es $10"
+   */
+  showAmountError(): { error: string; minimumAmount: number } {
+    return {
+      error: 'El monto mínimo es $10',
+      minimumAmount: 10
+    };
+  }
+
+  /**
+   * STEP 3: Classify investment range
+   * Based on diagram: "Clasificar Rango de Inversión"
+   * $10 - $99: MICRO IMPACTO
+   * $100 - $999: RAPIDO SOCIAL
+   * $1,000 - $4,999: ESTANQUE SOLIDARIO
+   * $5,000+: PREMIUM HUMANITARIO
+   */
+  classifyInvestmentRange(amount: number): InvestmentPlanType | null {
     if (amount >= 5000) {
-      selectedPlan = 'PREMIUM_HUMANITARIO';
-    } else if (amount >= 1000) {
-      selectedPlan = 'ESTANQUE_SOLIDARIO';
-    } else if (amount >= 100) {
-      selectedPlan = 'RAPIDO_SOCIAL';
+      return 'PREMIUM_HUMANITARIO';
+    } else if (amount >= 1000 && amount <= 4999) {
+      return 'ESTANQUE_SOLIDARIO';
+    } else if (amount >= 100 && amount <= 999) {
+      return 'RAPIDO_SOCIAL';
+    } else if (amount >= 10 && amount <= 99) {
+      return 'MICRO_IMPACTO';
+    }
+    return null;
+  }
+
+  /**
+   * STEP 4: Assign plan based on range
+   * Based on diagram sections for each plan
+   */
+  assignPlan(amount: number): { plan: InvestmentPlanType; details: PlanDetails } | null {
+    const planType = this.classifyInvestmentRange(amount);
+    if (!planType) return null;
+
+    return {
+      plan: planType,
+      details: this.planConfig[planType]
+    };
+  }
+
+  /**
+   * STEP 5: Configure investment candidate
+   * Based on diagram: "Configurar Candidato: Retiro cada 10 días / Mín $5" (example for Micro)
+   */
+  configureInvestmentCandidate(
+    amount: number,
+    planType: InvestmentPlanType
+  ): {
+    withdrawalInterval: number;
+    minimumWithdrawal: number;
+    ratificationPeriod: number;
+    monthlyRentability: number;
+  } {
+    const configurations = {
+      MICRO_IMPACTO: {
+        withdrawalInterval: 10, // días
+        minimumWithdrawal: 5,
+        ratificationPeriod: 15,
+        monthlyRentability: 5
+      },
+      RAPIDO_SOCIAL: {
+        withdrawalInterval: 10,
+        minimumWithdrawal: 10,
+        ratificationPeriod: 10,
+        monthlyRentability: 8
+      },
+      ESTANQUE_SOLIDARIO: {
+        withdrawalInterval: 30,
+        minimumWithdrawal: 200,
+        ratificationPeriod: 30,
+        monthlyRentability: 12
+      },
+      PREMIUM_HUMANITARIO: {
+        withdrawalInterval: 35,
+        minimumWithdrawal: 500,
+        ratificationPeriod: 35,
+        monthlyRentability: 15
+      }
+    };
+
+    return configurations[planType];
+  }
+
+  /**
+   * STEP 6: Register start date (Start Time)
+   * Based on diagram: "Registrar Fecha de Inicio (Start Time)"
+   */
+  registerStartDate(): Date {
+    return new Date();
+  }
+
+  /**
+   * STEP 7: Save in database
+   * Based on diagram: "Guardar en Base de Datos"
+   */
+  saveInvestmentToDatabase(investment: InvestmentData): Observable<InvestmentData> {
+    return this.http.post<InvestmentData>(`${this.apiUrl}`, investment);
+  }
+
+  /**
+   * STEP 8: Finalize (Paquete Activado)
+   * Based on diagram: "Fin: Paquete Activado"
+   */
+  finalizeInvestment(investmentId: string): { message: string; status: string } {
+    return {
+      message: 'Paquete activado exitosamente',
+      status: 'ACTIVE'
+    };
+  }
+
+  /**
+   * Unified method: Validate and classify investment
+   * Combines all steps from the diagram
+   */
+  validateAndClassifyInvestment(amount: number): { 
+    valid: boolean; 
+    plan?: InvestmentPlanType; 
+    level?: InvestmentLevel; 
+    error?: string;
+    configuration?: any;
+  } {
+    // STEP 1: Validate amount
+    const validation = this.validateAmount(amount);
+    if (!validation.valid) {
+      return { 
+        valid: false, 
+        error: validation.error 
+      };
     }
 
-    const plan = this.planConfig[selectedPlan];
+    // STEP 3: Classify range
+    const planType = this.classifyInvestmentRange(amount);
+    if (!planType) {
+      return {
+        valid: false,
+        error: 'No se pudo clasificar el monto'
+      };
+    }
+
+    // STEP 4: Get plan details
+    const plan = this.planConfig[planType];
+    
+    // STEP 5: Get configuration
+    const configuration = this.configureInvestmentCandidate(amount, planType);
+
     return {
       valid: true,
-      plan: selectedPlan,
-      level: plan.level
+      plan: planType,
+      level: plan.level,
+      configuration
     };
   }
 
