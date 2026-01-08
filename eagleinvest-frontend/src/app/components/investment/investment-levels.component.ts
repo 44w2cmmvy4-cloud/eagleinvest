@@ -135,7 +135,7 @@ import { NavbarComponent } from '../shared/navbar/navbar.component';
                   </li>
                   <li style="display: flex; align-items: center; gap: 10px; color: white; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px;">
                     <span style="color: {{ getLevelColor(selectedLevel()!) }}; font-size: 1.3rem;">📞</span>
-                    <span>Soporte dedicado 24/7</span>
+                    <span>Soporte dedicado las 24 horas</span>
                   </li>
                 </ul>
               </div>
