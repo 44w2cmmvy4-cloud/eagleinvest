@@ -7,6 +7,8 @@ import { NotificationService } from '../../services/notification.service';
 import { MarketDataService, CryptoPrice } from '../../services/market-data.service';
 import { AchievementService } from '../../services/achievement.service';
 import { PriceAlertService } from '../../services/price-alert.service';
+import { UnilevelService } from '../../services/unilevel.service';
+import { WithdrawalService } from '../../services/withdrawal.service';
 import { Subscription, interval } from 'rxjs';
 import { InvestmentPlan } from '../../models/api-models';
 
@@ -21,6 +23,27 @@ export class DashboardComponent implements OnInit, OnDestroy {
   dashboardData = signal<DashboardData | null>(null);
   cryptoPrices = signal<CryptoPrice[]>([]);
   achievements = signal<any[]>([]);
+  
+  // Nuevos datos del sistema
+  networkStats = signal<any>({
+    totalReferrals: 0,
+    activeReferrals: 0,
+    level: 'Bronce',
+    nextLevel: 'Plata',
+    progressToNext: 0
+  });
+  
+  withdrawalStats = signal<any>({
+    availableBalance: 0,
+    pendingWithdrawals: 0,
+    totalWithdrawn: 0
+  });
+  
+  commissionStats = signal<any>({
+    monthlyEarned: 0,
+    totalEarned: 0,
+    pendingCommissions: 0
+  });
 
   plans = signal<InvestmentPlan[]>([
     {
@@ -102,6 +125,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private marketDataService = inject(MarketDataService);
   private achievementService = inject(AchievementService);
   private priceAlertService = inject(PriceAlertService);
+  private unilevelService = inject(UnilevelService);
+  private withdrawalService = inject(WithdrawalService);
   private router = inject(Router);
   private notificationService = inject(NotificationService);
   
@@ -158,6 +183,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.achievements.set(achievements);
     });
     this.subscriptions.push(achievementsSub);
+    
+    // Cargar estadísticas de red
+    this.loadNetworkStats();
+    
+    // Cargar estadísticas de retiros
+    this.loadWithdrawalStats();
+    
+    // Cargar estadísticas de comisiones
+    this.loadCommissionStats();
   }
 
   ngOnDestroy() {
@@ -238,5 +272,87 @@ export class DashboardComponent implements OnInit, OnDestroy {
     return result
       ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
       : '0, 0, 0';
+  }
+  
+  loadNetworkStats() {
+    this.unilevelService.getUserLevel().subscribe({
+      next: (levelInfo) => {
+        const totalRefs = this.unilevelService.getTotalNetworkCount();
+        const activeRefs = this.unilevelService.getActiveReferralsCount();
+        
+        this.networkStats.set({
+          totalReferrals: totalRefs,
+          activeReferrals: activeRefs,
+          level: levelInfo.currentLevel.name,
+          nextLevel: levelInfo.nextLevel?.name || 'Máximo',
+          progressToNext: levelInfo.progressToNext
+        });
+      },
+      error: (err) => console.error('Error cargando estadísticas de red:', err)
+    });
+  }
+  
+  loadWithdrawalStats() {
+    const userId = this.authService.getCurrentUser()?.id || 0;
+    
+    // Balance disponible
+    this.withdrawalService.getAvailableBalance(userId).subscribe({
+      next: (balance) => {
+        this.withdrawalStats.update(stats => ({
+          ...stats,
+          availableBalance: balance
+        }));
+      },
+      error: (err) => console.error('Error cargando balance:', err)
+    });
+    
+    // Retiros pendientes
+    this.withdrawalService.getUserWithdrawals(userId).subscribe({
+      next: (withdrawals) => {
+        const pending = withdrawals.filter(w => w.status === 'pending').length;
+        const total = withdrawals
+          .filter(w => w.status === 'completed')
+          .reduce((sum, w) => sum + w.amount, 0);
+        
+        this.withdrawalStats.update(stats => ({
+          ...stats,
+          pendingWithdrawals: pending,
+          totalWithdrawn: total
+        }));
+      },
+      error: (err) => console.error('Error cargando retiros:', err)
+    });
+  }
+  
+  loadCommissionStats() {
+    const userId = this.authService.getCurrentUser()?.id || 0;
+    
+    this.unilevelService.getUserCommissions(userId).subscribe({
+      next: (commissions) => {
+        const now = new Date();
+        const currentMonth = now.getMonth();
+        const currentYear = now.getFullYear();
+        
+        const monthlyEarned = commissions
+          .filter(c => {
+            const date = new Date(c.date);
+            return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+          })
+          .reduce((sum, c) => sum + c.amount, 0);
+        
+        const totalEarned = commissions.reduce((sum, c) => sum + c.amount, 0);
+        
+        const pendingCommissions = commissions
+          .filter(c => c.status === 'pending')
+          .reduce((sum, c) => sum + c.amount, 0);
+        
+        this.commissionStats.set({
+          monthlyEarned,
+          totalEarned,
+          pendingCommissions
+        });
+      },
+      error: (err) => console.error('Error cargando comisiones:', err)
+    });
   }
 }

@@ -71,7 +71,12 @@ export const routes: Routes = [
   },
   { 
     path: 'commissions', 
-    loadComponent: () => import('./components/network/unilevel-network.component').then(m => m.UnilevelNetworkComponent),
+    loadComponent: () => import('./components/commissions/commission-history.component').then(m => m.CommissionHistoryComponent),
+    canActivate: [AuthGuard]
+  },
+  { 
+    path: 'withdrawal-history', 
+    loadComponent: () => import('./components/withdrawals/withdrawal-history.component').then(m => m.WithdrawalHistoryComponent),
     canActivate: [AuthGuard]
   },
   { 
